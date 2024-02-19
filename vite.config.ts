@@ -45,7 +45,7 @@ export default ({ mode }) => {
         },
       },
     },
-    base: "/currator-admin/",
+    base: "/din-admin/",
     build: {
       target: ["es2020"],
     },
