@@ -1,3 +1,3 @@
-import { Keychain } from "@daohaus/keychain-utils";
 
-export const NFT_DAO_REFERRER = "DHNFTCurratorShamanSummoner";
+export const NFT_DAO_REFERRER = "DHNFTCurratorShamanSummonerV0.1"; 
+// NFT shaman name NFTCuratorShamanV0.1

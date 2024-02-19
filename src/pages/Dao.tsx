@@ -1,9 +1,11 @@
 import { useCurrentDao, useDaoData } from "@daohaus/moloch-v3-hooks";
 import { DaoOverview } from "@daohaus/moloch-v3-macro-ui";
-import { Card, SingleColumnLayout } from "@daohaus/ui";
+import { Card, ParSm, SingleColumnLayout } from "@daohaus/ui";
 import ReactMarkdown from "react-markdown";
 import { ButtonRouterLink } from "../components/ButtonRouterLink";
 import styled from "styled-components";
+import { useShamanNFT } from "../hooks/useShamanNFT";
+import { ShamanInfo } from "../components/ShamanInfo";
 
 const ButtonList = styled.div`
   display: flex;
@@ -52,6 +54,9 @@ export function Dao() {
           </ButtonRouterLink>
 
         </ButtonList>)}
+      {dao && daoChain && (
+        <ShamanInfo dao={dao} daoChain={daoChain} />
+      )}
       {daoId && daoChain && (<Card
         title={dao?.name}
       >
