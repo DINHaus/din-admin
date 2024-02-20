@@ -1,6 +1,18 @@
 import { LOCAL_ABI } from "@daohaus/abis";
 import { ContractLego } from "@daohaus/utils";
 import { CONTRACT_KEYCHAINS } from "@daohaus/keychain-utils";
+import NftCurratorShamanAbi from "../abis/nftCurratorShaman.json";
+
+
+export const DOMAIN_CONTRACT: Record<string, ContractLego> = {
+  NEW_POST: {
+    type: "static",
+    contractName: "DIN_POST",
+    abi: NftCurratorShamanAbi,
+    targetAddress: ".shamanData.shamanAddress",
+  },
+};
+
 
 export const APP_CONTRACT: Record<string, ContractLego> = {
   POSTER: {

@@ -6,6 +6,8 @@ import { TXBuilder } from "@daohaus/tx-builder";
 import { ValidNetwork } from "@daohaus/keychain-utils";
 import { CurrentDaoProvider, useDaoData } from "@daohaus/moloch-v3-hooks";
 import { HeaderAvatar } from "../HeaderAvatar";
+import { useShamanNFT } from "../../hooks/useShamanNFT";
+import { MolochV3Dao } from "@daohaus/moloch-v3-data";
 
 export const DaoContainer = () => {
   const { proposalId, memberAddress, daoChain, daoId } = useParams<{
@@ -27,6 +29,40 @@ export const DaoContainer = () => {
   );
 };
 
+const DaoWrapper = ({
+  dao,
+  daoChain,
+  memberAddress,
+}: {
+  dao: MolochV3Dao;
+  daoChain: ValidNetwork;
+  memberAddress?: string;
+}) => {
+
+
+  const { publicClient, address } = useDHConnect();
+
+  const { shamanName, shamanAddress, sdata, isLoading: isShamanLoading } = useShamanNFT({ dao: dao, chainId: daoChain });
+
+  if (isShamanLoading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+
+        <TXBuilder
+          publicClient={publicClient}
+          chainId={daoChain}
+          daoId={dao?.id}
+          safeId={dao?.safeAddress}
+          appState={{ dao, memberAddress: memberAddress || address, shamanData: {shamanName, shamanAddress, sdata} }}
+        >
+          <Outlet />
+        </TXBuilder>
+
+  );
+};
+
 const Dao = ({
   daoId,
   daoChain,
@@ -40,7 +76,7 @@ const Dao = ({
 }) => {
   const location = useLocation();
 
-  const { publicClient, address } = useDHConnect();
+  const { address } = useDHConnect();
   const { dao } = useDaoData({
     daoId: daoId as string,
     daoChain: daoChain as string,
@@ -68,6 +104,8 @@ const Dao = ({
     //   : baseLinks;
   }, [daoChain, daoId, address]);
 
+  if (!dao) return null;
+
   return (
     <DHLayout
       pathname={location.pathname}
@@ -92,15 +130,7 @@ const Dao = ({
           memberAddress,
         }}
       >
-        <TXBuilder
-          publicClient={publicClient}
-          chainId={daoChain}
-          daoId={daoId}
-          safeId={dao?.safeAddress}
-          appState={{ dao, memberAddress: address }}
-        >
-          <Outlet />
-        </TXBuilder>
+        <DaoWrapper dao={dao} daoChain={daoChain} memberAddress={memberAddress} />
       </CurrentDaoProvider>
     </DHLayout>
   );

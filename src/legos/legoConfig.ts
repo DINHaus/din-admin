@@ -1,13 +1,14 @@
-import { MolochFields } from "@daohaus/moloch-v3-fields";
+import { MarkdownField, MolochFields } from "@daohaus/moloch-v3-fields";
 import { FieldLegoBase, FormLegoBase } from "@daohaus/utils";
 import { COMMON_FORMS, PROPOSAL_FORMS } from "@daohaus/moloch-v3-legos";
 
 import { APP_FORM } from "./forms";
-import { TestField } from "../components/customFields/fieldTest";
+import { ContentHashField } from "../components/customFields/ContentHash";
 
 export const AppFieldLookup = {
   ...MolochFields,
-  testField: TestField,
+  markdownField: MarkdownField,
+  contentHash: ContentHashField,
 };
 
 export type CustomFieldLego = FieldLegoBase<typeof AppFieldLookup>;

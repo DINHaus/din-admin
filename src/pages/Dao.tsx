@@ -4,7 +4,6 @@ import { Card, ParSm, SingleColumnLayout } from "@daohaus/ui";
 import ReactMarkdown from "react-markdown";
 import { ButtonRouterLink } from "../components/ButtonRouterLink";
 import styled from "styled-components";
-import { useShamanNFT } from "../hooks/useShamanNFT";
 import { ShamanInfo } from "../components/ShamanInfo";
 
 const ButtonList = styled.div`

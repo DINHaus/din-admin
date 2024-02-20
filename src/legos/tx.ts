@@ -1,52 +1,68 @@
-import { POSTER_TAGS } from "@daohaus/utils";
 import { buildMultiCallTX } from "@daohaus/tx-builder";
-import { APP_CONTRACT } from "./contract";
+import { DOMAIN_CONTRACT } from "./contract";
+import { TARGET_DAO } from "../targetDao";
 
 export enum ProposalTypeIds {
-  Signal = "SIGNAL",
-  IssueSharesLoot = "ISSUE",
-  AddShaman = "ADD_SHAMAN",
-  TransferErc20 = "TRANSFER_ERC20",
-  TransferNetworkToken = "TRANSFER_NETWORK_TOKEN",
-  UpdateGovSettings = "UPDATE_GOV_SETTINGS",
-  UpdateTokenSettings = "TOKEN_SETTINGS",
-  TokensForShares = "TOKENS_FOR_SHARES",
-  GuildKick = "GUILDKICK",
-  WalletConnect = "WALLETCONNECT",
-}
+    Signal = "SIGNAL",
+    IssueSharesLoot = "ISSUE",
+    AddShaman = "ADD_SHAMAN",
+    TransferErc20 = "TRANSFER_ERC20",
+    TransferNetworkToken = "TRANSFER_NETWORK_TOKEN",
+    UpdateGovSettings = "UPDATE_GOV_SETTINGS",
+    UpdateTokenSettings = "TOKEN_SETTINGS",
+    TokensForShares = "TOKENS_FOR_SHARES",
+    GuildKick = "GUILDKICK",
+    WalletConnect = "WALLETCONNECT",
+    Article = "ARTICLE",
+  }
 
 export const APP_TX = {
-  TEST_TX: buildMultiCallTX({
-    id: "TEST_TX",
+    COLLECT: {
+        id: "COLLECT",
+        contract: DOMAIN_CONTRACT.NEW_POST,
+        method: 'collect',
+        args: [
+          ".postId"
+        ],
+        disablePoll: true,
+      },
+    MINT_POST: buildMultiCallTX({
+        id: "MINT_PROPOSAL",
     JSONDetails: {
       type: "JSONDetails",
       jsonSchema: {
-        title: `.formValues.title`,
-        description: `.formValues.description`,
+        title: `.formValues.pubTitle`,
+        description: `.formValues.pubDescription`,
         contentURI: `.formValues.link`,
         contentURIType: { type: "static", value: "url" },
-        proposalType: { type: "static", value: ProposalTypeIds.Signal },
+        proposalType: { type: "static", value: ProposalTypeIds.Article },
       },
     },
-    actions: [
-      {
-        contract: APP_CONTRACT.POSTER,
-        method: "post",
+    actions: [{
+        contract: DOMAIN_CONTRACT.NEW_POST,
+        method: 'post',
         args: [
+          ".memberAddress",
+          ".formValues.contentHash",
           {
             type: "JSONDetails",
             jsonSchema: {
-              title: `.formValues.title`,
-              description: `.formValues.description`,
-              superSignal: `.formValues.testField`,
-              contentURI: `.formValues.link`,
+              daoId: ".dao.id",
+              table: { type: 'static', value: 'DIN' },
+              queryType: { type: 'static', value: 'list' },
+              title: ".formValues.pubTitle",
+              description: ".formValues.pubDescription",
+              contentURI: ".formValues.link",
               contentURIType: { type: "static", value: "url" },
-              proposalType: { type: "static", value: ProposalTypeIds.Signal },
+              imageURI: ".formValues.image",
+              imageURIType: { type: "static", value: "url" },
+              contentHash: ".formValues.contentHash",
+              authorAddress: ".memberAddress",
+              parentId: { type: "static", value: 0 },
             },
           },
-          { type: "static", value: POSTER_TAGS.signalProposal },
         ],
-      },
+      }
     ],
-  }),
-};
+    }),
+}

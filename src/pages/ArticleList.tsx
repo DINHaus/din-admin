@@ -97,7 +97,7 @@ export const ArticleList = () => {
         <ButtonRouterLink
           color="secondary"
           fullWidth
-          to={`/molochv3/${daoChain}/${daoId}/settings`}
+          to={`/molochv3/${daoChain}/${daoId}/new`}
         >
           Submit Article
         </ButtonRouterLink>

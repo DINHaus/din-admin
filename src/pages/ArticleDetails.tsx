@@ -24,13 +24,16 @@ import {
   formatValueTo,
   fromWei,
   ZERO_ADDRESS,
+  EthAddress,
 } from "@daohaus/utils";
 
 import { APP_TX } from "../legos/tx";
 import { useState } from "react";
-import { useCurrentDao } from "@daohaus/moloch-v3-hooks";
+import { useCurrentDao, useDaoData } from "@daohaus/moloch-v3-hooks";
 import { useRecords } from "../hooks/useRecords";
 import { AuthorAvatar } from "../components/AuthorAvatar";
+import { useShamanNFT } from "../hooks/useShamanNFT";
+import { CollectedBy } from "../components/CollectedBy";
 
 type BlogPost = {
   title: string;
@@ -70,14 +73,6 @@ const TitleWrapper = styled.div`
   text-align: center;
 `;
 
-const AvatarGroup = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-`;
-
 const DialogContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -101,10 +96,14 @@ export const ArticleDetails = () => {
   const { address } = useDHConnect();
   const { fireTransaction } = useTxBuilder();
   const { daoChain, daoId } = useCurrentDao();
+  const { dao } = useDaoData();
+
 
   if (!daoId || !daoChain) {
     return null;
   }
+  const { shamanName, shamanAddress, sdata, isLoading: isShamanLoading } = useShamanNFT({ dao: dao, chainId: daoChain });
+  console.log("shaman >>>", sdata, shamanAddress, shamanName, isShamanLoading);
   const { records } = useRecords({
     daoId: daoId,
     chainId: daoChain,
@@ -117,6 +116,10 @@ export const ArticleDetails = () => {
     return <div>Loading...</div>;
   }
 
+  if(!shamanAddress){
+    return null;
+  }
+
   const parsedContent: BlogPost = records[0]?.parsedContent as BlogPost;
 
   const handleCollect = () => {
@@ -124,40 +127,40 @@ export const ArticleDetails = () => {
       return;
     }
 
-    // fireTransaction({
-    //   tx: {
-    //     ...APP_TX.COLLECT,
-    //     staticOverrides: {
-    //       value: BigInt(TARGET_DAO.NFT_PRICE),
-    //     },
-    //   } as TXLego,
-    //   callerState: {
-    //     postId: hash,
-    //   },
-    //   lifeCycleFns: {
-    //     onRequestSign() {
-    //       setIsLoadingTx(true);
-    //       setIsSuccessTx(false);
-    //       defaultToast({
-    //         title: "Success",
-    //         description: "Transaction submitted: Wating",
-    //       });
-    //     },
-    //     onTxSuccess() {
-    //       setIsLoadingTx(false);
-    //       setIsSuccessTx(true);
-    //       successToast({ title: "Success", description: "Minted" });
-    //     },
-    //     onTxError(err) {
-    //       const errMsg = handleErrorMessage(
-    //         err as { error: unknown; fallback?: string | undefined }
-    //       );
-    //       console.error(err);
-    //       errorToast({ title: "Error", description: errMsg });
-    //       setIsLoadingTx(false);
-    //     },
-    //   },
-    // });
+    fireTransaction({
+      tx: {
+        ...APP_TX.COLLECT,
+        staticOverrides: {
+          value: BigInt(sdata?._price.result || 0),
+        },
+      } as TXLego,
+      callerState: {
+        postId: hash,
+      },
+      lifeCycleFns: {
+        onRequestSign() {
+          setIsLoadingTx(true);
+          setIsSuccessTx(false);
+          defaultToast({
+            title: "Success",
+            description: "Transaction submitted: Wating",
+          });
+        },
+        onTxSuccess() {
+          setIsLoadingTx(false);
+          setIsSuccessTx(true);
+          successToast({ title: "Success", description: "Minted" });
+        },
+        onTxError(err) {
+          const errMsg = handleErrorMessage(
+            err as { error: unknown; fallback?: string | undefined }
+          );
+          console.error(err);
+          errorToast({ title: "Error", description: errMsg });
+          setIsLoadingTx(false);
+        },
+      },
+    });
   };
 
   return (
@@ -199,26 +202,29 @@ export const ArticleDetails = () => {
             ) : (
               <>
                 <Card>
-                    <SmallCardImg
-                      src={
-                        parsedContent?.imageURI
-                      } />
-                    <ParMd>{parsedContent?.title}</ParMd>
+                  <SmallCardImg
+                    src={
+                      parsedContent?.imageURI
+                    } />
+                  <ParMd>{parsedContent?.title}</ParMd>
                 </Card>
                 <ParMd>Mint and collect this article</ParMd>
                 <ParMd>
                   Price will be{" "}
                   {formatValueTo({
-                    value: fromWei("00000000000000000000"),
+                    value: fromWei(sdata?._price.result || "0"),
                     decimals: 6,
                     format: "number",
-                  })}{" "}
-                  eth (~$1)
+                  })}{" "}ETH
+                  
                 </ParMd>
-                <ParMd>20% goes to the author and 80% to the DAO</ParMd>
+                {sdata?._authorFee.result ?
+                  (<ParMd>{100 / Number(sdata?._authorFee.result)}% goes to the author and {100 - (100 / Number(sdata?._authorFee.result))}% to the DAO</ParMd>)
+                  :
+                  (<ParMd>split between author and DAO</ParMd>)}
                 {isLoadingTx && (
                   <ParMd>
-                    <Spinner /> Waiting for transaction 
+                    <Spinner /> Waiting for transaction
                   </ParMd>
                 )}
                 {isSuccessTx && (
@@ -230,13 +236,7 @@ export const ArticleDetails = () => {
         </DialogContent>
       </Dialog>
       <>
-        <AvatarGroup>
-          {/* stubbed out, can get from nft */}
-          <ParMd>Collected By:</ParMd>
-          <Avatar size="sm"></Avatar>
-          <Avatar size="sm"></Avatar>
-          <Avatar size="sm"></Avatar>
-        </AvatarGroup>
+        {false && hash && <CollectedBy shamanAddress={shamanAddress as EthAddress} hash={hash} />}
       </>
     </ArticleLayout>
   );

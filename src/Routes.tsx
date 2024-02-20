@@ -26,6 +26,7 @@ import NewProposal from "./pages/NewProposal";
 import UpdateSettings from "./pages/UpdateSettings";
 import { ArticleList } from "./pages/ArticleList";
 import { ArticleDetails } from "./pages/ArticleDetails";
+import { SubmitForm } from "./pages/SubmitForm";
 
 export const Routes = ({
   setDaoChainId,
@@ -66,6 +67,8 @@ export const Routes = ({
         <Route path="members/ragequit" element={<RageQuit />} />
         <Route path="articles" element={<ArticleList/>} />
         <Route path="articles/:hash" element={<ArticleDetails/>} />
+        <Route path="new" element={<SubmitForm/>} />
+        <Route path="*" element={<div>404</div>} />
       </Route>
     </Router>
   );
