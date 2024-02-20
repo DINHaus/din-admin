@@ -1,10 +1,9 @@
 import React, { ComponentProps } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { Avatar, Button, ParMd, ParSm, ProfileAvatar, Tooltip } from '@daohaus/ui';
-import { TokenChild, useShamanTokenId } from '../hooks/useShamanTokenId';
+import { ParMd, ProfileAvatar, Tooltip } from '@daohaus/ui';
+import {  useShamanTokenId } from '../hooks/useShamanTokenId';
 import { EthAddress, truncateAddress } from '@daohaus/utils';
-import { useDHConnect } from '@daohaus/connect';
 import { useCurrentDao } from '@daohaus/moloch-v3-hooks';
 
 
@@ -37,9 +36,7 @@ return (
 
         {childs && Array.isArray(childs) && childs.length > 0 && childs.map((child) => {
                 return (
-                        <Tooltip content={truncateAddress(child?.owner)} triggerEl={<ProfileAvatar size='sm' address={child.owner} />}>
-                        
-                        </Tooltip>
+                        <Tooltip content={truncateAddress(child?.owner)} triggerEl={(<ProfileAvatar size='sm' address={child.owner} />)} />
 
                 )
         
