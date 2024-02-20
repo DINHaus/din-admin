@@ -103,7 +103,7 @@ export const ArticleDetails = () => {
     return null;
   }
   const { shamanName, shamanAddress, sdata, isLoading: isShamanLoading } = useShamanNFT({ dao: dao, chainId: daoChain });
-  console.log("shaman >>>", sdata, shamanAddress, shamanName, isShamanLoading);
+  // console.log("shaman >>>", sdata, shamanAddress, shamanName, isShamanLoading);
   const { records } = useRecords({
     daoId: daoId,
     chainId: daoChain,
@@ -236,7 +236,7 @@ export const ArticleDetails = () => {
         </DialogContent>
       </Dialog>
       <>
-        {false && hash && <CollectedBy shamanAddress={shamanAddress as EthAddress} hash={hash} />}
+        {shamanAddress && hash && <CollectedBy shamanAddress={shamanAddress as EthAddress} hash={hash} />}
       </>
     </ArticleLayout>
   );

@@ -16,7 +16,7 @@ export const AuthorAvatar = (
       if (!daoChain) {
         return null;
       }
-    console.log("profile >>", profile);
+    // console.log("profile >>", profile);
   return (
     <div>
       <ProfileAvatar size='lg' address={address} />

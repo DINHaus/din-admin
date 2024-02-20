@@ -5,6 +5,11 @@ import { EthAddress, createViemClient } from "@daohaus/utils";
 import NftCurratorShamanAbi from "../abis/nftCurratorShaman.json";
 import { MolochV3Dao } from "@daohaus/moloch-v3-data";
 
+export interface TokenChild {
+  owner: string;
+  tokenId: BigInt;
+}
+
 const fetchShaman = async ({
   shamanAddress,
   hash,
@@ -18,7 +23,7 @@ const fetchShaman = async ({
   chainId?: ValidNetwork;
   rpcs?: Keychain;
 }) => {
-  if (!shamanAddress || !tokenId || !chainId) {
+  if (!shamanAddress || !hash || !chainId) {
     throw new Error("Missing Args");
   }
   const client = createViemClient({
@@ -26,36 +31,37 @@ const fetchShaman = async ({
     rpcs,
   });
 
-    let parentId;
-    let childs;
-    try {
-      parentId = await client.readContract({
-        abi: NftCurratorShamanAbi,
-        address: shamanAddress,
-        functionName: "posts",
-        args: [hash],
-      });
+  let parentId;
+  let childs;
+  try {
+    parentId = await client.readContract({
+      abi: NftCurratorShamanAbi,
+      address: shamanAddress,
+      functionName: "posts",
+      args: [hash],
+    });
 
-      childs = await client.readContract({
-        abi: NftCurratorShamanAbi,
-        address: shamanAddress,
-        functionName: "getAllChilds",
-        args: [parentId],
-      });
-
-
-
-    } catch (e) {
-      return false;
-    }
+    childs = await client.readContract({
+      abi: NftCurratorShamanAbi,
+      address: shamanAddress,
+      functionName: "getAllChilds",
+      args: [parentId],
+    });
 
 
- 
 
-    return {
-      parentId,
-      childs,
-    }
+
+  } catch (e) {
+    return false;
+  }
+
+
+
+
+  return {
+    parentId,
+    childs
+  }
 
 };
 
@@ -76,7 +82,7 @@ export const useShamanTokenId = ({
   const { data, error, ...rest } = useQuery(
     [`claimShaman-${shamanAddress}-${hash}}`],
     () => fetchShaman({ shamanAddress, hash, chainId }),
-    { enabled: !!shamanAddress && !!tokenId}
+    { enabled: shamanAddress && !!hash }
   );
 
   return { ...data, error, ...rest };
