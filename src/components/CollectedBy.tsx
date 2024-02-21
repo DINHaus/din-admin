@@ -34,9 +34,9 @@ return (
         <>
         <ParMd>{`id:${parentId} Collected By:`}</ParMd>
 
-        {childs && Array.isArray(childs) && childs.length > 0 && childs.map((child) => {
+        {childs && Array.isArray(childs) && childs.length > 0 && childs.map((child, key) => {
                 return (
-                        <Tooltip content={truncateAddress(child?.owner)} triggerEl={(<ProfileAvatar size='sm' address={child.owner} />)} />
+                        <Tooltip key={key} content={truncateAddress(child?.owner)} triggerEl={(<ProfileAvatar size='sm' address={child.owner} />)} />
 
                 )
         

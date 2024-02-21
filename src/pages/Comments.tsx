@@ -152,10 +152,10 @@ export const Comments = () => {
 
 
 
-            {comments.map((comment) => {
+            {comments.map((comment, key) => {
                 const parsedComment: BlogPost = comment.parsedContent as BlogPost;
                 return (
-                    <Card key={comment.id}>
+                    <Card key={key}>
                         <ReactMarkdown>{parsedComment.description}</ReactMarkdown>
                     </Card>
                 );
