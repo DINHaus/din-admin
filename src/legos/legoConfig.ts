@@ -4,11 +4,13 @@ import { COMMON_FORMS, PROPOSAL_FORMS } from "@daohaus/moloch-v3-legos";
 
 import { APP_FORM } from "./forms";
 import { ContentHashField } from "../components/customFields/ContentHash";
+import { CommentId } from "../components/customFields/CommentID";
 
 export const AppFieldLookup = {
   ...MolochFields,
   markdownField: MarkdownField,
   contentHash: ContentHashField,
+  commentId: CommentId
 };
 
 export type CustomFieldLego = FieldLegoBase<typeof AppFieldLookup>;

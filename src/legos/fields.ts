@@ -45,4 +45,8 @@ export const APP_FIELD: Record<string, CustomFieldLego> = {
     id: 'contentHash',
     type: 'contentHash',
   },
+  COMMENTID_FIELD: {
+    id: 'commentId',
+    type: 'commentId',
+  },
 };

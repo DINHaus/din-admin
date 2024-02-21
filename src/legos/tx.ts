@@ -1,6 +1,8 @@
 import { buildMultiCallTX } from "@daohaus/tx-builder";
 import { DOMAIN_CONTRACT } from "./contract";
 import { TARGET_DAO } from "../targetDao";
+import { CONTRACT } from "@daohaus/moloch-v3-legos";
+import { POSTER_TAGS } from "@daohaus/utils";
 
 export enum ProposalTypeIds {
     Signal = "SIGNAL",
@@ -26,6 +28,25 @@ export const APP_TX = {
         ],
         disablePoll: true,
       },
+    COMMENT: {
+      id: "COMMENT",
+      contract: CONTRACT.POSTER,
+      method: 'post',
+      args: [
+        {
+          type: 'JSONDetails',
+          jsonSchema: {
+            daoId: ".dao.id",
+            table: { type: 'static', value: 'DINComment' },
+            queryType: { type: 'static', value: 'list' },
+            description: '.formValues.pubDescription',
+            hash: '.formValues.commentId',
+            author: '.memberAddress',
+          },
+        },
+        { type: 'static', value: POSTER_TAGS.daoDatabaseSharesOrLoot },
+      ],
+    },
     MINT_POST: buildMultiCallTX({
         id: "MINT_PROPOSAL",
     JSONDetails: {

@@ -22,4 +22,17 @@ export const APP_FORM: Record<string, CustomFormLego> = {
       FIELD.PROP_OFFERING
     ],
   },
+  NEW_COMMENT: {
+    id: "NEW_COMMENT",
+    title: "Comment Form",
+    subtitle: "comments",
+    description: "Collectors can post comment.",
+    requiredFields: { pubDescription: true },
+    log: true,
+    tx: APP_TX.COMMENT as TXLego,
+    fields: [
+      {...APP_FIELD.DESC_FIELD, type: "markdownField", label: "Comment"},
+      APP_FIELD.COMMENTID_FIELD,
+    ],
+  },
 };

@@ -2,7 +2,7 @@ import ReactMarkdown from "react-markdown";
 import styled from "styled-components";
 
 import { TARGET_DAO } from "../targetDao";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   Avatar,
   Button,
@@ -34,6 +34,7 @@ import { useRecords } from "../hooks/useRecords";
 import { AuthorAvatar } from "../components/AuthorAvatar";
 import { useShamanNFT } from "../hooks/useShamanNFT";
 import { CollectedBy } from "../components/CollectedBy";
+import { Comments } from "./Comments";
 
 type BlogPost = {
   title: string;
@@ -116,7 +117,7 @@ export const ArticleDetails = () => {
     return <div>Loading...</div>;
   }
 
-  if(!shamanAddress){
+  if (!shamanAddress) {
     return null;
   }
 
@@ -216,7 +217,7 @@ export const ArticleDetails = () => {
                     decimals: 6,
                     format: "number",
                   })}{" "}ETH
-                  
+
                 </ParMd>
                 {sdata?._authorFee.result ?
                   (<ParMd>{100 / Number(sdata?._authorFee.result)}% goes to the author and {100 - (100 / Number(sdata?._authorFee.result))}% to the DAO</ParMd>)
@@ -238,6 +239,9 @@ export const ArticleDetails = () => {
       <>
         {shamanAddress && hash && <CollectedBy shamanAddress={shamanAddress as EthAddress} hash={hash} />}
       </>
+      <Button variant="link">
+        <Link to={"comments"}> Comments</Link>
+      </Button>
     </ArticleLayout>
   );
 };
