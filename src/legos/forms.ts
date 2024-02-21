@@ -2,6 +2,7 @@ import { APP_FIELD } from "./fields";
 import { CustomFormLego } from "./legoConfig";
 import { TXLego } from "@daohaus/utils";
 import { APP_TX } from "./tx";
+import { FIELD } from "@daohaus/moloch-v3-legos";
 
 export const APP_FORM: Record<string, CustomFormLego> = {
   NEW_POST: {
@@ -18,6 +19,7 @@ export const APP_FORM: Record<string, CustomFormLego> = {
       {...APP_FIELD.DESC_FIELD, type: "markdownField"},
       APP_FIELD.LINK_FIELD,
       APP_FIELD.CONTENTHASH_FIELD,
+      FIELD.PROP_OFFERING
     ],
   },
 };
