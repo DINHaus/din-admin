@@ -26,7 +26,6 @@ import {
   EthAddress,
 } from "@daohaus/utils";
 
-import { APP_TX } from "../legos/tx";
 import { useState } from "react";
 import { useCurrentDao, useDaoData } from "@daohaus/moloch-v3-hooks";
 import { useRecords } from "../hooks/useRecords";
@@ -34,17 +33,10 @@ import { AuthorAvatar } from "../components/AuthorAvatar";
 import { useShamanNFT } from "../hooks/useShamanNFT";
 import { CollectedBy } from "../components/CollectedBy";
 import { Comments } from "./Comments";
+import { CollectButton } from "../components/CollectButton";
+import { BlogPost } from "../utils/types";
+import { ArticleLinks, StyledLink } from "../utils/listStyles";
 
-type BlogPost = {
-  title: string;
-  content: string;
-  contentURI: string;
-  imageURI: string;
-  authorAddress: string;
-  contentHash: string;
-  parentId: string;
-  id: string;
-};
 
 const ArticleLayout = styled.div`
   display: flex;
@@ -91,12 +83,10 @@ const SmallCardImg = styled.img`
 
 export const ArticleDetails = () => {
   //   const location = useLocation(); // for share link
-  const [isLoadingTx, setIsLoadingTx] = useState(false);
-  const [isSuccessTx, setIsSuccessTx] = useState(false);
+
 
   const { hash } = useParams();
-  const { address } = useDHConnect();
-  const { fireTransaction } = useTxBuilder();
+
   const { daoChain, daoId } = useCurrentDao();
   const { dao } = useDaoData();
 
@@ -112,7 +102,6 @@ export const ArticleDetails = () => {
     recordType: "DIN",
     hash,
   });
-  const { successToast, errorToast, defaultToast } = useToast();
 
   if (!records) {
     return <div>Loading...</div>;
@@ -124,46 +113,6 @@ export const ArticleDetails = () => {
 
   const parsedContent: BlogPost = records[0]?.parsedContent as BlogPost;
 
-  const handleCollect = () => {
-    if (!address) {
-      return;
-    }
-
-    fireTransaction({
-      tx: {
-        ...APP_TX.COLLECT,
-        staticOverrides: {
-          value: BigInt(sdata?._price.result || 0),
-        },
-      } as TXLego,
-      callerState: {
-        postId: hash,
-      },
-      lifeCycleFns: {
-        onRequestSign() {
-          setIsLoadingTx(true);
-          setIsSuccessTx(false);
-          defaultToast({
-            title: "Success",
-            description: "Transaction submitted: Wating",
-          });
-        },
-        onTxSuccess() {
-          setIsLoadingTx(false);
-          setIsSuccessTx(true);
-          successToast({ title: "Success", description: "Minted" });
-        },
-        onTxError(err) {
-          const errMsg = handleErrorMessage(
-            err as { error: unknown; fallback?: string | undefined }
-          );
-          console.error(err);
-          errorToast({ title: "Error", description: errMsg });
-          setIsLoadingTx(false);
-        },
-      },
-    });
-  };
 
   return (
     <ArticleLayout>
@@ -186,63 +135,13 @@ export const ArticleDetails = () => {
       )}
 
       <ReactMarkdown>{parsedContent?.content}</ReactMarkdown>
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button variant="outline">Collect</Button>
-        </DialogTrigger>
-        <DialogContent
-          title="Collect"
-          rightButton={{
-            onClick: handleCollect,
-            disabled: !!isLoadingTx,
-            children: "Collect",
-          }}
-        >
-          <DialogContentWrapper>
-            {!address ? (
-              <ParMd>Connect to collect</ParMd>
-            ) : (
-              <>
-                <Card>
-                  {/* <SmallCardImg
-                    src={
-                      parsedContent?.imageURI
-                    } /> */}
-                  <ParMd>{parsedContent?.title}</ParMd>
-                </Card>
-                <ParMd>Mint and collect this article</ParMd>
-                <ParMd>
-                  Price will be{" "}
-                  {formatValueTo({
-                    value: fromWei(sdata?._price.result || "0"),
-                    decimals: 6,
-                    format: "number",
-                  })}{" "}ETH
-
-                </ParMd>
-                {sdata?._authorFee.result ?
-                  (<ParMd>{100 / Number(sdata?._authorFee.result)}% goes to the author and {100 - (100 / Number(sdata?._authorFee.result))}% to the DAO</ParMd>)
-                  :
-                  (<ParMd>split between author and DAO</ParMd>)}
-                {isLoadingTx && (
-                  <ParMd>
-                    <Spinner /> Waiting for transaction
-                  </ParMd>
-                )}
-                {isSuccessTx && (
-                  <SuccessText>Success! Thank you for your support</SuccessText>
-                )}
-              </>
-            )}
-          </DialogContentWrapper>
-        </DialogContent>
-      </Dialog>
-      <>
-        {shamanAddress && hash && <CollectedBy shamanAddress={shamanAddress as EthAddress} hash={hash} />}
-      </>
-      <Button variant="link">
-        <Link to={"comments"}> Comments</Link>
-      </Button>
+      {shamanAddress && hash && <CollectedBy shamanAddress={shamanAddress as EthAddress} hash={hash} />}
+      <ArticleLinks>
+        {sdata?._price.result && sdata?._authorFee.result && hash && <CollectButton hash={hash} link={false} />}
+        <Button variant="outline">
+          <StyledLink to={"comments"}> Comments</StyledLink>
+        </Button>
+      </ArticleLinks>
     </ArticleLayout>
   );
 };

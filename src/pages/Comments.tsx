@@ -19,15 +19,10 @@ import { useRecords } from "../hooks/useRecords";
 import { FormBuilder } from "@daohaus/form-builder";
 import { APP_FORM } from "../legos/forms";
 import { AppFieldLookup } from "../legos/legoConfig";
-
-type BlogPost = {
-    title: string;
-    content: string;
-    contentURI: string;
-    imageURI: string;
-    authorAddress: string;
-    contentHash: string;
-};
+import { BlogPost } from "../utils/types";
+import { ArticleCard, ArticleLinks, CardWrapper, StyledLink } from "../utils/listStyles";
+import { AuthorAvatar } from "../components/AuthorAvatar";
+import { ZERO_ADDRESS } from "@daohaus/utils";
 
 const ArticleLayout = styled.div`
   display: flex;
@@ -92,7 +87,7 @@ export const Comments = () => {
         daoChain: daoChain,
         daoId: daoId,
         memberAddress: address,
-      });
+    });
     const { records } = useRecords({
         daoId: daoId,
         chainId: daoChain,
@@ -122,32 +117,46 @@ export const Comments = () => {
 
     return (
         <SingleColumnLayout
-            title={"Comments"}
+            title={`Comments (${comments.length})`}
             subtitle={"Collectors can post comments here."}
         >
             <TitleWrapper>
                 <H1>{parsedContent.title}</H1>
             </TitleWrapper>
-
-            
-
+            <ReactMarkdown>{parsedContent.content}</ReactMarkdown>
 
 
-            {comments.map((comment, key) => {
-                const parsedComment: BlogPost = comment.parsedContent as BlogPost;
-                return (
-                    <Card key={key}>
-                        <ReactMarkdown>{parsedComment.content}</ReactMarkdown>
-                    </Card>
-                );
-            })
-            }
+
+
+            <CardWrapper>
+                {comments.map((comment, key) => {
+                    const parsedComment: BlogPost = comment.parsedContent as BlogPost;
+                    return (
+
+                        <ArticleCard key={key}>
+                            {parsedContent?.authorAddress ? (
+                                <AuthorAvatar address={parsedContent?.authorAddress} />
+                            ) : (
+                                <AuthorAvatar address={ZERO_ADDRESS} />
+                            )}
+                            <ReactMarkdown>{parsedComment.content}</ReactMarkdown>
+                            <ArticleLinks>
+                                <StyledLink to={""}> detail</StyledLink>
+                                <StyledLink to={""}> replys (69)</StyledLink>
+
+                            </ArticleLinks>
+                        </ArticleCard>
+
+                    );
+                })
+                }
+            </CardWrapper>
             {member && Number(member?.loot) > 0 ? (
-            <FormBuilder form={APP_FORM.NEW_COMMENT} customFields={AppFieldLookup} lifeCycleFns={{
-                onPollSuccess: () => {
-                    onFormComplete();
-                },
-            }} />
+                <FormBuilder form={APP_FORM.NEW_COMMENT} customFields={AppFieldLookup} lifeCycleFns={{
+                    onPollSuccess: () => {
+                        onFormComplete();
+                    },
+                }} />
             ) : (
                 <ParLg>Only Collectors can comment</ParLg>
             )}
