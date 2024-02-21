@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 
 import { Keychain, ValidNetwork } from "@daohaus/keychain-utils";
 import { EthAddress, createViemClient } from "@daohaus/utils";
-import NftCurratorShamanAbi from "../abis/nftCurratorShaman.json";
+import NftCuratorShamanAbi from "../abis/nftCuratorShaman.json";
 import { MolochV3Dao } from "@daohaus/moloch-v3-data";
 
 export interface TokenChild {
@@ -35,14 +35,14 @@ const fetchShaman = async ({
   let childs;
   try {
     parentId = await client.readContract({
-      abi: NftCurratorShamanAbi,
+      abi: NftCuratorShamanAbi,
       address: shamanAddress,
       functionName: "posts",
       args: [hash],
     });
 
     childs = await client.readContract({
-      abi: NftCurratorShamanAbi,
+      abi: NftCuratorShamanAbi,
       address: shamanAddress,
       functionName: "getAllChilds",
       args: [parentId],

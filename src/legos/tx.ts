@@ -1,6 +1,5 @@
 import { buildMultiCallTX } from "@daohaus/tx-builder";
 import { DOMAIN_CONTRACT } from "./contract";
-import { TARGET_DAO } from "../targetDao";
 import { CONTRACT } from "@daohaus/moloch-v3-legos";
 import { POSTER_TAGS } from "@daohaus/utils";
 
@@ -15,7 +14,7 @@ export enum ProposalTypeIds {
     TokensForShares = "TOKENS_FOR_SHARES",
     GuildKick = "GUILDKICK",
     WalletConnect = "WALLETCONNECT",
-    Article = "ARTICLE",
+    Topic = "TOPIC",
   }
 
 export const APP_TX = {
@@ -39,9 +38,11 @@ export const APP_TX = {
             daoId: ".dao.id",
             table: { type: 'static', value: 'DINComment' },
             queryType: { type: 'static', value: 'list' },
-            description: '.formValues.pubDescription',
-            hash: '.formValues.commentId',
+            content: '.formValues.content',
+            parentId: '.formValues.commentParentId',
+            id: '.formValues.contentHash',
             author: '.memberAddress',
+            createdAt: '.formValues.createdAt',
           },
         },
         { type: 'static', value: POSTER_TAGS.daoDatabaseSharesOrLoot },
@@ -52,11 +53,11 @@ export const APP_TX = {
     JSONDetails: {
       type: "JSONDetails",
       jsonSchema: {
-        title: `.formValues.pubTitle`,
-        description: `.formValues.pubDescription`,
+        title: `.formValues.title`,
+        description: `.formValues.content`,
         contentURI: `.formValues.link`,
         contentURIType: { type: "static", value: "url" },
-        proposalType: { type: "static", value: ProposalTypeIds.Article },
+        proposalType: { type: "static", value: ProposalTypeIds.Topic },
       },
     },
     actions: [{
@@ -71,15 +72,17 @@ export const APP_TX = {
               daoId: ".dao.id",
               table: { type: 'static', value: 'DIN' },
               queryType: { type: 'static', value: 'list' },
-              title: ".formValues.pubTitle",
-              description: ".formValues.pubDescription",
+              title: ".formValues.title",
+              content: ".formValues.content",
               contentURI: ".formValues.link",
               contentURIType: { type: "static", value: "url" },
-              imageURI: ".formValues.image",
-              imageURIType: { type: "static", value: "url" },
-              contentHash: ".formValues.contentHash",
+              // imageURI: ".formValues.image",
+              // imageURIType: { type: "static", value: "url" },
+              parentId: { type: "static", value: "0" },
+              id: ".formValues.contentHash",
               authorAddress: ".memberAddress",
-              parentId: { type: "static", value: 0 },
+              createdAt: '.formValues.createdAt',
+              
             },
           },
         ],

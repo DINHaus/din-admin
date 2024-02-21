@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 
 import { Keychain, ValidNetwork } from "@daohaus/keychain-utils";
 import { EthAddress, createViemClient } from "@daohaus/utils";
-import NftCurratorShamanAbi from "../abis/nftCurratorShaman.json";
+import NftCuratorShamanAbi from "../abis/nftCuratorShaman.json";
 import { MolochV3Dao } from "@daohaus/moloch-v3-data";
 
 const fetchShaman = async ({
@@ -24,10 +24,10 @@ const fetchShaman = async ({
 
   const targetShamanName = "NFTCuratorShamanV0.1";
 
-  const nftcurratorShaman = shamen.find(async (shaman) => {
+  const nftcuratorShaman = shamen.find(async (shaman) => {
     try {
       const shamanName = await client.readContract({
-        abi: NftCurratorShamanAbi,
+        abi: NftCuratorShamanAbi,
         address: shaman.shamanAddress as EthAddress,
         functionName: "name",
         args: [],
@@ -39,7 +39,7 @@ const fetchShaman = async ({
     }
   });
 
-  if (nftcurratorShaman) {
+  if (nftcuratorShaman) {
 
     const getters = ["_price", "_authorFee", "_creatorShares", "_collectorLoot"];
     const types = ["uint256", "uint256", "uint256", "uint256"];
@@ -50,8 +50,8 @@ const fetchShaman = async ({
         let res;
         try {
           res = await client.readContract({
-            abi: NftCurratorShamanAbi,
-            address: nftcurratorShaman.shamanAddress as EthAddress,
+            abi: NftCuratorShamanAbi,
+            address: nftcuratorShaman.shamanAddress as EthAddress,
             functionName: getter,
             args: [],
           });
@@ -71,7 +71,7 @@ const fetchShaman = async ({
     return {
       shamanName: targetShamanName,
       sdata,
-      shamanAddress: nftcurratorShaman.shamanAddress,
+      shamanAddress: nftcuratorShaman.shamanAddress,
     };
   } else {
     throw new Error("Shaman not found");

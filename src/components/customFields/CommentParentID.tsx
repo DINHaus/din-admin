@@ -4,37 +4,29 @@ import { useDHConnect } from "@daohaus/connect";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { hashMessage } from 'viem';
+import { useParams } from "react-router-dom";
 
 
-export const ContentHashField = (props: Buildable<object>) => {
-  const { watch, setValue } = useFormContext();
+export const CommentParentIdField = (props: Buildable<object>) => {
+  const { setValue } = useFormContext();
+  const { hash } = useParams();
   const { address } = useDHConnect();
 
-
-  console.log("getting hash");
-  const [title, content, link, createdAt] = watch([
-    "title",
-    "content",
-    "link",
-    "createdAt"
-  ]);
 
   const [errorText, setErrorText] = useState<string | null>(null);
 
   useEffect(() => {
 
-    if (!content) {
+    if (!hash) {
       return;
     }
-
-    console.log("vaules", JSON.stringify({ title, content, link, address, createdAt }));
 
     setErrorText(null);
     setValue(
       props.id,
-      hashMessage(JSON.stringify({ title, content, link, address, createdAt }))
+      hash
     );
-  }, [title, content, link, address, createdAt]);
+  }, [hash]);
 
   if (!errorText) {
     return null;

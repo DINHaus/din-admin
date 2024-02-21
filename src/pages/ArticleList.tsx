@@ -2,7 +2,6 @@ import { useDHConnect } from "@daohaus/connect";
 
 import { Button, Card, ParMd, SingleColumnLayout } from "@daohaus/ui";
 import styled from "styled-components";
-import { TARGET_DAO } from "../targetDao";
 
 import { Link } from "react-router-dom";
 import { useRecords } from "../hooks/useRecords";
@@ -13,11 +12,13 @@ import { ButtonRouterLink } from "../components/ButtonRouterLink";
 
 type BlogPost = {
   title: string;
-  description: string;
+  content: string;
   contentURI: string;
   imageURI: string;
   authorAddress: string;
   contentHash: string;
+  parentId: string;
+  id: string;
 };
 
 const CardWrapper = styled.div`
@@ -32,7 +33,7 @@ const CardWrapper = styled.div`
 const ArticleCard = styled(Card)`
   width: 100%;
   max-width: 35rem;
-  min-height: 30rem;
+  min-height: 20rem;
   padding: 1rem;
   margin: 1rem;
   display: flex;
@@ -107,8 +108,8 @@ export const ArticleList = () => {
           const parsedContent: BlogPost = record.parsedContent as BlogPost;
           return (
             <ArticleCard key={record.id}>
-              <CardImg>
-                <Link to={parsedContent?.contentHash}>
+              {/* <CardImg>
+                <Link to={parsedContent?.id}>
                   <img
                     src={
                       parsedContent?.imageURI ||
@@ -116,7 +117,7 @@ export const ArticleList = () => {
                     }
                   />
                 </Link>
-              </CardImg>
+              </CardImg> */}
               <CardAvatar>
                 {parsedContent?.authorAddress ? (
                   <AuthorAvatar address={parsedContent?.authorAddress} />
@@ -125,10 +126,10 @@ export const ArticleList = () => {
                 )}
               </CardAvatar>
               <CardTitle>{parsedContent?.title}</CardTitle>
-              <CardDescription>{parsedContent?.description}</CardDescription>
+              <CardDescription>{parsedContent?.content}</CardDescription>
               <ParMd>{parsedContent?.contentURI}</ParMd>
               <Button variant="link">
-                <Link to={parsedContent?.contentHash}> More...</Link>
+                <Link to={parsedContent?.id}> More...</Link>
               </Button>
             </ArticleCard>
           );

@@ -2,7 +2,6 @@
 // import styled from 'styled-components';
 import { AddressDisplay, ParSm, ProfileAvatar } from '@daohaus/ui';
 import { useCurrentDao, useProfile } from '@daohaus/moloch-v3-hooks';
-import { TARGET_DAO } from '../targetDao';
  
  
 export const AuthorAvatar = (

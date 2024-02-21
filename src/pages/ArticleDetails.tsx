@@ -1,7 +1,6 @@
 import ReactMarkdown from "react-markdown";
 import styled from "styled-components";
 
-import { TARGET_DAO } from "../targetDao";
 import { Link, useParams } from "react-router-dom";
 import {
   Avatar,
@@ -38,11 +37,13 @@ import { Comments } from "./Comments";
 
 type BlogPost = {
   title: string;
-  description: string;
+  content: string;
   contentURI: string;
   imageURI: string;
   authorAddress: string;
   contentHash: string;
+  parentId: string;
+  id: string;
 };
 
 const ArticleLayout = styled.div`
@@ -184,7 +185,7 @@ export const ArticleDetails = () => {
         <AuthorAvatar address={ZERO_ADDRESS} />
       )}
 
-      <ReactMarkdown>{parsedContent?.description}</ReactMarkdown>
+      <ReactMarkdown>{parsedContent?.content}</ReactMarkdown>
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="outline">Collect</Button>
@@ -203,10 +204,10 @@ export const ArticleDetails = () => {
             ) : (
               <>
                 <Card>
-                  <SmallCardImg
+                  {/* <SmallCardImg
                     src={
                       parsedContent?.imageURI
-                    } />
+                    } /> */}
                   <ParMd>{parsedContent?.title}</ParMd>
                 </Card>
                 <ParMd>Mint and collect this article</ParMd>

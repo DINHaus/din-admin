@@ -2,16 +2,16 @@ import { CustomFieldLego } from "./legoConfig";
 
 export const APP_FIELD: Record<string, CustomFieldLego> = {
   TITLE_FIELD:  {
-    id: "pubTitle",
+    id: "title",
     type: "input",
-    placeholder: "pubtitle",
-    label: "Publication Title",
+    placeholder: "title",
+    label: "Title",
   },
-  DESC_FIELD: {
-    id: "pubDescription",
+  CONTENT_FIELD: {
+    id: "content",
     type: "textarea",
-    placeholder: "pubDescription",
-    label: "Publication Description",
+    placeholder: "content",
+    label: "Content",
   },
   AMOUNT_FIELD:  {
     id: "amount",
@@ -45,8 +45,12 @@ export const APP_FIELD: Record<string, CustomFieldLego> = {
     id: 'contentHash',
     type: 'contentHash',
   },
-  COMMENTID_FIELD: {
-    id: 'commentId',
-    type: 'commentId',
+  COMMENTPARENTID_FIELD: {
+    id: 'commentParentId',
+    type: 'commentParentId',
+  },
+  CREATEDAT_FIELD: {
+    id: 'createdAt',
+    type: 'createdAt',
   },
 };

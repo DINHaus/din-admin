@@ -33,6 +33,8 @@ type Record = {
     imageURIType: string;
     contentHash: string;
     hash: string;
+    id: string;
+    parentId: string;
   };
 };
 
@@ -63,14 +65,24 @@ const fetchRecords = async ({
       paging: { pageSize, offset },
     });
 
-    console.log('items', recordType, data.items);
-    console.log('hash', hash);
+    // console.log('>>>>>>>>>>>items', recordType, data.items);
+    // console.log('>>>>>>>>>>>.hash', hash);
 
-    if (hash) {
+    if (hash && recordType === "DIN") {
       return data.items.filter(
-        (item) => (item as Record)?.parsedContent?.contentHash === hash || (item as Record)?.parsedContent?.hash === hash 
+        (item) => {
+          return (item as Record)?.parsedContent?.id === hash
+        }
+
+      );
+    } else if (hash && recordType === "DINComments") {
+      return data.items.filter(
+        (item) => {
+          return (item as Record)?.parsedContent?.parentId === hash
+        }
       );
     }
+
 
     return data.items;
   } catch (error) {

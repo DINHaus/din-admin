@@ -1,48 +1,28 @@
 import ReactMarkdown from "react-markdown";
 import styled from "styled-components";
 
-import { TARGET_DAO } from "../targetDao";
 import { useParams } from "react-router-dom";
 import {
-    Avatar,
-    Button,
     Card,
-    Dialog,
-    DialogContent,
-    DialogTrigger,
     H1,
     ParLg,
-    ParMd,
     SingleColumnLayout,
-    Spinner,
-    SuccessText,
     useToast,
 } from "@daohaus/ui";
 import { useDHConnect } from "@daohaus/connect";
-import { useTxBuilder } from "@daohaus/tx-builder";
-import {
-    TXLego,
-    handleErrorMessage,
-    formatValueTo,
-    fromWei,
-    ZERO_ADDRESS,
-    EthAddress,
-} from "@daohaus/utils";
 
-import { APP_TX } from "../legos/tx";
+
 import { useState } from "react";
 import { useCurrentDao, useDaoData, useDaoMember } from "@daohaus/moloch-v3-hooks";
 import { useRecords } from "../hooks/useRecords";
-import { AuthorAvatar } from "../components/AuthorAvatar";
-import { useShamanNFT } from "../hooks/useShamanNFT";
-import { CollectedBy } from "../components/CollectedBy";
+
 import { FormBuilder } from "@daohaus/form-builder";
 import { APP_FORM } from "../legos/forms";
 import { AppFieldLookup } from "../legos/legoConfig";
 
 type BlogPost = {
     title: string;
-    description: string;
+    content: string;
     contentURI: string;
     imageURI: string;
     authorAddress: string;
@@ -113,7 +93,6 @@ export const Comments = () => {
         daoId: daoId,
         memberAddress: address,
       });
-      console.log("member >>", member);
     const { records } = useRecords({
         daoId: daoId,
         chainId: daoChain,
@@ -127,6 +106,8 @@ export const Comments = () => {
         recordType: "DINComment",
         hash,
     });
+    console.log("comments >>>>>>>>>>>>>/////>>>>>>>>", comments);
+
 
     if (!records || !comments) {
         return <div>Loading...</div>;
@@ -156,7 +137,7 @@ export const Comments = () => {
                 const parsedComment: BlogPost = comment.parsedContent as BlogPost;
                 return (
                     <Card key={key}>
-                        <ReactMarkdown>{parsedComment.description}</ReactMarkdown>
+                        <ReactMarkdown>{parsedComment.content}</ReactMarkdown>
                     </Card>
                 );
             })
