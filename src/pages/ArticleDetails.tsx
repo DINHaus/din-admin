@@ -167,14 +167,14 @@ export const ArticleDetails = () => {
 
   return (
     <ArticleLayout>
-      <HeaderImageWrapper>
+      {/* <HeaderImageWrapper>
         <HeaderImage
           src={
             parsedContent?.imageURI ||
             "https://hackmd.io/_uploads/rkWi13-ba.png"
           }
         />
-      </HeaderImageWrapper>
+      </HeaderImageWrapper> */}
       <TitleWrapper>
         <H1>{parsedContent?.title}</H1>
       </TitleWrapper>
