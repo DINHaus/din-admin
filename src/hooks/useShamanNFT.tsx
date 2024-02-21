@@ -71,7 +71,7 @@ const fetchShaman = async ({
     return {
       shamanName: targetShamanName,
       sdata,
-      shamanAddress: nftcuratorShaman.shamanAddress,
+      shamanAddress: nftcuratorShaman.shamanAddress as EthAddress,
     };
   } else {
     throw new Error("Shaman not found");

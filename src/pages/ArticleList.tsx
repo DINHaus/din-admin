@@ -1,6 +1,6 @@
 import { useDHConnect } from "@daohaus/connect";
 
-import { ParMd, SingleColumnLayout } from "@daohaus/ui";
+import { ParMd, SingleColumnLayout, Tooltip } from "@daohaus/ui";
 
 import { Link } from "react-router-dom";
 import { useRecords } from "../hooks/useRecords";
@@ -11,6 +11,8 @@ import { ButtonRouterLink } from "../components/ButtonRouterLink";
 import { CollectButton } from "../components/CollectButton";
 import { ArticleCard, ArticleLinks, ButtonList, CardAvatar, CardDescription, CardTitle, CardTitleWrapper, CardWrapper, StyledLink } from "../utils/listStyles";
 import { BlogPost } from "../utils/types";
+import { CollectedBy } from "../components/CollectedBy";
+import { Comments } from "./Comments";
 
 
 
@@ -28,7 +30,7 @@ export const ArticleList = () => {
     recordType: "DIN",
   });
 
-  console.log("records >>", records);
+  // console.log("records >>", records);
 
   return (
     <SingleColumnLayout>
@@ -78,14 +80,15 @@ export const ArticleList = () => {
                 )}
               </CardAvatar>
               <CardTitleWrapper>
-                <CardTitle>{parsedContent?.title}</CardTitle>
-                <CollectButton hash={parsedContent?.id} link={true} />
+                <Link to={`${parsedContent?.id}/comments`}><CardTitle>{parsedContent?.title}</CardTitle></Link> 
+                <Tooltip key={parsedContent?.id} content={`updoot & collect`} triggerEl={(<CollectButton hash={parsedContent?.id} link={true} />)} />
               </CardTitleWrapper>
               <CardDescription>{parsedContent?.content}</CardDescription>
               <ParMd>{parsedContent?.contentURI}</ParMd>
               <ArticleLinks>
                 <StyledLink to={parsedContent?.id}> detail</StyledLink>
-                <StyledLink to={`${parsedContent?.id}/comments`}> comments (69)</StyledLink>
+                <StyledLink to={`${parsedContent?.id}/comments`}> comments <Comments hash={parsedContent?.id} badge /> </StyledLink>
+                <StyledLink to={``}> created at: {new Date(Number(parsedContent.createdAt) * 1000).toString()} </StyledLink>
 
               </ArticleLinks>
 

@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import { ParMd, ProfileAvatar, Tooltip } from '@daohaus/ui';
 import {  useShamanTokenId } from '../hooks/useShamanTokenId';
 import { EthAddress, truncateAddress } from '@daohaus/utils';
-import { useCurrentDao } from '@daohaus/moloch-v3-hooks';
+import { useCurrentDao, useDaoData } from '@daohaus/moloch-v3-hooks';
+import { useShamanNFT } from '../hooks/useShamanNFT';
 
 
 const AvatarGroup = styled.div`
@@ -16,23 +17,34 @@ const AvatarGroup = styled.div`
 `;
 
 export const CollectedBy = ({
-    shamanAddress,
-    hash
+    hash,
+    badge
 
 }: {
-    shamanAddress: EthAddress,
     hash: string
+    badge?: boolean
 }) => {
     const {daoChain} = useCurrentDao();
+    const { dao } = useDaoData();
+
+    const { shamanName, shamanAddress, sdata, isLoading: isShamanLoading } = useShamanNFT({ dao: dao, chainId: daoChain });
+
+    if (!shamanAddress) {
+        return null;
+    }
     
 
     const {parentId, childs} = useShamanTokenId({shamanAddress, hash, chainId: daoChain});
-    console.log("things", parentId, childs);
+    // console.log("things", parentId, childs);
+
+    if(badge) {
+        return `(${childs && Array.isArray(childs) && childs.length})`
+    }
 
 return (
     <AvatarGroup>
         <>
-        <ParMd>{`id:${parentId} Collected By:`}</ParMd>
+        {childs && Array.isArray(childs) && childs.length > 0 ? (<ParMd>{`id:${parentId} (${childs.length}) Collected By:`}</ParMd>) : (<ParMd>{`Not collected yet`}</ParMd>)}
 
         {childs && Array.isArray(childs) && childs.length > 0 && childs.map((child, key) => {
                 return (

@@ -75,7 +75,7 @@ const fetchRecords = async ({
         }
 
       );
-    } else if (hash && recordType === "DINComments") {
+    } else if (hash && recordType === "DINComment") {
       return data.items.filter(
         (item) => {
           return (item as Record)?.parsedContent?.parentId === hash

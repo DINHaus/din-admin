@@ -91,7 +91,7 @@ export const ArticleDetails = () => {
   const { dao } = useDaoData();
 
 
-  if (!daoId || !daoChain) {
+  if (!daoId || !daoChain || !hash) {
     return null;
   }
   const { shamanName, shamanAddress, sdata, isLoading: isShamanLoading } = useShamanNFT({ dao: dao, chainId: daoChain });
@@ -126,6 +126,8 @@ export const ArticleDetails = () => {
       </HeaderImageWrapper> */}
       <TitleWrapper>
         <H1>{parsedContent?.title}</H1>
+        <StyledLink to={``}> created at: {new Date(Number(parsedContent.createdAt) * 1000).toString()} </StyledLink>
+
       </TitleWrapper>
 
       {parsedContent?.authorAddress ? (
@@ -135,11 +137,11 @@ export const ArticleDetails = () => {
       )}
 
       <ReactMarkdown>{parsedContent?.content}</ReactMarkdown>
-      {shamanAddress && hash && <CollectedBy shamanAddress={shamanAddress as EthAddress} hash={hash} />}
+      {shamanAddress && hash && <CollectedBy hash={hash} />}
       <ArticleLinks>
         {sdata?._price.result && sdata?._authorFee.result && hash && <CollectButton hash={hash} link={false} />}
         <Button variant="outline">
-          <StyledLink to={"comments"}> Comments</StyledLink>
+          <StyledLink to={"comments"}> Comments <Comments badge hash={hash} /></StyledLink>
         </Button>
       </ArticleLinks>
     </ArticleLayout>

@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 import { useParams } from "react-router-dom";
 import {
-    Card,
     H1,
     ParLg,
     SingleColumnLayout,
@@ -67,18 +66,21 @@ const SmallCardImg = styled.img`
     margin-bottom: 2rem;
     `;
 
-export const Comments = () => {
+export const Comments = ({ hash, badge }: { hash?: string, badge?: boolean }) => {
     //   const location = useLocation(); // for share link
     const [isLoadingTx, setIsLoadingTx] = useState(false);
     const [isSuccessTx, setIsSuccessTx] = useState(false);
 
-    const { hash } = useParams();
+    const { hash: hashParam } = useParams();
     const { address } = useDHConnect();
     const { daoChain, daoId } = useCurrentDao();
     const { dao } = useDaoData();
 
-
     const { successToast, errorToast, defaultToast } = useToast();
+
+    if (!hash) {
+        hash = hashParam;
+    }
 
     if (!daoId || !daoChain) {
         return null;
@@ -101,7 +103,6 @@ export const Comments = () => {
         recordType: "DINComment",
         hash,
     });
-    console.log("comments >>>>>>>>>>>>>/////>>>>>>>>", comments);
 
 
     if (!records || !comments) {
@@ -113,6 +114,10 @@ export const Comments = () => {
     const onFormComplete = () => {
         refetchComments?.();
     };
+
+    if (badge) {
+        return `(${comments.length})`
+    }
 
 
     return (
@@ -129,6 +134,9 @@ export const Comments = () => {
 
 
             <CardWrapper>
+                {comments.length === 0 && (
+                    <ArticleCard><ParLg>No comments yet. You can be the first.</ParLg></ArticleCard>
+                )}
                 {comments.map((comment, key) => {
                     const parsedComment: BlogPost = comment.parsedContent as BlogPost;
                     return (

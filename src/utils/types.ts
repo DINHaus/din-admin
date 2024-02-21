@@ -7,4 +7,5 @@ export type BlogPost = {
     contentHash: string;
     parentId: string;
     id: string;
+    createdAt: string;
   };

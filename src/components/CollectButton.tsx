@@ -10,6 +10,7 @@ import { useCurrentDao, useDaoData } from "@daohaus/moloch-v3-hooks";
 import { useRecords } from "../hooks/useRecords";
 import { IoMdArrowDropupCircle } from "react-icons/io";
 import { BlogPost } from "../utils/types";
+import { CollectedBy } from "./CollectedBy";
 
 const DialogContentWrapper = styled.div`
   display: flex;
@@ -95,7 +96,7 @@ export const CollectButton = ({ hash, link }: { hash: string, link: boolean }) =
                 {!link ? (
                     <Button variant="outline">Collect</Button>
                 ) : (
-                    <Button variant="link" size="sm"><IoMdArrowDropupCircle />(42)</Button>
+                    <Button variant="link" size="sm"><IoMdArrowDropupCircle /><CollectedBy hash={hash} badge /></Button>
                     )}
                 
             </DialogTrigger>
