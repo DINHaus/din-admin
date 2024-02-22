@@ -19,6 +19,7 @@ import { SortDropdown } from "./SortDropdown";
 import { sortOptions } from "../../utils/hub";
 import { useDHConnect } from "@daohaus/connect";
 import { getNetworkName } from "@daohaus/keychain-utils";
+import { DEFAULT_NETWORK_ID } from "../../utils/constants";
 
 type ListActionsProps = {
   children: ReactNode;
@@ -87,7 +88,7 @@ export const ListActions = ({
           noun={noun}
           full={isMobile}
         />
-        <ParLg>DIN DAOs {getNetworkName(chainId)}</ParLg>
+        <ParLg>DIN TOPICS {getNetworkName(chainId || DEFAULT_NETWORK_ID) }</ParLg>
         <SortDropdown
           id="dao-sort"
           value={sortBy}

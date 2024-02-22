@@ -10,12 +10,12 @@ import {
   useDebounce,
   widthQuery,
 } from "@daohaus/ui";
-import { ValidNetwork } from "@daohaus/keychain-utils";
+import { VALID_NETWORKS, ValidNetwork } from "@daohaus/keychain-utils";
 import { useDHConnect } from "@daohaus/connect";
 import { DEFAULT_SORT_KEY, SORT_FIELDS } from "../../utils/hub";
 import { ListActions } from "./ListActions";
 import { DaoList } from "./DaoList";
-import { NFT_DAO_REFERRER } from "../../utils/constants";
+import { DEFAULT_NETWORK_ID, NFT_DAO_REFERRER } from "../../utils/constants";
 
 export enum ListType {
   Cards,
@@ -64,8 +64,8 @@ export const HomeDashboard = () => {
         setLoading(false);
       }
     };
-    if (!chainId) return;
-    getDaos(chainId);
+    // if (!chainId) return;
+    getDaos(chainId || DEFAULT_NETWORK_ID);
     return () => {
       shouldUpdate = false;
     };

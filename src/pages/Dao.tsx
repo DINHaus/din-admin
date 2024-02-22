@@ -53,9 +53,6 @@ export function Dao() {
           </ButtonRouterLink>
 
         </ButtonList>)}
-      {dao && daoChain && (
-        <ShamanInfo dao={dao} daoChain={daoChain} />
-      )}
       {daoId && daoChain && (<Card
         title={dao?.name}
       >
@@ -65,6 +62,9 @@ export function Dao() {
       </Card>)}
 
       {daoId && daoChain && <DaoOverview daoChain={daoChain} daoId={daoId} />}
+      {dao && daoChain && (
+        <ShamanInfo dao={dao} daoChain={daoChain} />
+      )}
     </SingleColumnLayout>
   );
 }

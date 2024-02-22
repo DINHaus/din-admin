@@ -5,5 +5,6 @@ import { HomeNotConnected } from "../components/hub/HomeNotConnected";
 export const Home = () => {
   const { isConnected, address } = useDHConnect();
 
-  return address && isConnected ? <HomeDashboard /> : <HomeNotConnected />;
+  // return address && isConnected ? <HomeDashboard /> : <HomeNotConnected />;
+  return <HomeDashboard />;
 };

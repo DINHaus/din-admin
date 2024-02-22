@@ -159,7 +159,7 @@ export const Comments = ({ hash, badge }: { hash?: string, badge?: boolean }) =>
                 })
                 }
             </CardWrapper>
-            {member && Number(member?.loot) > 0 ? (
+            {member && Number(member?.sharesLootDelegateShares) > 0 ? (
                 <FormBuilder form={APP_FORM.NEW_COMMENT} customFields={AppFieldLookup} lifeCycleFns={{
                     onPollSuccess: () => {
                         onFormComplete();

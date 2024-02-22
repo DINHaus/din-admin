@@ -1,7 +1,7 @@
 import { BsArrowLeft, BsShareFill } from "react-icons/bs";
 import styled from "styled-components";
 
-import { useCurrentDao, useDaoMember } from "@daohaus/moloch-v3-hooks";
+import { useCurrentDao, useDaoData, useDaoMember } from "@daohaus/moloch-v3-hooks";
 import { MemberProfileCard } from "@daohaus/moloch-v3-macro-ui";
 import {
   Button,
@@ -13,6 +13,10 @@ import {
   widthQuery,
 } from "@daohaus/ui";
 import { ButtonRouterLink } from "../components/ButtonRouterLink";
+import { useShamanNFT } from "../hooks/useShamanNFT";
+import { useShamanNFTbyMember } from "../hooks/useShamanNFTbyMember";
+import { EthAddress } from "@daohaus/utils";
+import { MemberNFts } from "../components/MemberNFts";
 
 const ButtonsContainer = styled.div`
   display: flex;
@@ -39,8 +43,10 @@ const StyledArrowLeft = styled(BsArrowLeft)`
 export const Member = () => {
   const { isFetched, isFetching, member } = useDaoMember();
   const { daoChain, daoId } = useCurrentDao();
+  const { dao } = useDaoData()
   const { successToast } = useToast();
   const isMobile = useBreakpoint(widthQuery.sm);
+
 
   const handleOnClick = () => {
     navigator.clipboard.writeText(`${window.location.href}`);
@@ -49,12 +55,14 @@ export const Member = () => {
     });
   };
 
-  if (!daoChain || !daoId) return <ParLg>DAO Not Found</ParLg>;
+  if (!daoChain || !daoId || !dao) return <ParLg>DAO Not Found</ParLg>;
 
   return (
     <SingleColumnLayout title="Member Profile">
       {!member && isFetching && <Loading size={12} />}
       {!member && isFetched && <ParLg>Member Not Found</ParLg>}
+
+
       {member && (
         <>
           <ButtonsContainer>
@@ -76,6 +84,7 @@ export const Member = () => {
               SHARE PROFILE
             </Button>
           </ButtonsContainer>
+
           <MemberProfileCard
             daoChain={daoChain}
             daoId={daoId}
@@ -83,6 +92,8 @@ export const Member = () => {
             allowLinks={true}
             allowMemberMenu={true}
           />
+          <MemberNFts memberAddress={member.memberAddress as EthAddress} dao={dao} daoChain={daoChain} />
+
         </>
       )}
     </SingleColumnLayout>

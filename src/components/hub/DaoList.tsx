@@ -13,8 +13,9 @@ export const DaoList = ({ daoData }: { daoData: ListDaosQueryResDaos }) => {
 
 const CardListBox = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  column-gap: 4rem;
+  width: 100%;
+  flex-direction: column;
+  column-gap: 1rem;
   row-gap: 2rem;
   justify-content: center;
   @media (min-width: ${breakpoints.xs}) {

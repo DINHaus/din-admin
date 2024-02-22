@@ -87,21 +87,23 @@ const Dao = ({
   const navLinks = useMemo(() => {
     let baseLinks = [
       { label: "Hub", href: `/` },
-      { label: "DAO", href: `/${routePath}` },
       { label: "Articles", href: `/${routePath}/articles` },
+      { label: "Curators", href: `/${routePath}` },
+      { label: "Collectors", href: `/${routePath}/polls` },
+
       // { label: "Safes", href: `/${routePath}/safes` },
       // { label: "Proposals", href: `/${routePath}/proposals` },
       // { label: "Members", href: `/${routePath}/members` },
       // { label: "Settings", href: `/${routePath}/settings` },
     ];
-    return baseLinks;
+    // return baseLinks;
 
-    // return address
-    //   ? [
-    //       ...baseLinks,
-    //       { label: "Profile", href: `/${routePath}/member/${address}` },
-    //     ]
-    //   : baseLinks;
+    return address
+      ? [
+          ...baseLinks,
+          { label: "Profile", href: `/${routePath}/member/${address}` },
+        ]
+      : baseLinks;
   }, [daoChain, daoId, address]);
 
   if (!dao) return null;
