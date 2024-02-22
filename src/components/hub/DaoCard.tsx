@@ -108,7 +108,7 @@ export const DaoCard = ({
           </div>
         </div>
         <StyledLink to={`/molochv3/${chainIdLocal}/${id}/articles`}><ParLg className="dao-title">
-          {name ? charLimit(name, 21) : charLimit(id, 21)}{" "}
+          {name ? charLimit(name, 31) : charLimit(id, 31)}{" "}
         </ParLg></StyledLink>
         <div className="stats-box">
           {activeMemberCount && (
