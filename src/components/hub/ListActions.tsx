@@ -19,7 +19,7 @@ import { SortDropdown } from "./SortDropdown";
 import { sortOptions } from "../../utils/hub";
 import { useDHConnect } from "@daohaus/connect";
 import { getNetworkName } from "@daohaus/keychain-utils";
-import { DEFAULT_NETWORK_ID } from "../../utils/constants";
+import { DEFAULT_NETWORK_ID, SUMMONER_URL } from "../../utils/constants";
 
 type ListActionsProps = {
   children: ReactNode;
@@ -95,6 +95,7 @@ export const ListActions = ({
           onChange={switchSortBy}
           options={sortOptions}
         />
+        <a href={SUMMONER_URL} target="_blank"><Button>New Topic</Button></a>
       </ControlBarBox>
       {children}
     </SingleColumnLayout>
