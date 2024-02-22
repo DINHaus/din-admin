@@ -80,6 +80,7 @@ export const ListActions = ({
 
   return (
     <SingleColumnLayout>
+      {chainId != DEFAULT_NETWORK_ID && <ParLg>**Only Sepolia currently supported**</ParLg>}
       <ControlBarBox>
         <SearchInput
           searchTerm={searchTerm}

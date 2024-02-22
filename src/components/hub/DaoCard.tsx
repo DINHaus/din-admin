@@ -85,6 +85,7 @@ export const DaoCard = ({
 }: ListDaosQueryResDaos[0]) => {
   const { chainId } = useDHConnect();
   const chainIdLocal = chainId || DEFAULT_NETWORK_ID;
+
   return (
     <StyledDaoCard className="dao-card">
       <div className="top-row">
@@ -118,8 +119,8 @@ export const DaoCard = ({
               {parseInt(
                 readableNumbers.toNumber({ value: (Number(activeMemberCount) - 1).toString() })
               ) === 1
-                ? "Member"
-                : "Members"}
+                ? "Curator"
+                : "Curators"}
             </ParMd>
           )}
           {proposalCount && (
