@@ -84,6 +84,7 @@ export const DaoCard = ({
   tags,
 }: ListDaosQueryResDaos[0]) => {
   const { chainId } = useDHConnect();
+  const chainIdLocal = chainId || DEFAULT_NETWORK_ID;
   return (
     <StyledDaoCard className="dao-card">
       <div className="top-row">
@@ -105,7 +106,7 @@ export const DaoCard = ({
             )}
           </div>
         </div>
-        <StyledLink to={`/molochv3/${chainId}/${id}/articles`}><ParLg className="dao-title">
+        <StyledLink to={`/molochv3/${chainIdLocal}/${id}/articles`}><ParLg className="dao-title">
           {name ? charLimit(name, 21) : charLimit(id, 21)}{" "}
         </ParLg></StyledLink>
         <div className="stats-box">
@@ -141,7 +142,7 @@ export const DaoCard = ({
         </div>)}
 
         {/* <div className="tag-box">
-          <Tag tagColor="red">{getNetworkName(chainId || DEFAULT_NETWORK_ID)}</Tag>
+          <Tag tagColor="red">{getNetworkName(chainIdLocal || DEFAULT_NETWORK_ID)}</Tag>
         </div> */}
       </div>
       {description && (<div className="description-box">
@@ -150,19 +151,19 @@ export const DaoCard = ({
       <div className="button-box">
       <ButtonRouterLink
           color="secondary"
-          to={`/molochv3/${chainId}/${id}/articles`}
+          to={`/molochv3/${chainIdLocal}/${id}/articles`}
         >
           Articles
         </ButtonRouterLink>
         <ButtonRouterLink
           color="secondary"
-          to={`/molochv3/${chainId}/${id}/articles`}
+          to={`/molochv3/${chainIdLocal}/${id}`}
         >
           Currator Dashboard
         </ButtonRouterLink>
         <ButtonRouterLink
           color="secondary"
-          to={`/molochv3/${chainId}/${id}/articles`}
+          to={`/molochv3/${chainIdLocal}/${id}/polls`}
         >
           Collector Dashboard
         </ButtonRouterLink>

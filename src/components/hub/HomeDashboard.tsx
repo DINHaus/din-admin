@@ -87,17 +87,18 @@ export const HomeDashboard = () => {
     },
   };
 
-  if (!daoData.length) {
-    return (
-      <ListActions {...tableControlProps}>
-        <NoDaosFound />
-      </ListActions>
-    );
-  }
+
   if (loading) {
     return (
       <ListActions {...tableControlProps}>
         <LoadingContainer isMobile={isMobile} />
+      </ListActions>
+    );
+  }
+  if (!daoData.length) {
+    return (
+      <ListActions {...tableControlProps}>
+        <NoDaosFound />
       </ListActions>
     );
   }

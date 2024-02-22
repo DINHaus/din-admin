@@ -56,10 +56,10 @@ export const ArticleList = () => {
 
       </ButtonList>
       <CardWrapper>
-        {records?.map((record) => {
+        {records?.map((record, key) => {
           const parsedContent: BlogPost = record.parsedContent as BlogPost;
           return (
-            <ArticleCard key={record.id}>
+            <ArticleCard key={key}>
               {/* <CardImg>
                 <Link to={parsedContent?.id}>
                   <img
