@@ -81,6 +81,12 @@ const SmallCardImg = styled.img`
     margin-bottom: 2rem;
     `;
 
+const ReactMarkdownWrapper = styled.div`
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    `;
+
 export const ArticleDetails = () => {
   //   const location = useLocation(); // for share link
 
@@ -136,7 +142,7 @@ export const ArticleDetails = () => {
         <AuthorAvatar address={ZERO_ADDRESS} />
       )}
 
-      <ReactMarkdown>{parsedContent?.content}</ReactMarkdown>
+      <ReactMarkdownWrapper><ReactMarkdown>{parsedContent?.content}</ReactMarkdown></ReactMarkdownWrapper>
       {shamanAddress && hash && <CollectedBy hash={hash} />}
       <ArticleLinks>
         {sdata?._price.result && sdata?._authorFee.result && hash && <CollectButton hash={hash} link={false} />}

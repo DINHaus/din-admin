@@ -66,6 +66,12 @@ const SmallCardImg = styled.img`
     margin-bottom: 2rem;
     `;
 
+const ReactMarkdownWrapper = styled.div`
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    `;
+
 export const Comments = ({ hash, badge }: { hash?: string, badge?: boolean }) => {
     //   const location = useLocation(); // for share link
     const [isLoadingTx, setIsLoadingTx] = useState(false);
@@ -128,8 +134,10 @@ export const Comments = ({ hash, badge }: { hash?: string, badge?: boolean }) =>
             <TitleWrapper>
                 <H1>{parsedContent.title}</H1>
             </TitleWrapper>
-            <ReactMarkdown>{parsedContent.content}</ReactMarkdown>
 
+            <ReactMarkdownWrapper>
+            <ReactMarkdown>{parsedContent.content}</ReactMarkdown>
+            </ReactMarkdownWrapper>
 
 
 
