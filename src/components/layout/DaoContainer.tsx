@@ -40,14 +40,13 @@ const DaoWrapper = ({
 }) => {
 
 
-  const { publicClient, address } = useDHConnect();
+  const { publicClient, address, chainId } = useDHConnect();
 
   const { shamanName, shamanAddress, sdata, isLoading: isShamanLoading } = useShamanNFT({ dao: dao, chainId: daoChain });
 
   if (isShamanLoading) {
     return <div>Loading...</div>;
   }
-
   return (
 
         <TXBuilder
@@ -55,7 +54,7 @@ const DaoWrapper = ({
           chainId={daoChain}
           daoId={dao?.id}
           safeId={dao?.safeAddress}
-          appState={{ dao, memberAddress: memberAddress || address, shamanData: {shamanName, shamanAddress, sdata} }}
+          appState={{ dao, memberAddress: memberAddress || address, shamanData: {shamanName, shamanAddress, sdata}, chainId: chainId }}
         >
           <Outlet />
         </TXBuilder>

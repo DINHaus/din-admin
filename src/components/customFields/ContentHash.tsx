@@ -11,7 +11,6 @@ export const ContentHashField = (props: Buildable<object>) => {
   const { address } = useDHConnect();
 
 
-  console.log("getting hash");
   const [title, content, link, createdAt] = watch([
     "title",
     "content",

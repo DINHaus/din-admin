@@ -43,6 +43,7 @@ export const APP_TX = {
             id: '.formValues.contentHash',
             author: '.memberAddress',
             createdAt: '.formValues.createdAt',
+            chainId: ".chainId"
           },
         },
         { type: 'static', value: POSTER_TAGS.daoDatabaseSharesOrLoot },
@@ -82,6 +83,7 @@ export const APP_TX = {
               id: ".formValues.contentHash",
               authorAddress: ".memberAddress",
               createdAt: '.formValues.createdAt',
+              chainId: `.chainId`
               
             },
           },

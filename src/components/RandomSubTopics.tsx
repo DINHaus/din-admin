@@ -68,7 +68,6 @@ export const RandomSubTopic = ({daoChain}: {daoChain: ValidNetwork}) => {
 
 
               });
-              console.log("ran>>>>>>.", res);
             setRec1(res.items[ Math.floor(Math.random() * (res.items?.length || 0))]);
             setLoading(false);
         }
@@ -81,7 +80,6 @@ export const RandomSubTopic = ({daoChain}: {daoChain: ValidNetwork}) => {
         return <div>Loading...</div>;
     }
 
-    console.log("rec1", rec1);
     return (
         <SingleColumnLayout>
             <ParSm>Random Sub Topic Article Highlight</ParSm>
