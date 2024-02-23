@@ -22,6 +22,8 @@ export const ArticleListItem = ({parsedContent}:{parsedContent: BlogPost}) => {
     return <ParMd>Invalid Metadata Format</ParMd>
   }
 
+  console.log(parsedContent)
+
   return (
     <ArticleCard>
               {/* <CardImg>

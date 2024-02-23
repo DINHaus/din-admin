@@ -1,8 +1,10 @@
 // ExampleComponent.tsx
 // import styled from 'styled-components';
 import { AddressDisplay, ParSm, ProfileAvatar } from '@daohaus/ui';
-import { useCurrentDao, useProfile } from '@daohaus/moloch-v3-hooks';
+import { useProfile } from '@daohaus/moloch-v3-hooks';
 import styled from 'styled-components';
+import { ValidNetwork } from '@daohaus/keychain-utils';
+import { DEFAULT_NETWORK_ID } from '../utils/constants';
  
  
 const AuthorDetails = styled.div`
@@ -12,22 +14,18 @@ const AuthorDetails = styled.div`
   margin-bottom: 1rem;
 `;
 export const AuthorAvatar = (
-    { address }: { address: string }
+    { address, daoChain }: { address: string, daoChain?: ValidNetwork }
 ) => {
     const { profile } = useProfile({
         address
       });
-      const { daoChain} = useCurrentDao();
 
-      if (!daoChain) {
-        return null;
-      }
     // console.log("profile >>", profile);
   return (
     <AuthorDetails>
       <ProfileAvatar size='sm' address={address} />
       {profile?.ens && (<ParSm>{profile.ens}</ParSm>)}
-      <AddressDisplay truncate explorerNetworkId={daoChain} address={address} />
+      <AddressDisplay truncate explorerNetworkId={daoChain || DEFAULT_NETWORK_ID} address={address} />
     </AuthorDetails>
   );
 };
