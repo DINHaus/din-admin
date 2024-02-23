@@ -149,6 +149,12 @@ export const ArticleDetails = () => {
         <Button variant="outline">
           <StyledLink to={"comments"}> Comments <Comments badge hash={hash} /></StyledLink>
         </Button>
+        <Button variant="outline">
+          <StyledLink to={""}> Export <Comments badge hash={hash} /></StyledLink>
+        </Button>
+        <Button variant="outline">
+          <StyledLink to={""}> Share <Comments badge hash={hash} /></StyledLink>
+        </Button>
       </ArticleLinks>
     </ArticleLayout>
   );

@@ -13,6 +13,7 @@ import { ArticleCard, ArticleLinks, ButtonList, CardAvatar, CardDescription, Car
 import { BlogPost } from "../utils/types";
 import { CollectedBy } from "../components/CollectedBy";
 import { Comments } from "./Comments";
+import { ArticleListItem } from "./ArticleListItem";
 
 
 
@@ -59,41 +60,7 @@ export const ArticleList = () => {
         {records?.map((record, key) => {
           const parsedContent: BlogPost = record.parsedContent as BlogPost;
           return (
-            <ArticleCard key={key}>
-              {/* <CardImg>
-                <Link to={parsedContent?.id}>
-                  <img
-                    src={
-                      parsedContent?.imageURI ||
-                      "https://hackmd.io/_uploads/rkWi13-ba.png"
-                    }
-                  />
-                </Link>
-              </CardImg> */}
-              <CardAvatar>
-
-
-                {parsedContent?.authorAddress ? (
-                  <AuthorAvatar address={parsedContent?.authorAddress} />
-                ) : (
-                  <AuthorAvatar address={ZERO_ADDRESS} />
-                )}
-              </CardAvatar>
-              <CardTitleWrapper>
-                <Link to={`${parsedContent?.id}/comments`}><CardTitle>{parsedContent?.title}</CardTitle></Link> 
-                <Tooltip key={parsedContent?.id} content={`updoot & collect`} triggerEl={(<CollectButton hash={parsedContent?.id} link={true} />)} />
-              </CardTitleWrapper>
-              <CardDescription>{parsedContent?.content}</CardDescription>
-              <ParMd>{parsedContent?.contentURI}</ParMd>
-              <ArticleLinks>
-                <StyledLink to={parsedContent?.id}> detail</StyledLink>
-                <StyledLink to={`${parsedContent?.id}/comments`}> comments <Comments hash={parsedContent?.id} badge /> </StyledLink>
-                <StyledLink to={``}> created at: {new Date(Number(parsedContent.createdAt) * 1000).toString()} </StyledLink>
-
-              </ArticleLinks>
-
-
-            </ArticleCard>
+            <ArticleListItem parsedContent={parsedContent} key={key} />
           );
         })}
       </CardWrapper>

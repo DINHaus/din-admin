@@ -4,8 +4,10 @@ import styled from "styled-components";
 import { handleErrorMessage } from "@daohaus/utils";
 import { listDaos, ListDaosQueryResDaos } from "@daohaus/moloch-v3-data";
 import {
+  Card,
   H2,
   Loading,
+  SingleColumnLayout,
   useBreakpoint,
   useDebounce,
   widthQuery,
@@ -16,6 +18,7 @@ import { DEFAULT_SORT_KEY, SORT_FIELDS } from "../../utils/hub";
 import { ListActions } from "./ListActions";
 import { DaoList } from "./DaoList";
 import { DEFAULT_NETWORK_ID, NFT_DAO_REFERRER } from "../../utils/constants";
+import { RandomSubTopic } from "../RandomSubTopics";
 
 export enum ListType {
   Cards,
@@ -103,9 +106,12 @@ export const HomeDashboard = () => {
     );
   }
   return (
+    <SingleColumnLayout>
+    <RandomSubTopic daoChain={chainId || DEFAULT_NETWORK_ID} />
     <ListActions {...tableControlProps}>
       <DaoList daoData={daoData} />
     </ListActions>
+    </SingleColumnLayout>
   );
 };
 

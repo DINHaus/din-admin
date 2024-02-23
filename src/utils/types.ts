@@ -1,4 +1,5 @@
 export type BlogPost = {
+    daoId: string;
     title: string;
     content: string;
     contentURI: string;
