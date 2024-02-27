@@ -12,7 +12,7 @@ export const APP_FORM: Record<string, CustomFormLego> = {
     description: "If accepted it will be ratify Smith on-chain, and you will become a curator of the Topic DAO.",
     requiredFields: { pubTitle: true, content: true },
     log: true,
-    tx: APP_TX.MINT_POST as TXLego,
+    tx: APP_TX.NEW_SUBTOPIC as TXLego,
     fields: [
       // APP_FIELD.IMAGE_FIELD,
       APP_FIELD.TITLE_FIELD,

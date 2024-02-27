@@ -59,7 +59,7 @@ type NewProposalListProps = {
 
 const ProposalList = ({ proposals }: { proposals: CustomFormLego[] }) => {
   const { daoChain, daoId } = useCurrentDao();
-
+  console.log("proposals", proposals)
   return (
     <div>
       {proposals.map((proposalLego: CustomFormLego) => (

@@ -14,6 +14,7 @@ import {
   BASIC_PROPOSAL_FORMS_APP,
   ADVANCED_PROPOSAL_FORMS_APP,
 } from "../legos/legoConfig";
+import { CUSTOM_APP_PROPOSAL_TYPE_LABELS } from "../utils/ProposalData";
 
 export const Proposals = () => {
   const basicProposals = prepareProposals(BASIC_PROPOSAL_FORMS_APP);
@@ -24,6 +25,7 @@ export const Proposals = () => {
       <ProposalList
         header="Proposals"
         allowLinks={true}
+        customProposalTypeLabels={CUSTOM_APP_PROPOSAL_TYPE_LABELS}
         rightActionEl={
           <Dialog>
             <DialogTrigger asChild>

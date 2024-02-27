@@ -2,20 +2,8 @@ import { buildMultiCallTX } from "@daohaus/tx-builder";
 import { DOMAIN_CONTRACT } from "./contract";
 import { CONTRACT } from "@daohaus/moloch-v3-legos";
 import { POSTER_TAGS } from "@daohaus/utils";
+import { PROPOSAL_TYPE_IDS } from "../utils/ProposalData";
 
-export enum ProposalTypeIds {
-    Signal = "SIGNAL",
-    IssueSharesLoot = "ISSUE",
-    AddShaman = "ADD_SHAMAN",
-    TransferErc20 = "TRANSFER_ERC20",
-    TransferNetworkToken = "TRANSFER_NETWORK_TOKEN",
-    UpdateGovSettings = "UPDATE_GOV_SETTINGS",
-    UpdateTokenSettings = "TOKEN_SETTINGS",
-    TokensForShares = "TOKENS_FOR_SHARES",
-    GuildKick = "GUILDKICK",
-    WalletConnect = "WALLETCONNECT",
-    Topic = "TOPIC",
-  }
 
 export const APP_TX = {
     COLLECT: {
@@ -49,8 +37,8 @@ export const APP_TX = {
         { type: 'static', value: POSTER_TAGS.daoDatabaseSharesOrLoot },
       ],
     },
-    MINT_POST: buildMultiCallTX({
-        id: "MINT_PROPOSAL",
+    NEW_SUBTOPIC: buildMultiCallTX({
+        id: "NEW_SUBTOPIC",
     JSONDetails: {
       type: "JSONDetails",
       jsonSchema: {
@@ -58,7 +46,7 @@ export const APP_TX = {
         description: `.formValues.content`,
         contentURI: `.formValues.link`,
         contentURIType: { type: "static", value: "url" },
-        proposalType: { type: "static", value: ProposalTypeIds.Topic },
+        proposalType: { type: "static", value: PROPOSAL_TYPE_IDS.SubTopic },
       },
     },
     actions: [{

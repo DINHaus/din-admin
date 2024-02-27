@@ -19,7 +19,6 @@ export type CustomFieldLego = FieldLegoBase<typeof AppFieldLookup>;
 export type CustomFormLego = FormLegoBase<typeof AppFieldLookup>;
 
 export const BASIC_PROPOSAL_FORMS_APP = {
-  TEST_FORM: APP_FORM.TEST_FORM,
   SIGNAL: PROPOSAL_FORMS.SIGNAL,
   ISSUE: PROPOSAL_FORMS.ISSUE,
   TOKENS_FOR_SHARES: PROPOSAL_FORMS.TOKENS_FOR_SHARES,
