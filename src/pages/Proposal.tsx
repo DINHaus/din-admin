@@ -12,6 +12,8 @@ import {
   PROPOSAL_TYPE_LABELS,
   TXLego,
 } from "@daohaus/utils";
+import { CUSTOM_APP_PROPOSAL_TYPE_LABELS } from "../utils/ProposalData";
+
 
 const LoadingContainer = styled.div`
   margin-top: 5rem;
@@ -69,7 +71,7 @@ export const Proposal = () => {
       title={proposal?.title}
       subtitle={`${proposal?.proposalId} | ${getProposalTypeLabel(
         proposal?.proposalType,
-        PROPOSAL_TYPE_LABELS
+        {...PROPOSAL_TYPE_LABELS, ...CUSTOM_APP_PROPOSAL_TYPE_LABELS}
       )}`}
       left={
         <OverviewCard>
