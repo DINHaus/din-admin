@@ -6,13 +6,15 @@ import { APP_FORM } from "./forms";
 import { ContentHashField } from "../components/customFields/ContentHash";
 import { CommentParentIdField } from "../components/customFields/CommentParentID";
 import { CreatedAtField } from "../components/customFields/CreatedAt";
+import { TagCheckList } from "../components/customFields/TagCheckList";
 
 export const AppFieldLookup = {
   ...MolochFields,
   markdownField: MarkdownField,
   contentHash: ContentHashField,
   commentParentId: CommentParentIdField,
-  createdAt: CreatedAtField
+  createdAt: CreatedAtField,
+  tagCheckList: TagCheckList
 };
 
 export type CustomFieldLego = FieldLegoBase<typeof AppFieldLookup>;

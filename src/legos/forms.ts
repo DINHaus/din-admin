@@ -18,6 +18,7 @@ export const APP_FORM: Record<string, CustomFormLego> = {
       APP_FIELD.TITLE_FIELD,
       {...APP_FIELD.CONTENT_FIELD, type: "markdownField"},
       APP_FIELD.LINK_FIELD,
+      APP_FIELD.TAG_CHECK_LIST,
       APP_FIELD.CONTENTHASH_FIELD,
       APP_FIELD.CREATEDAT_FIELD,
       FIELD.PROP_OFFERING

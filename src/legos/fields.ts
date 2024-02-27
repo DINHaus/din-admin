@@ -53,4 +53,8 @@ export const APP_FIELD: Record<string, CustomFieldLego> = {
     id: 'createdAt',
     type: 'createdAt',
   },
+  TAG_CHECK_LIST: {
+    id: "tagCheckList",
+    type: "tagCheckList"
+  }
 };
