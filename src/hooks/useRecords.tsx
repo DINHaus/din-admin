@@ -49,7 +49,7 @@ const fetchRecords = async ({
   offset,
   graphApiKeys,
 }: {
-  daoId: string;
+  daoId?: string;
   chainId: ValidNetwork;
   recordType: string;
   hash?: string;
@@ -58,12 +58,23 @@ const fetchRecords = async ({
   graphApiKeys: Keychain;
 }) => {
   try {
-    const data = await listRecords({
-      networkId: chainId,
-      graphApiKeys: graphApiKeys,
-      filter: { dao: daoId, table: recordType },
-      paging: { pageSize, offset },
-    });
+    let data;
+    if (!daoId) {
+      data = await listRecords({
+        networkId: chainId,
+        graphApiKeys: graphApiKeys,
+        filter: { table: recordType },
+        paging: { pageSize, offset },
+      });
+    } else {
+      data = await listRecords({
+        networkId: chainId,
+        graphApiKeys: graphApiKeys,
+        filter: { dao: daoId, table: recordType },
+        paging: { pageSize, offset },
+      });
+    }
+
 
     // console.log('>>>>>>>>>>>items', recordType, data.items);
     // console.log('>>>>>>>>>>>.hash', hash);
@@ -81,7 +92,15 @@ const fetchRecords = async ({
           return (item as Record)?.parsedContent?.parentId === hash
         }
       );
+    } else if (recordType === "DINComment") {
+
+      return data.items.filter(
+        (item) => {
+          return (item as Record)?.parsedContent.description !== ""
+        }
+      );
     }
+
 
 
     return data.items;
@@ -102,7 +121,7 @@ export const useRecords = ({
   offset = 0,
   graphApiKeys = defaultGraphApiKeys,
 }: {
-  daoId: string;
+  daoId?: string;
   chainId: ValidNetwork;
   recordType: string;
   hash?: string;
@@ -111,7 +130,7 @@ export const useRecords = ({
   graphApiKeys?: Keychain;
 }) => {
   const { data, error, ...rest } = useQuery(
-    [`${daoId}_${recordType}_${hash || ""}`, { daoId, chainId }],
+    [`${daoId || 'all'}_${recordType}_${hash || ""}`, { daoId, chainId }],
     () =>
       fetchRecords({
         daoId,
@@ -122,7 +141,7 @@ export const useRecords = ({
         offset,
         graphApiKeys,
       }),
-    { enabled: !!daoId && !!chainId }
+    { enabled: !!chainId }
   );
 
   return { records: data, error: error as Error | null, ...rest };

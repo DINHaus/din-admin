@@ -73,54 +73,22 @@ const ReactMarkdownWrapper = styled.div`
     font-size: 1.5rem;
     `;
 
-export const Comments = ({ hash, badge }: { hash?: string, badge?: boolean }) => {
+export const AllComments = ({ hash, badge }: { hash?: string, badge?: boolean }) => {
     //   const location = useLocation(); // for share link
-    const [isLoadingTx, setIsLoadingTx] = useState(false);
-    const [isSuccessTx, setIsSuccessTx] = useState(false);
 
-    const { hash: hashParam } = useParams();
-    const { address } = useDHConnect();
-    const { daoChain, daoId } = useCurrentDao();
-    const { dao } = useDaoData();
+    const { address, chainId } = useDHConnect();
 
-    const { successToast, errorToast, defaultToast } = useToast();
-
-    if (!hash) {
-        hash = hashParam;
-    }
-
-    if (!daoId || !daoChain) {
-        return null;
-    }
-    const { member } = useDaoMember({
-        daoChain: daoChain,
-        daoId: daoId,
-        memberAddress: address,
-    });
-    const { records } = useRecords({
-        daoId: daoId,
-        chainId: daoChain,
-        recordType: "DIN",
-        hash,
-    });
 
     const { records: comments, refetch: refetchComments } = useRecords({
-        daoId: daoId,
-        chainId: daoChain,
+        // daoId: daoId,
+        chainId: chainId || "0xaa36a7", // Assign a default value to chainId
         recordType: "DINComment",
         hash,
     });
 
-
-    if (!records || !comments) {
-        return <div>Loading...</div>;
+    if (!comments) {
+        return <div>Loading Comments on {chainId}...</div>;
     }
-
-    const parsedContent: BlogPost = records[0]?.parsedContent as BlogPost;
-
-    const onFormComplete = () => {
-        refetchComments?.();
-    };
 
     if (badge) {
         return `(${comments.length})`
@@ -129,8 +97,8 @@ export const Comments = ({ hash, badge }: { hash?: string, badge?: boolean }) =>
 
     return (
         <SingleColumnLayout
-            title={parsedContent.title}
-            subtitle={"Collectors can post comments here."}
+            title={"All Comments"}
+            subtitle={"Collectors can post comments on posts."}
             description={`Comments (${comments.length})`}
         >
 
@@ -150,9 +118,9 @@ export const Comments = ({ hash, badge }: { hash?: string, badge?: boolean }) =>
                             )}
                             <ReactMarkdown>{parsedComment.content}</ReactMarkdown>
                             <ArticleLinks>
-                                <StyledLink to={`/molochv3/${daoChain}/${daoId}/articles/${parsedComment.parentId}`}> OP detail
+                                <StyledLink to={`/molochv3/${chainId}/${parsedComment.daoId}/articles/${parsedComment.parentId}`}> OP detail
                                 </StyledLink>
-                                <StyledLink to={`/molochv3/${daoChain}/${daoId}/articles/${parsedComment.parentId}`}>
+                                <StyledLink to={`/molochv3/${chainId}/${parsedComment.daoId}/articles/${parsedComment.parentId}`}>
                                     created at: {new Date(Number(parsedComment.createdAt) * 1000).toString()}
                                 </StyledLink>
 
@@ -163,15 +131,6 @@ export const Comments = ({ hash, badge }: { hash?: string, badge?: boolean }) =>
                 })
                 }
             </CardWrapper>
-            {member && Number(member?.sharesLootDelegateShares) > 0 ? (
-                <FormBuilder form={APP_FORM.NEW_COMMENT} customFields={AppFieldLookup} lifeCycleFns={{
-                    onPollSuccess: () => {
-                        onFormComplete();
-                    },
-                }} />
-            ) : (
-                <ParLg>Only Collectors can comment</ParLg>
-            )}
 
         </SingleColumnLayout>
 

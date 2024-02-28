@@ -85,7 +85,7 @@ const Dao = ({
 
   const navLinks = useMemo(() => {
     let baseLinks = [
-      { label: "Topics", href: `/` },
+      { label: "Topics  ↩", href: `/` },
       { label: "Articles", href: `/${routePath}/articles` },
       { label: "Curators", href: `/${routePath}` },
       { label: "Collectors", href: `/${routePath}/polls` },

@@ -94,7 +94,7 @@ export const CollectButton = ({ hash, link }: { hash: string, link: boolean }) =
         <Dialog>
             <DialogTrigger asChild>
                 {!link ? (
-                    <Button variant="outline">Collect</Button>
+                    <Button variant="outline" size="sm">Collect</Button>
                 ) : (
                     <Button variant="link" size="sm"><IoMdArrowDropupCircle /><CollectedBy hash={hash} badge /></Button>
                     )}

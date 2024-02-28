@@ -9,7 +9,10 @@ export const HomeContainer = () => {
     <DHLayout
       leftNav={<H4>Decentralized Information Network</H4>}
       pathname={location.pathname}
-      navLinks={[]}
+      navLinks={[
+        { label: "Topics", href: `/` },
+        { label: "Comments", href: `/comments` },
+      ]}
       footer={<Footer />}
     >
       <Outlet />

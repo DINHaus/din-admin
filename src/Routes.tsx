@@ -29,6 +29,7 @@ import { ArticleDetails } from "./pages/ArticleDetails";
 import { SubmitForm } from "./pages/SubmitForm";
 import { Comments } from "./pages/Comments";
 import { SigSesh } from "./pages/SigSesh";
+import { AllComments } from "./pages/AllComments";
 
 export const Routes = ({
   setDaoChainId,
@@ -54,6 +55,7 @@ export const Routes = ({
     <Router>
       <Route path="/" element={<HomeContainer />}>
         <Route path="/" element={<Home />} />
+        <Route path="/comments" element={<AllComments />} />
       </Route>
       <Route path={MULTI_DAO_ROUTER} element={<DaoContainer />}>
         <Route index element={<Dao />} />
