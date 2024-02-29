@@ -16,8 +16,8 @@ export const APP_FORM: Record<string, CustomFormLego> = {
     fields: [
       // APP_FIELD.IMAGE_FIELD,
       APP_FIELD.TITLE_FIELD,
-      {...APP_FIELD.CONTENT_FIELD, type: "markdownField"},
       APP_FIELD.LINK_FIELD,
+      {...APP_FIELD.CONTENT_FIELD, type: "mdxEditor"},
       APP_FIELD.CONTENTHASH_FIELD,
       APP_FIELD.CREATEDAT_FIELD,
       FIELD.PROP_OFFERING
@@ -32,7 +32,7 @@ export const APP_FORM: Record<string, CustomFormLego> = {
     log: true,
     tx: APP_TX.COMMENT as TXLego,
     fields: [
-      {...APP_FIELD.CONTENT_FIELD, type: "markdownField", label: "Comment"},
+      {...APP_FIELD.CONTENT_FIELD, type: "mdxEditor", label: "Comment"},
       APP_FIELD.COMMENTPARENTID_FIELD,
       APP_FIELD.CREATEDAT_FIELD,
       APP_FIELD.CONTENTHASH_FIELD,
