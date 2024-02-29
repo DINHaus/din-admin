@@ -29,7 +29,7 @@ export const APP_TX = {
             content: '.formValues.content',
             parentId: '.formValues.commentParentId',
             id: '.formValues.contentHash',
-            author: '.memberAddress',
+            authorAddress: '.memberAddress',
             createdAt: '.formValues.createdAt',
             chainId: ".chainId"
           },

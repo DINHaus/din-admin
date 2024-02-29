@@ -108,11 +108,15 @@ export const AllComments = ({ hash, badge }: { hash?: string, badge?: boolean })
                 )}
                 {comments.map((comment, key) => {
                     const parsedComment: BlogPost = comment.parsedContent as BlogPost;
+                    if(!parsedComment.parentId){
+                        return null;
+                    }
+
                     return (
 
                         <ArticleCard key={key}>
-                            {parsedComment?.authorAddress ? (
-                                <AuthorAvatar address={parsedComment?.authorAddress} />
+                            {parsedComment?.authorAddress || parsedComment?.author ? (
+                                <AuthorAvatar address={parsedComment?.authorAddress || parsedComment?.author} />
                             ) : (
                                 <AuthorAvatar address={ZERO_ADDRESS} />
                             )}

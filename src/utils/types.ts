@@ -5,6 +5,7 @@ export type BlogPost = {
     contentURI: string;
     imageURI: string;
     authorAddress: string;
+    author: string; // remove
     contentHash: string;
     parentId: string;
     id: string;

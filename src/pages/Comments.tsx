@@ -143,8 +143,8 @@ export const Comments = ({ hash, badge }: { hash?: string, badge?: boolean }) =>
                     return (
 
                         <ArticleCard key={key}>
-                            {parsedComment?.authorAddress ? (
-                                <AuthorAvatar address={parsedComment?.authorAddress} />
+                            {parsedComment?.authorAddress || parsedComment?.author ? (
+                                <AuthorAvatar address={parsedComment?.authorAddress || parsedComment?.author} />
                             ) : (
                                 <AuthorAvatar address={ZERO_ADDRESS} />
                             )}
