@@ -39,7 +39,7 @@ export const APP_FORM: Record<string, CustomFormLego> = {
     ],
   },
   PROMOTE_DRAFT: {
-    id: "NEW_COMMENT",
+    id: "PROMOTE_DRAFT",
     title: "Draft Form",
     subtitle: "drafts",
     description: "Create and edit local drafts.",
