@@ -37,6 +37,28 @@ export const APP_TX = {
         { type: 'static', value: POSTER_TAGS.daoDatabaseSharesOrLoot },
       ],
     },
+    STAGE_ARTICLE: {
+      id: "STAGE_ARTICLE",
+      contract: CONTRACT.POSTER,
+      method: 'post',
+      args: [
+        {
+          type: 'JSONDetails',
+          jsonSchema: {
+            daoId: ".dao.id",
+            table: { type: 'static', value: 'DINComment' }, // DINMeta or DUCE
+            queryType: { type: 'static', value: 'list' },
+            content: '.formValues.content', // contentProtocol: // ipfs, arweave, s3, native (poster.sol), etc // CID, link, etc // linked content
+            parentId: '.formValues.commentParentId', // always 0?
+            id: '.formValues.contentHash',
+            authorAddress: '.memberAddress',
+            createdAt: '.formValues.createdAt',
+            chainId: ".chainId"
+          },
+        },
+        { type: 'static', value: POSTER_TAGS.daoDatabaseSharesOrLoot },
+      ],
+    },
     NEW_SUBTOPIC: buildMultiCallTX({
         id: "NEW_SUBTOPIC",
     JSONDetails: {

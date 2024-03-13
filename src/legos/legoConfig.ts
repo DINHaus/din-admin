@@ -7,6 +7,7 @@ import { ContentHashField } from "../components/customFields/ContentHash";
 import { CommentParentIdField } from "../components/customFields/CommentParentID";
 import { CreatedAtField } from "../components/customFields/CreatedAt";
 import { MDXEditorField } from "../components/customFields/MDXEditorField";
+import { SaveAsDraftField } from "../components/customFields/SaveAsDraft";
 
 export const AppFieldLookup = {
   ...MolochFields,
@@ -14,7 +15,8 @@ export const AppFieldLookup = {
   contentHash: ContentHashField,
   commentParentId: CommentParentIdField,
   createdAt: CreatedAtField,
-  mdxEditor: MDXEditorField
+  mdxEditor: MDXEditorField,
+  saveAsDraft: SaveAsDraftField
 };
 
 export type CustomFieldLego = FieldLegoBase<typeof AppFieldLookup>;

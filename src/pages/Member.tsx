@@ -17,6 +17,7 @@ import { useShamanNFT } from "../hooks/useShamanNFT";
 import { useShamanNFTbyMember } from "../hooks/useShamanNFTbyMember";
 import { EthAddress } from "@daohaus/utils";
 import { MemberNFts } from "../components/MemberNFts";
+import { LocalDrafts } from "../components/LocalDrafts";
 
 const ButtonsContainer = styled.div`
   display: flex;
@@ -92,6 +93,7 @@ export const Member = () => {
             allowLinks={true}
             allowMemberMenu={true}
           />
+          <LocalDrafts memberAddress={member.memberAddress as EthAddress} dao={dao} daoChain={daoChain} />
           <MemberNFts memberAddress={member.memberAddress as EthAddress} dao={dao} daoChain={daoChain} />
 
         </>

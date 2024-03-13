@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
     Buildable,
 
@@ -8,7 +8,7 @@ import {
 import { useFormContext } from 'react-hook-form';
 
 import { MDXEditor, headingsPlugin, UndoRedo, BoldItalicUnderlineToggles, 
-    toolbarPlugin, BlockTypeSelect, quotePlugin, listsPlugin, ListsToggle } from '@mdxeditor/editor'
+    toolbarPlugin, BlockTypeSelect, quotePlugin, listsPlugin, ListsToggle, MDXEditorMethods } from '@mdxeditor/editor'
 import '@mdxeditor/editor/style.css'
 import styled from 'styled-components';
 
@@ -22,16 +22,29 @@ const MarkDownContainer = styled.div`
 `;
 
 export const MDXEditorField = (props: Buildable<Field>) => {
-    const { setValue } = useFormContext();
+    const { setValue, watch } = useFormContext();
+    const [content, createdAt] = watch([props.id, "createdAt"]);
+    const ref = useRef<MDXEditorMethods>(null)
 
     const handleOnChange = (value: string) => {
         setValue(props.id, value);
     }
 
+    useEffect(() => {
+        const drafts = localStorage.getItem("drafts") || "{}" as string;
+        const parsedDrafts = JSON.parse(drafts);
+
+        if (parsedDrafts[createdAt]) {
+            ref.current?.setMarkdown(parsedDrafts[createdAt]?.content || "")
+            setValue(props.id, parsedDrafts[createdAt]?.content);
+
+        }
+
+      }, [createdAt, ref]);
 
     return (
         <MarkDownContainer>
-            <MDXEditor className="dark-theme dark-editor" markdown="# Hello world" plugins={[listsPlugin(), quotePlugin(), headingsPlugin(), toolbarPlugin({
+            <MDXEditor ref={ref} className="dark-theme dark-editor" markdown={""} plugins={[listsPlugin(), quotePlugin(), headingsPlugin(), toolbarPlugin({
                 toolbarContents: () => (
                     <>
                         {' '}

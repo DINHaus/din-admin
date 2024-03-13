@@ -87,6 +87,7 @@ const Dao = ({
     let baseLinks = [
       { label: "Topics  ↩", href: `/` },
       { label: "Articles", href: `/${routePath}/articles` },
+      { label: "Comments", href: `/${routePath}/comments` },
       { label: "Curators", href: `/${routePath}` },
       { label: "Collectors", href: `/${routePath}/polls` },
 
