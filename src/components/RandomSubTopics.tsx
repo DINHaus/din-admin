@@ -9,7 +9,7 @@ import { useDinDAOs } from '../hooks/useDinDaos';
 import { useRecords } from '../hooks/useRecords';
 import { DEFAULT_NETWORK_ID, NFT_DAO_REFERRER } from '../utils/constants';
 import { handleErrorMessage } from '@daohaus/utils';
-import { ArticleListItem } from '../pages/ArticleListItem';
+import { ArticleListItem } from './ArticleListItem';
 
 
 export const RandomSubTopic = ({daoChain}: {daoChain: ValidNetwork}) => {

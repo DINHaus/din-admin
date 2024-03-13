@@ -17,14 +17,10 @@ export const CommentParentIdField = (props: Buildable<object>) => {
 
   useEffect(() => {
 
-    if (!hash) {
-      return;
-    }
-
     setErrorText(null);
     setValue(
       props.id,
-      hash
+      hash || ""
     );
   }, [hash]);
 

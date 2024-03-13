@@ -7,7 +7,7 @@ import { SingleColumnLayout } from "@daohaus/ui";
 import { APP_FORM } from "../legos/forms";
 import { AppFieldLookup } from "../legos/legoConfig";
 
-export const SubmitForm = () => {
+export const PromoteDraftForm = () => {
   const { publicClient, address } = useDHConnect();
   console.log("address", address);
   console.log("publicClient", publicClient);
@@ -16,10 +16,7 @@ export const SubmitForm = () => {
     <SingleColumnLayout>
 
 
-      {/* <FormBuilder form={APP_FORM.NEW_POST} customFields={AppFieldLookup} /> */}
-      <FormBuilder form={APP_FORM.BROKER_CONTENT} customFields={AppFieldLookup} />
-
-      
+      <FormBuilder form={APP_FORM.PROMOTE_DRAFT} customFields={AppFieldLookup} />
     </SingleColumnLayout>
   );
 };

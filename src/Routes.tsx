@@ -30,6 +30,8 @@ import { SubmitForm } from "./pages/SubmitForm";
 import { Comments } from "./pages/Comments";
 import { SigSesh } from "./pages/SigSesh";
 import { AllComments } from "./pages/AllComments";
+import { StagingDAO } from "./pages/StagingDAO";
+import { PromoteDraftForm } from "./pages/PromoteDraftForm";
 
 export const Routes = ({
   setDaoChainId,
@@ -73,7 +75,10 @@ export const Routes = ({
         <Route path="articles" element={<ArticleList/>} />
         <Route path="articles/:hash" element={<ArticleDetails/>} />
         <Route path="articles/:hash/comments" element={<Comments/>} />
+        <Route path="comments" element={<StagingDAO/>} />
         <Route path="new" element={<SubmitForm/>} />
+        <Route path="edit/:createdAt" element={<PromoteDraftForm/>} />
+
         <Route path="*" element={<div>404</div>} />
       </Route>
     </Router>

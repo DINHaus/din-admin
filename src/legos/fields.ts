@@ -53,4 +53,8 @@ export const APP_FIELD: Record<string, CustomFieldLego> = {
     id: 'createdAt',
     type: 'createdAt',
   },
+  SAVEASDRAFT_FIELD: {
+    id: 'saveAsDraft',
+    type: 'saveAsDraft',
+  },
 };

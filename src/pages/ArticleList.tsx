@@ -13,7 +13,8 @@ import { ArticleCard, ArticleLinks, ButtonList, CardAvatar, CardDescription, Car
 import { BlogPost } from "../utils/types";
 import { CollectedBy } from "../components/CollectedBy";
 import { Comments } from "./Comments";
-import { ArticleListItem } from "./ArticleListItem";
+import { ArticleListItem } from "../components/ArticleListItem";
+import { NewDraftDialog } from "../components/NewDraftDialog";
 
 
 
@@ -38,22 +39,23 @@ export const ArticleList = () => {
       <ButtonList>
       <ButtonRouterLink
           color="secondary"
-          to={`/molochv3/${daoChain}/${daoId}/new`}
+          to={``}
         >
           Top
         </ButtonRouterLink>
         <ButtonRouterLink
           color="secondary"
-          to={`/molochv3/${daoChain}/${daoId}/new`}
+          to={``}
         >
           New
         </ButtonRouterLink>
-        <ButtonRouterLink
+        <NewDraftDialog />
+        {/* <ButtonRouterLink
           color="secondary"
           to={`/molochv3/${daoChain}/${daoId}/new`}
         >
-          Submit Article
-        </ButtonRouterLink>
+          Submit Article or comment
+        </ButtonRouterLink> */}
 
       </ButtonList>
       <CardWrapper>

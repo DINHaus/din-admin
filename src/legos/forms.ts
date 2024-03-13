@@ -20,7 +20,7 @@ export const APP_FORM: Record<string, CustomFormLego> = {
       {...APP_FIELD.CONTENT_FIELD, type: "mdxEditor"},
       APP_FIELD.CONTENTHASH_FIELD,
       APP_FIELD.CREATEDAT_FIELD,
-      FIELD.PROP_OFFERING
+      FIELD.PROP_OFFERING,
     ],
   },
   NEW_COMMENT: {
@@ -36,6 +36,38 @@ export const APP_FORM: Record<string, CustomFormLego> = {
       APP_FIELD.COMMENTPARENTID_FIELD,
       APP_FIELD.CREATEDAT_FIELD,
       APP_FIELD.CONTENTHASH_FIELD,
+    ],
+  },
+  PROMOTE_DRAFT: {
+    id: "PROMOTE_DRAFT",
+    title: "Draft Form",
+    subtitle: "drafts",
+    description: "Create and edit local drafts.",
+    requiredFields: { content: true },
+    submitButtonText: "Promote Draft",
+    log: true,
+    tx: APP_TX.COMMENT as TXLego,
+    fields: [
+      APP_FIELD.COMMENTPARENTID_FIELD,
+      APP_FIELD.TITLE_FIELD,
+      APP_FIELD.LINK_FIELD,
+      {...APP_FIELD.CONTENT_FIELD, type: "mdxEditor", label: "Comment"},
+      APP_FIELD.CREATEDAT_FIELD,
+      APP_FIELD.CONTENTHASH_FIELD,
+      APP_FIELD.SAVEASDRAFT_FIELD,
+    ],
+  },
+  BROKER_CONTENT: {
+    id: "ROKER_CONTENT",
+    title: "Coming soon...",
+    subtitle: "Enter the world of data daos",
+    description: "Submit a piece of content to be brokered by the DAO.",
+    requiredFields: { content: true },
+    submitButtonText: "Promote Draft",
+    log: true,
+    tx: APP_TX.COMMENT as TXLego,
+    fields: [
+      
     ],
   },
 };

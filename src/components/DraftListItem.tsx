@@ -3,22 +3,29 @@ import React from "react";
 import { useCurrentDao, useDaoData } from "@daohaus/moloch-v3-hooks";
 import { ParMd, Tooltip } from "@daohaus/ui";
 import { ArticleCard, ArticleLinks, CardAvatar, CardDescription, CardTitle, CardTitleWrapper, StyledLink } from "../utils/listStyles";
-import { AuthorAvatar } from "../components/AuthorAvatar";
+import { AuthorAvatar } from "./AuthorAvatar";
 import { Link } from "react-router-dom";
-import { CollectButton } from "../components/CollectButton";
-import { Comments } from "./Comments";
+import { CollectButton } from "./CollectButton";
+import { Comments } from "../pages/Comments";
 import { ZERO_ADDRESS } from "@daohaus/utils";
 import { BlogPost } from "../utils/types";
 import { DEFAULT_NETWORK_ID } from "../utils/constants";
+import { MolochV3Dao } from "@daohaus/moloch-v3-data";
 
 
-export const ArticleListItem = ({parsedContent}:{parsedContent: BlogPost}) => {
-
+export const DraftListItem = ({parsedContent, createdAt, dao, daoChain, memberAddress}:
+  {parsedContent: BlogPost, 
+    createdAt: string,
+    dao: MolochV3Dao,
+    daoChain: string,
+    memberAddress: string
+  }) => {
+console.log("p>>>>>>>>>>>> parsedContent", parsedContent)
   const getArticleUrl = (daoId: string, articleId: string, daoChain?: string) => {
     return `/molochv3/${daoChain || DEFAULT_NETWORK_ID}/${daoId}/articles/${articleId}`
   }
 
-  if(!parsedContent.id || !parsedContent.daoId || !parsedContent.content) {
+  if(!parsedContent.content) {
     return <ParMd>Invalid Metadata Format</ParMd>
   }
 
@@ -39,23 +46,19 @@ export const ArticleListItem = ({parsedContent}:{parsedContent: BlogPost}) => {
               <CardAvatar>
 
 
-                {parsedContent?.authorAddress ? (
-                  <AuthorAvatar address={parsedContent?.authorAddress} />
+                {memberAddress ? (
+                  <AuthorAvatar address={memberAddress} />
                 ) : (
                   <AuthorAvatar address={ZERO_ADDRESS} />
                 )}
               </CardAvatar>
               <CardTitleWrapper>
-                <Link to={`${getArticleUrl(parsedContent.daoId, parsedContent.id)}/comments`}><CardTitle>{parsedContent?.title}</CardTitle></Link> 
-                <Tooltip key={parsedContent?.id} content={`updoot & collect`} triggerEl={(<CollectButton hash={parsedContent?.id} link={true} />)} />
+                <Link to={`/molochv3/${daoChain}/${dao.id}/edit/${createdAt}`}><CardTitle>{parsedContent?.title}</CardTitle></Link> 
               </CardTitleWrapper>
               <CardDescription>{parsedContent?.content}</CardDescription>
               <ParMd>{parsedContent?.contentURI}</ParMd>
               <ArticleLinks>
-                <StyledLink to={getArticleUrl(parsedContent.daoId, parsedContent.id)}> detail</StyledLink>
-                <StyledLink to={`${getArticleUrl(parsedContent.daoId, parsedContent.id)}/comments`}> comments <Comments hash={parsedContent?.id} badge /> </StyledLink>
-                <StyledLink to={``}> created at: {new Date(Number(parsedContent.createdAt) * 1000).toString()} </StyledLink>
-
+                <StyledLink to={`/molochv3/${daoChain}/${dao.id}/edit/${createdAt}`}> created at: {new Date(Number(createdAt) * 1000).toString()} </StyledLink>
               </ArticleLinks>
 
 
