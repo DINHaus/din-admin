@@ -3,7 +3,7 @@ import React from 'react';
 
 import { useCurrentDao, useDaoData } from '@daohaus/moloch-v3-hooks';
 import { useShamanNFT } from '../hooks/useShamanNFT';
-import { Card, ParSm } from '@daohaus/ui';
+import { Button, Card, ParSm } from '@daohaus/ui';
 import { MolochV3Dao } from '@daohaus/moloch-v3-data';
 import { ValidNetwork } from '@daohaus/keychain-utils';
 import { EthAddress } from '@daohaus/utils';
@@ -23,6 +23,7 @@ export const LocalDrafts = ({ dao, daoChain, memberAddress }: { dao: MolochV3Dao
     return (
         <>
             <ParSm>Local Drafts:</ParSm>
+            <Button>Export</Button>
             <CardWrapper>
                 {Object.keys(parsedDrafts).map((key, index) => {
                     return (
