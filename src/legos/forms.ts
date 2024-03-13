@@ -57,4 +57,17 @@ export const APP_FORM: Record<string, CustomFormLego> = {
       APP_FIELD.SAVEASDRAFT_FIELD,
     ],
   },
+  BROKER_CONTENT: {
+    id: "ROKER_CONTENT",
+    title: "Coming soon...",
+    subtitle: "Enter the world of data daos",
+    description: "Submit a piece of content to be brokered by the DAO.",
+    requiredFields: { content: true },
+    submitButtonText: "Promote Draft",
+    log: true,
+    tx: APP_TX.COMMENT as TXLego,
+    fields: [
+      
+    ],
+  },
 };

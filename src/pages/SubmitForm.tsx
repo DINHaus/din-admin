@@ -16,7 +16,10 @@ export const SubmitForm = () => {
     <SingleColumnLayout>
 
 
-      <FormBuilder form={APP_FORM.NEW_POST} customFields={AppFieldLookup} />
+      {/* <FormBuilder form={APP_FORM.NEW_POST} customFields={AppFieldLookup} /> */}
+      <FormBuilder form={APP_FORM.BROKER_CONTENT} customFields={AppFieldLookup} />
+
+      
     </SingleColumnLayout>
   );
 };
