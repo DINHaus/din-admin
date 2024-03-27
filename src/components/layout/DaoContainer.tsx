@@ -4,7 +4,7 @@ import { Outlet, useLocation, useParams } from "react-router-dom";
 import { DHLayout, useDHConnect } from "@daohaus/connect";
 import { TXBuilder } from "@daohaus/tx-builder";
 import { ValidNetwork } from "@daohaus/keychain-utils";
-import { CurrentDaoProvider, useDaoData } from "@daohaus/moloch-v3-hooks";
+import { CurrentDaoProvider, useDaoData, useDaoMember } from "@daohaus/moloch-v3-hooks";
 import { HeaderAvatar } from "../HeaderAvatar";
 import { useShamanNFT } from "../../hooks/useShamanNFT";
 import { MolochV3Dao } from "@daohaus/moloch-v3-data";
@@ -49,15 +49,15 @@ const DaoWrapper = ({
   }
   return (
 
-        <TXBuilder
-          publicClient={publicClient}
-          chainId={daoChain}
-          daoId={dao?.id}
-          safeId={dao?.safeAddress}
-          appState={{ dao, memberAddress: memberAddress || address, shamanData: {shamanName, shamanAddress, sdata}, chainId: chainId }}
-        >
-          <Outlet />
-        </TXBuilder>
+    <TXBuilder
+      publicClient={publicClient}
+      chainId={daoChain}
+      daoId={dao?.id}
+      safeId={dao?.safeAddress}
+      appState={{ dao, memberAddress: memberAddress || address, shamanData: { shamanName, shamanAddress, sdata }, chainId: chainId }}
+    >
+      <Outlet />
+    </TXBuilder>
 
   );
 };
@@ -81,15 +81,27 @@ const Dao = ({
     daoChain: daoChain as string,
   });
 
+  const { member } = useDaoMember({
+    daoId: daoId as string,
+    daoChain: daoChain as ValidNetwork,
+    memberAddress: memberAddress || address,
+  });
+
   const routePath = `molochv3/${daoChain}/${daoId}`;
+  // const curratorLabel = member?.shares ? "Curators" : "Curators 🔒";
+  // const  collectorLabel = member?.loot ? "Collectors" : "Collectors 🔒";
+  const curratorLabel = "Curators";
+  const collectorLabel = "Collectors";
+
+
 
   const navLinks = useMemo(() => {
     let baseLinks = [
       { label: "Topics  ↩", href: `/` },
-      { label: "Articles", href: `/${routePath}/articles` },
-      { label: "Comments", href: `/${routePath}/comments` },
-      { label: "Curators", href: `/${routePath}` },
-      { label: "Collectors", href: `/${routePath}/polls` },
+      { label: "Feed", href: `/${routePath}/articles` },
+      // { label: "Comments", href: `/${routePath}/comments` },
+      { label: curratorLabel, href: `/${routePath}` },
+      { label: collectorLabel, href: `/${routePath}/polls` },
 
       // { label: "Safes", href: `/${routePath}/safes` },
       // { label: "Proposals", href: `/${routePath}/proposals` },
@@ -100,9 +112,9 @@ const Dao = ({
 
     return address
       ? [
-          ...baseLinks,
-          { label: "Profile", href: `/${routePath}/member/${address}` },
-        ]
+        ...baseLinks,
+        { label: "Profile", href: `/${routePath}/member/${address}` },
+      ]
       : baseLinks;
   }, [daoChain, daoId, address]);
 

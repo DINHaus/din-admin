@@ -32,6 +32,7 @@ import { SigSesh } from "./pages/SigSesh";
 import { AllComments } from "./pages/AllComments";
 import { StagingDAO } from "./pages/StagingDAO";
 import { PromoteDraftForm } from "./pages/PromoteDraftForm";
+import { FeedList } from "./pages/FeedList";
 
 export const Routes = ({
   setDaoChainId,
@@ -72,7 +73,7 @@ export const Routes = ({
         <Route path="members" element={<Members />} />
         <Route path="member/:memberAddress" element={<Member />} />
         <Route path="members/ragequit" element={<RageQuit />} />
-        <Route path="articles" element={<ArticleList/>} />
+        <Route path="articles" element={<FeedList/>} />
         <Route path="articles/:hash" element={<ArticleDetails/>} />
         <Route path="articles/:hash/comments" element={<Comments/>} />
         <Route path="comments" element={<StagingDAO/>} />

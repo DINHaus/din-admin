@@ -46,7 +46,9 @@ export const APP_FORM: Record<string, CustomFormLego> = {
     requiredFields: { content: true },
     submitButtonText: "Promote Draft",
     log: true,
-    tx: APP_TX.COMMENT as TXLego,
+    // tx: APP_TX.NEW_SUBTOPIC as TXLego,
+    tx: APP_TX.COMMENTNFT as TXLego,
+
     fields: [
       APP_FIELD.COMMENTPARENTID_FIELD,
       APP_FIELD.TITLE_FIELD,

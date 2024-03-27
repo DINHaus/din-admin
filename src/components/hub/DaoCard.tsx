@@ -154,7 +154,7 @@ export const DaoCard = ({
           color="secondary"
           to={`/molochv3/${chainIdLocal}/${id}/articles`}
         >
-          Articles
+          Feed
         </ButtonRouterLink>
         <ButtonRouterLink
           color="secondary"

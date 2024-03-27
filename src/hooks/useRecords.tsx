@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import { ValidNetwork, Keychain } from "@daohaus/keychain-utils";
 import { listRecords } from "@daohaus/moloch-v3-data";
 import { handleErrorMessage } from "@daohaus/utils";
+import { BlogPost } from "../utils/types";
 
 const defaultGraphApiKeys = {
   "0x1": import.meta.env.VITE_GRAPH_API_KEY_MAINNET,
@@ -76,10 +77,12 @@ const fetchRecords = async ({
     }
 
 
-    // console.log('>>>>>>>>>>>items', recordType, data.items);
-    // console.log('>>>>>>>>>>>.hash', hash);
+    for (let i = 0; i < data.items.length; i++) {
+      (data.items[i].parsedContent as BlogPost).tag = recordType;
+    }
 
     if (hash && recordType === "DIN") {
+      
       return data.items.filter(
         (item) => {
           return (item as Record)?.parsedContent?.id === hash

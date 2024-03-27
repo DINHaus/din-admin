@@ -37,6 +37,33 @@ export const APP_TX = {
         { type: 'static', value: POSTER_TAGS.daoDatabaseSharesOrLoot },
       ],
     },
+    COMMENTNFT: {
+      id: "COMMENTNFT",
+      contract: DOMAIN_CONTRACT.NEW_POST,
+      method: 'comment',
+      args: [
+        ".memberAddress",
+          ".formValues.contentHash",
+          {
+            type: "JSONDetails",
+            jsonSchema: {
+              daoId: ".dao.id",
+              table: { type: 'static', value: 'DINComment' },
+              queryType: { type: 'static', value: 'list' },
+              content: ".formValues.content",
+              contentURIType: { type: "static", value: "url" },
+              // imageURI: ".formValues.image",
+              // imageURIType: { type: "static", value: "url" },
+              parentId: { type: "static", value: "0" },
+              id: ".formValues.contentHash",
+              authorAddress: ".memberAddress",
+              createdAt: '.formValues.createdAt',
+              chainId: `.chainId`
+              
+            },
+          },
+      ],
+    },
     STAGE_ARTICLE: {
       id: "STAGE_ARTICLE",
       contract: CONTRACT.POSTER,

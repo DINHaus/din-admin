@@ -33,7 +33,6 @@ export const RandomSubTopic = ({daoChain}: {daoChain: ValidNetwork}) => {
               },
             });
             if (query.items && shouldUpdate) {
-              console.log("query.items", query.items);
               setDaos(query.items);
               setLoading(false);
             }

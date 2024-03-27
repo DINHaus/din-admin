@@ -37,7 +37,7 @@ export const NewDraftDialog = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <a><Button size="sm" variant="link" color="secondary">New Draft or Submit Content</Button></a>
+                <a><Button size="sm" variant="link" color="primary">Create Content</Button></a>
             </DialogTrigger>
             <DialogContent
                 title="New Draft or Submit Draft"
