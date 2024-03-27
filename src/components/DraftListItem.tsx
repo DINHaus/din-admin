@@ -20,7 +20,6 @@ export const DraftListItem = ({parsedContent, createdAt, dao, daoChain, memberAd
     daoChain: string,
     memberAddress: string
   }) => {
-console.log("p>>>>>>>>>>>> parsedContent", parsedContent)
   const getArticleUrl = (daoId: string, articleId: string, daoChain?: string) => {
     return `/molochv3/${daoChain || DEFAULT_NETWORK_ID}/${daoId}/articles/${articleId}`
   }
@@ -29,7 +28,6 @@ console.log("p>>>>>>>>>>>> parsedContent", parsedContent)
     return <ParMd>Invalid Metadata Format</ParMd>
   }
 
-  console.log(parsedContent)
 
   return (
     <ArticleCard>

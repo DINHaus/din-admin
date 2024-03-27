@@ -10,4 +10,6 @@ export type BlogPost = {
     parentId: string;
     id: string;
     createdAt: string;
+    daoChain?: string;
+    tag?: string;
   };

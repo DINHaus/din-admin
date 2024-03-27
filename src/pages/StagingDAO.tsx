@@ -106,7 +106,6 @@ export const StagingDAO = ({ badge }: { daoId?: string, badge?: boolean }) => {
         return <div>Loading Comments on {chainId}...</div>;
     }
 
-    console.log('>>>>>>>>>>>comments', dao);
 
     const fillteredComments = comments.filter((comment) => {
         return (comment.parsedContent as BlogPost)?.parentId === "";

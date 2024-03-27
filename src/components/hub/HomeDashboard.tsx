@@ -53,7 +53,6 @@ export const HomeDashboard = () => {
           },
         });
         if (query.items && shouldUpdate) {
-          console.log("query.items", query.items);
           setDaoData(query.items);
           setLoading(false);
         }
