@@ -11,11 +11,12 @@ export const SaveAsDraftField = (props: Buildable<object>) => {
     const { address } = useDHConnect();
 
 
-    const [title, content, link, createdAt] = watch([
+    const [title, content, link, createdAt, tags] = watch([
         "title",
         "content",
         "link",
-        "createdAt"
+        "createdAt",
+        "tags"
     ]);
 
 
@@ -42,10 +43,13 @@ export const SaveAsDraftField = (props: Buildable<object>) => {
             title,
             content,
             link,
+            tags
         };
         const newDrafts = {
             ...parsedDrafts
         };
+
+        console.log("saving draft", newDrafts);
 
         localStorage.setItem("drafts", JSON.stringify(newDrafts));
         setErrorText("Draft saved");

@@ -8,6 +8,7 @@ import { CommentParentIdField } from "../components/customFields/CommentParentID
 import { CreatedAtField } from "../components/customFields/CreatedAt";
 import { MDXEditorField } from "../components/customFields/MDXEditorField";
 import { SaveAsDraftField } from "../components/customFields/SaveAsDraft";
+import { MultiSelect } from "../components/customFields/MultiSelect";
 
 export const AppFieldLookup = {
   ...MolochFields,
@@ -16,7 +17,8 @@ export const AppFieldLookup = {
   commentParentId: CommentParentIdField,
   createdAt: CreatedAtField,
   mdxEditor: MDXEditorField,
-  saveAsDraft: SaveAsDraftField
+  saveAsDraft: SaveAsDraftField,
+  multiSelect: MultiSelect
 };
 
 export type CustomFieldLego = FieldLegoBase<typeof AppFieldLookup>;

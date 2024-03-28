@@ -31,7 +31,8 @@ export const APP_TX = {
             id: '.formValues.contentHash',
             authorAddress: '.memberAddress',
             createdAt: '.formValues.createdAt',
-            chainId: ".chainId"
+            chainId: ".chainId",
+            tags: '.formValues.tags',
           },
         },
         { type: 'static', value: POSTER_TAGS.daoDatabaseSharesOrLoot },
@@ -58,8 +59,8 @@ export const APP_TX = {
               id: ".formValues.contentHash",
               authorAddress: ".memberAddress",
               createdAt: '.formValues.createdAt',
-              chainId: `.chainId`
-              
+              chainId: `.chainId`,
+              tags: '.formValues.tags',    
             },
           },
       ],
@@ -80,7 +81,9 @@ export const APP_TX = {
             id: '.formValues.contentHash',
             authorAddress: '.memberAddress',
             createdAt: '.formValues.createdAt',
-            chainId: ".chainId"
+            chainId: ".chainId",
+            tags: '.formValues.tags',
+
           },
         },
         { type: 'static', value: POSTER_TAGS.daoDatabaseSharesOrLoot },
@@ -120,8 +123,9 @@ export const APP_TX = {
               id: ".formValues.contentHash",
               authorAddress: ".memberAddress",
               createdAt: '.formValues.createdAt',
-              chainId: `.chainId`
-              
+              chainId: `.chainId`,
+              tags: '.formValues.tags',
+         
             },
           },
         ],
