@@ -57,4 +57,8 @@ export const APP_FIELD: Record<string, CustomFieldLego> = {
     id: 'saveAsDraft',
     type: 'saveAsDraft',
   },
+  TAGS_MULTISELECT_FIELD: {
+    id: 'tags',
+    type: 'multiSelect',
+  },
 };
