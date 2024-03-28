@@ -32,7 +32,6 @@ export const APP_TX = {
             authorAddress: '.memberAddress',
             createdAt: '.formValues.createdAt',
             chainId: ".chainId",
-            tags: '.formValues.tags',
           },
         },
         { type: 'static', value: POSTER_TAGS.daoDatabaseSharesOrLoot },
