@@ -84,7 +84,7 @@ export const Comments = ({ hash, badge }: { hash?: string, badge?: boolean }) =>
     const { dao } = useDaoData();
 
     const { successToast, errorToast, defaultToast } = useToast();
-
+    console.log("hashParam", hashParam, hash)
     if (!hash) {
         hash = hashParam;
     }
@@ -97,26 +97,26 @@ export const Comments = ({ hash, badge }: { hash?: string, badge?: boolean }) =>
         daoId: daoId,
         memberAddress: address,
     });
-    const { records } = useRecords({
+    const { records: parent } = useRecords({
         daoId: daoId,
         chainId: daoChain,
-        recordType: "DIN",
-        hash,
+        recordType: "DINComment",
+        hash: hash,
     });
 
     const { records: comments, refetch: refetchComments } = useRecords({
         daoId: daoId,
         chainId: daoChain,
         recordType: "DINComment",
-        hash,
+        parentHash: hash,
     });
 
 
-    if (!records || !comments) {
+    if (!parent || !comments) {
         return <div>Loading...</div>;
     }
-
-    const parsedContent: BlogPost = records[0]?.parsedContent as BlogPost;
+    console.log("parent~~~~~~~~~~~~~~", parent)
+    const parsedContent: BlogPost = parent[0]?.parsedContent as BlogPost;
 
     const onFormComplete = () => {
         refetchComments?.();
@@ -129,7 +129,7 @@ export const Comments = ({ hash, badge }: { hash?: string, badge?: boolean }) =>
 
     return (
         <SingleColumnLayout
-            title={parsedContent.title}
+            title={parsedContent?.title || "no title"}
             subtitle={"Collectors can post comments here."}
             description={`Comments (${comments.length})`}
         >

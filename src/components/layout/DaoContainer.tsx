@@ -113,7 +113,7 @@ const Dao = ({
     return address
       ? [
         ...baseLinks,
-        { label: "Profile", href: `/${routePath}/member/${address}` },
+        { label: "My Profile", href: `/${routePath}/member/${address}` },
       ]
       : baseLinks;
   }, [daoChain, daoId, address]);

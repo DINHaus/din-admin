@@ -46,6 +46,7 @@ const fetchRecords = async ({
   chainId,
   recordType,
   hash,
+  parentHash,
   pageSize,
   offset,
   graphApiKeys,
@@ -54,12 +55,14 @@ const fetchRecords = async ({
   chainId: ValidNetwork;
   recordType: string;
   hash?: string;
+  parentHash?: string;
   pageSize: number;
   offset: number;
   graphApiKeys: Keychain;
 }) => {
   try {
     let data;
+    // get all comments if daoid is null
     if (!daoId) {
       data = await listRecords({
         networkId: chainId,
@@ -81,20 +84,35 @@ const fetchRecords = async ({
       (data.items[i].parsedContent as BlogPost).tag = recordType;
     }
 
+
     if (hash && recordType === "DIN") {
-      
-      return data.items.filter(
+      console.log("hash recordtype", hash, recordType);
+      const filteredData = data.items.filter(
         (item) => {
           return (item as Record)?.parsedContent?.id === hash
         }
 
       );
+      console.log("filteredData DIN", filteredData);
+      return filteredData;
     } else if (hash && recordType === "DINComment") {
-      return data.items.filter(
+
+      const filteredData = data.items.filter(
         (item) => {
-          return (item as Record)?.parsedContent?.parentId === hash
+          return (item as Record)?.parsedContent?.id === hash
         }
       );
+      console.log("filteredData", filteredData);
+      return filteredData;
+    } else if (parentHash && recordType === "DINComment") {
+
+      const filteredData = data.items.filter(
+        (item) => {
+          return (item as Record)?.parsedContent?.parentId === parentHash
+        }
+      );
+      console.log("filteredData", filteredData);
+      return filteredData;
     } else if (recordType === "DINComment") {
 
       return data.items.filter(
@@ -120,6 +138,7 @@ export const useRecords = ({
   chainId,
   recordType,
   hash,
+  parentHash,
   pageSize = 100,
   offset = 0,
   graphApiKeys = defaultGraphApiKeys,
@@ -128,18 +147,20 @@ export const useRecords = ({
   chainId: ValidNetwork;
   recordType: string;
   hash?: string;
+  parentHash?: string;
   pageSize?: number;
   offset?: number;
   graphApiKeys?: Keychain;
 }) => {
   const { data, error, ...rest } = useQuery(
-    [`${daoId || 'all'}_${recordType}_${hash || ""}`, { daoId, chainId }],
+    [`${daoId || 'all'}_${recordType}_h${hash || ""}-ph${parentHash || ""}`, { daoId, chainId }],
     () =>
       fetchRecords({
         daoId,
         chainId: chainId as ValidNetwork,
         recordType,
         hash,
+        parentHash,
         pageSize,
         offset,
         graphApiKeys,
