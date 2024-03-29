@@ -114,13 +114,15 @@ export const ArticleDetails = () => {
   const { records } = useRecords({
     daoId: daoId,
     chainId: daoChain,
-    recordType: "DIN",
+    recordType: "DINComment",
     hash,
   });
 
   if (!records) {
     return <div>Loading...</div>;
   }
+
+  console.log("records *****************>>", records);
 
   if (!shamanAddress) {
     return null;
@@ -141,7 +143,7 @@ export const ArticleDetails = () => {
       </HeaderImageWrapper> */}
       <TitleWrapper>
         <H1>{parsedContent?.title}</H1>
-        <StyledLink to={``}> created at: {new Date(Number(parsedContent.createdAt) * 1000).toString()} </StyledLink>
+        {parsedContent?.createdAt && (<StyledLink to={``}> created at: {new Date(Number(parsedContent.createdAt) * 1000).toString()} </StyledLink>)}
 
       </TitleWrapper>
 

@@ -12,4 +12,5 @@ export type BlogPost = {
     createdAt: string;
     daoChain?: string;
     tag?: string;
+    tags?: string[];
   };

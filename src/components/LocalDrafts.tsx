@@ -22,8 +22,7 @@ export const LocalDrafts = ({ dao, daoChain, memberAddress }: { dao: MolochV3Dao
 
     return (
         <>
-            <ParSm>Local Drafts:</ParSm>
-            <Button>Export</Button>
+            <Button>Export Local Drafts</Button>
             <CardWrapper>
                 {Object.keys(parsedDrafts).map((key, index) => {
                     return (
