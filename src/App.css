@@ -1,3 +1,8 @@
 #root {
-  margin: 0 auto;
+	margin: 0 auto;
+}
+
+.mdxeditor-select-content,
+.mdxeditor-popup-container {
+	color: gray;
 }
