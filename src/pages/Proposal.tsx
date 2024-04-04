@@ -51,6 +51,7 @@ const TX: Record<string, TXLego> = {};
 export const Proposal = () => {
   const { proposal } = useDaoProposal();
   const { daoChain, daoId } = useCurrentDao();
+  console.log(proposal, daoChain, daoId);
 
   if (!daoChain || !daoId)
     return (

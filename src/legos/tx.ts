@@ -103,7 +103,7 @@ export const APP_TX = {
       },
     },
     actions: [{
-        contract: DOMAIN_CONTRACT.NEW_POST,
+        contract: {...DOMAIN_CONTRACT.NEW_POST, ...{targetAddress: ".formValues.shamanAddress"}}, // DOMAIN_CONTRACT.NEW_POST,
         method: 'post',
         args: [
           ".memberAddress",
@@ -111,7 +111,7 @@ export const APP_TX = {
           {
             type: "JSONDetails",
             jsonSchema: {
-              daoId: ".dao.id",
+              daoId: ".formValues.daoAddress",
               table: { type: 'static', value: 'DIN' },
               queryType: { type: 'static', value: 'list' },
               title: ".formValues.title",
@@ -120,13 +120,13 @@ export const APP_TX = {
               contentURIType: { type: "static", value: "url" },
               // imageURI: ".formValues.image",
               // imageURIType: { type: "static", value: "url" },
-              parentId: { type: "static", value: "0" },
               id: ".formValues.contentHash",
               authorAddress: ".memberAddress",
               createdAt: '.formValues.createdAt',
               chainId: `.chainId`,
               tags: '.formValues.tags',
-         
+              parentId: { type: "static", value: "0" },
+              realatedRecordId: '.formValues.relatedRecord'
             },
           },
         ],

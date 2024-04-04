@@ -61,4 +61,8 @@ export const APP_FIELD: Record<string, CustomFieldLego> = {
     id: 'tags',
     type: 'multiSelect',
   },
+  RELATED_RECORD_FIELD: {
+    id: 'relatedRecord',
+    type: 'relatedRecord',
+  },
 };

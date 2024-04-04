@@ -80,6 +80,7 @@ export const Routes = ({
         <Route path="new" element={<SubmitForm/>} />
         <Route path="edit/:createdAt" element={<PromoteDraftForm/>} />
 
+        <Route path="curate/:daoId/:relatedRecord" element={<SubmitForm/>} />
         <Route path="*" element={<div>404</div>} />
       </Route>
     </Router>

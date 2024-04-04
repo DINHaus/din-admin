@@ -1,10 +1,10 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { useCurrentDao, useDaoData } from "@daohaus/moloch-v3-hooks";
-import { Badge, Dialog, DialogContent, DialogTrigger, ParLg, ParMd, ParSm, Tag, Tooltip } from "@daohaus/ui";
+import { Badge, Button, Dialog, DialogContent, DialogTrigger, Input, ParLg, ParMd, ParSm, Tag, Tooltip } from "@daohaus/ui";
 import { ArticleCard, ArticleLinks, CardAvatar, CardDescription, CardTitle, CardTitleWrapper, StyledLink } from "../utils/listStyles";
 import { AuthorAvatar } from "./AuthorAvatar";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { CollectButton } from "./CollectButton";
 import { Comments } from "../pages/Comments";
 import { ZERO_ADDRESS } from "@daohaus/utils";
@@ -26,10 +26,34 @@ const DialogContentWrapper = styled.div`
 
 
 export const ArticleListItem = ({ parsedContent }: { parsedContent: BlogPost }) => {
+  const { daoChain } = useParams();
+  const navigate = useNavigate();
+  const [curateFormLink, setCurateFormLink] = useState<string | null>(null);
+
 
   const getArticleUrl = (daoId: string, articleId: string, daoChain?: string) => {
     return `/molochv3/${daoChain || DEFAULT_NETWORK_ID}/${daoId}/articles/${articleId}`
   }
+
+  const getCurateUrl = (daoId: string, relatedArticle: string, daoChain?: string) => {
+    return `/molochv3/${daoChain || DEFAULT_NETWORK_ID}/${daoId}/curate/${daoId}/${relatedArticle}`
+  }
+
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    // TODO: validate DAO
+    const link = getCurateUrl(event.target.value, parsedContent.recordId, daoChain);
+    console.log(event, link)
+    setCurateFormLink(link);
+  }
+
+  const handleClick = () => {
+    if(!curateFormLink) return;
+    navigate(curateFormLink)
+  }
+
+
 
   if (!parsedContent.id || !parsedContent.daoId || !parsedContent.content) {
     return <ParMd>Invalid Metadata Format</ParMd>
@@ -62,7 +86,7 @@ export const ArticleListItem = ({ parsedContent }: { parsedContent: BlogPost }) 
         )}
       </CardAvatar>
       {(parsedContent?.tag == "DIN" || (parsedContent?.tag == "DINComment" && parsedContent?.parentId == "0")) && (<CardTitleWrapper>
-        <Link to={`${getArticleUrl(parsedContent.daoId, parsedContent.id)}/comments`}><CardTitle>{parsedContent?.title}</CardTitle></Link>
+        <Link to={`${getArticleUrl(parsedContent.daoId, parsedContent.id, daoChain)}/comments`}><CardTitle>{parsedContent?.title}</CardTitle></Link>
         <Tooltip key={parsedContent?.id} content={`updoot & collect`} triggerEl={(<CollectButton hash={parsedContent?.id} link={true} />)} />
       </CardTitleWrapper>)}
 
@@ -77,8 +101,8 @@ export const ArticleListItem = ({ parsedContent }: { parsedContent: BlogPost }) 
 
       }</Tags>
       <ArticleLinks>
-        {(!parsedContent?.parentId || parsedContent?.parentId === "0") && (<StyledLink to={getArticleUrl(parsedContent.daoId, parsedContent.id)}> detail</StyledLink>)}
-        {(!parsedContent?.parentId || parsedContent?.parentId === "0") && (<StyledLink to={`${getArticleUrl(parsedContent.daoId, parsedContent.id)}/comments`}> comments <Comments hash={parsedContent?.id} badge /> </StyledLink>)}
+        {(!parsedContent?.parentId || parsedContent?.parentId === "0") && (<StyledLink to={getArticleUrl(parsedContent.daoId, parsedContent.id, daoChain)}> detail</StyledLink>)}
+        {(!parsedContent?.parentId || parsedContent?.parentId === "0") && (<StyledLink to={`${getArticleUrl(parsedContent.daoId, parsedContent.id, daoChain)}/comments`}> comments <Comments hash={parsedContent?.id} badge /> </StyledLink>)}
         {parsedContent?.parentId && parsedContent?.parentId != "0" && (
           <StyledLink to={`/molochv3/${parsedContent.daoChain}/${parsedContent.daoId}/articles/${parsedContent.parentId}`}> See parent ↩
           </StyledLink>
@@ -91,15 +115,16 @@ export const ArticleListItem = ({ parsedContent }: { parsedContent: BlogPost }) 
               <StyledLink to={``}> Submit for curation </StyledLink>
             </DialogTrigger>
             <DialogContent
-              title="New Draft or Submit Draft"
+              title="Submit for curation to Topic Hub"
               rightButton={{
                 children: "Submit for curation",
               }}
+              onClick={handleClick}
 
             >
               <DialogContentWrapper>
                 <ParSm>Enter the Hub Id to submit to the editors for curation</ParSm>
-                <ParLg>TODO</ParLg>
+                <Input long id="daoAddress" placeholder="DAO Address" onChange={handleChange}></Input>
               </DialogContentWrapper>
             </DialogContent>
           </Dialog>

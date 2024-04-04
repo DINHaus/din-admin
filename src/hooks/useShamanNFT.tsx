@@ -5,7 +5,7 @@ import { EthAddress, createViemClient } from "@daohaus/utils";
 import NftCuratorShamanAbi from "../abis/nftCuratorShaman.json";
 import { MolochV3Dao } from "@daohaus/moloch-v3-data";
 
-const fetchShaman = async ({
+export const fetchShaman = async ({
   shamen,
   chainId,
   rpcs,

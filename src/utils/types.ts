@@ -9,6 +9,7 @@ export type BlogPost = {
     contentHash: string;
     parentId: string;
     id: string;
+    recordId: string;
     createdAt: string;
     daoChain?: string;
     tag?: string;

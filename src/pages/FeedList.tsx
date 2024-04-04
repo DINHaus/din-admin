@@ -50,7 +50,7 @@ export const FeedList = () => {
       const combinedParsedContent: BlogPost[] = [];
       
       sortedRecords.forEach((record) => {
-        combinedParsedContent.push(record.parsedContent as BlogPost);
+        combinedParsedContent.push({...(record.parsedContent as BlogPost), ...{recordId: record.id}});
       }
       );
       setDinRecords(combinedParsedContent);

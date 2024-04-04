@@ -15,6 +15,7 @@ export const APP_FORM: Record<string, CustomFormLego> = {
     tx: APP_TX.NEW_SUBTOPIC as TXLego,
     fields: [
       // APP_FIELD.IMAGE_FIELD,
+      APP_FIELD.RELATED_RECORD_FIELD,
       APP_FIELD.TITLE_FIELD,
       APP_FIELD.LINK_FIELD,
       {...APP_FIELD.CONTENT_FIELD, type: "mdxEditor"},
