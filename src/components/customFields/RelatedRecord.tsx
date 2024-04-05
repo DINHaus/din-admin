@@ -7,6 +7,9 @@ import { ValidNetwork, isValidNetwork } from "@daohaus/keychain-utils";
 import { useDaoData } from "@daohaus/moloch-v3-hooks";
 import { DEFAULT_NETWORK_ID } from "../../utils/constants";
 import { fetchShaman } from "../../hooks/useShamanNFT";
+import { useRecordById } from "../../hooks/useRecordById";
+import { ArticleListItem } from "../ArticleListItem";
+import { BlogPost } from "../../utils/types";
 
 
 export const RelatedRecordField = (props: Buildable<object>) => {
@@ -15,7 +18,12 @@ export const RelatedRecordField = (props: Buildable<object>) => {
     const [errorText, setErrorText] = useState<string | null>(null);
 
     const { dao, isLoading } = useDaoData({ daoChain: daoChain, daoId: daoId });
-
+    if (!relatedRecord) {
+        setErrorText("missing record id");
+        return
+    }
+    const { record } = useRecordById({ daoId, chainId: daoChain as ValidNetwork, recordId: relatedRecord });
+    console.log("related rec", record);
     useEffect(() => {
 
         const getShaman = async () => {
@@ -27,32 +35,36 @@ export const RelatedRecordField = (props: Buildable<object>) => {
                 }
             }
         };
-        if (relatedRecord && daoId && dao) {
+        if (relatedRecord && record && daoId && dao) {
             setValue(props.id, relatedRecord);
             setValue("dao", dao);
             setValue("daoChain", daoChain);
             setValue("daoAddress", daoId);
+            setValue("authorAddress", (record.parsedContent as unknown as BlogPost).author);
 
             getShaman();
         }
-    }, [relatedRecord, dao, daoId, setValue, props.id]);
+    }, [relatedRecord, record, dao, daoId, setValue, props.id]);
 
     if (
         (!daoChain || !isValidNetwork(daoChain)) ||
         !daoId ||
         !relatedRecord ||
         !dao ||
+        !record ||
         isLoading
     ) {
         return
     }
+
+    const parsedContent: BlogPost = record.parsedContent as unknown as BlogPost;
 
 
     if (!errorText) {
         return (<>
             <ParMd>dao chain: {daoChain}</ParMd>
             <ParMd> dao address: {daoId}</ParMd>
-            <ParMd> related record: {relatedRecord}</ParMd>
+            <ArticleListItem parsedContent={parsedContent} />
         </>);
     }
 

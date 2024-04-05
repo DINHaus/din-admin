@@ -106,7 +106,7 @@ export const APP_TX = {
         contract: {...DOMAIN_CONTRACT.NEW_POST, ...{targetAddress: ".formValues.shamanAddress"}}, // DOMAIN_CONTRACT.NEW_POST,
         method: 'post',
         args: [
-          ".memberAddress",
+          ".formValues.authorAddress",
           ".formValues.contentHash",
           {
             type: "JSONDetails",
@@ -116,8 +116,8 @@ export const APP_TX = {
               queryType: { type: 'static', value: 'list' },
               title: ".formValues.title",
               content: ".formValues.content",
-              contentURI: ".formValues.link",
-              contentURIType: { type: "static", value: "url" },
+              // contentURI: ".formValues.link",
+              // contentURIType: { type: "static", value: "url" },
               // imageURI: ".formValues.image",
               // imageURIType: { type: "static", value: "url" },
               id: ".formValues.contentHash",
@@ -126,7 +126,7 @@ export const APP_TX = {
               chainId: `.chainId`,
               tags: '.formValues.tags',
               parentId: { type: "static", value: "0" },
-              realatedRecordId: '.formValues.relatedRecord'
+              relatedRecordId: '.formValues.relatedRecord'
             },
           },
         ],
