@@ -19,15 +19,17 @@ import {
 } from "@mdxeditor/editor";
 import "@mdxeditor/editor/style.css";
 import styled from "styled-components";
-
 import { LinkStyles } from "@daohaus/ui";
 
 const MarkDownContainer = styled.div`
   padding: 10px;
   margin-bottom: 5rem;
   border-radius: 5px;
-  background-color: hsl(228, 43.3%, 17.5%); // TODO: use theme
-  font-family: inherit;
+  background-color: ${({ theme }) => theme.input.bg};
+  color: ${({ theme }) => theme.input.color};
+  font-size: ${({ theme }) => theme.field.fontSize};
+  font-weight: ${({ theme }) => theme.field.fontWeight};
+  font-family: ${({ theme }) => theme.field.inputFont};
   min-height: 10vh;
   max-height: 50vh;
   overflow: auto;
