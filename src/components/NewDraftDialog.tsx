@@ -6,7 +6,8 @@ import {
 import { SUMMONER_URL } from "../utils/constants";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useCurrentDao } from "@daohaus/moloch-v3-hooks";
+import { useCurrentDao, useDaoMember } from "@daohaus/moloch-v3-hooks";
+import { useDHConnect } from "@daohaus/connect";
 
 
 
@@ -24,37 +25,42 @@ const DialogContentWrapper = styled.div`
 export const NewDraftDialog = () => {
     const navigate = useNavigate();
     const { daoChain, daoId } = useCurrentDao();
+    const { address } = useDHConnect();
+
+    if (!daoId || !daoChain) {
+        return null;
+    }
+
+    const { member } = useDaoMember({
+        daoChain: daoChain,
+        daoId: daoId,
+        memberAddress: address,
+    });
 
     const handleNewLocalDraft = () => {
         navigate(`/molochv3/${daoChain}/${daoId}/edit/${Math.floor(Date.now() / 1000)}`);
     };
-    
-    const handleSubmitContent = () => {
-        navigate(`/molochv3/${daoChain}/${daoId}/new`);
-    };
+
+    if(member && Number(member?.shares) == 0) {
+        return null;
+    }
 
 
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <a><Button size="sm" variant="link" color="primary">Create Content</Button></a>
+                <a><Button size="sm" variant="link" color="primary">| Create Content</Button></a>
             </DialogTrigger>
             <DialogContent
-                title="New Draft or Submit Draft"
+                title="New Draft"
                 rightButton={{
                     onClick: handleNewLocalDraft, // link to SUMMONER_URL
                     disabled: false,
                     children: "New Local Draft",
                 }}
-                leftButton={{
-                    onClick: handleSubmitContent, // link to SUMMONER_URL
-                    disabled: false,
-                    children: "Submit Content",
-                }}
             >
                 <DialogContentWrapper>
                     <ParSm>You can start a new local draft, work on it and when ready publish on chain</ParSm>
-                    <ParSm>Alternativly you can submit a published draft to be curated by this DAO</ParSm>
                 </DialogContentWrapper>
             </DialogContent>
         </Dialog>

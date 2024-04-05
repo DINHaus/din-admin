@@ -51,6 +51,8 @@ const TX: Record<string, TXLego> = {};
 export const Proposal = () => {
   const { proposal } = useDaoProposal();
   const { daoChain, daoId } = useCurrentDao();
+  console.log("proposal", proposal, daoChain, daoId);
+  // TODO: if record attached display it
 
   if (!daoChain || !daoId)
     return (

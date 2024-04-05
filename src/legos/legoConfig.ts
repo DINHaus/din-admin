@@ -9,6 +9,8 @@ import { CreatedAtField } from "../components/customFields/CreatedAt";
 import { MDXEditorField } from "../components/customFields/MDXEditorField";
 import { SaveAsDraftField } from "../components/customFields/SaveAsDraft";
 import { MultiSelect } from "../components/customFields/MultiSelect";
+import { RelatedRecordField } from "../components/customFields/RelatedRecord";
+import { ShamanAddressField } from "../components/customFields/ShamanAddress";
 
 export const AppFieldLookup = {
   ...MolochFields,
@@ -18,7 +20,8 @@ export const AppFieldLookup = {
   createdAt: CreatedAtField,
   mdxEditor: MDXEditorField,
   saveAsDraft: SaveAsDraftField,
-  multiSelect: MultiSelect
+  multiSelect: MultiSelect,
+  relatedRecord: RelatedRecordField,
 };
 
 export type CustomFieldLego = FieldLegoBase<typeof AppFieldLookup>;

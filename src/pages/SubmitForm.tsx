@@ -6,18 +6,18 @@ import { FormBuilder } from "@daohaus/form-builder";
 import { SingleColumnLayout } from "@daohaus/ui";
 import { APP_FORM } from "../legos/forms";
 import { AppFieldLookup } from "../legos/legoConfig";
+import { useParams } from "react-router-dom";
 
 export const SubmitForm = () => {
+  const { daoChain, daoId, relatedRecord } = useParams();
+
   const { publicClient, address } = useDHConnect();
-  console.log("address", address);
-  console.log("publicClient", publicClient);
+  
 
   return (
     <SingleColumnLayout>
 
-
-      {/* <FormBuilder form={APP_FORM.NEW_POST} customFields={AppFieldLookup} /> */}
-      <FormBuilder form={APP_FORM.BROKER_CONTENT} customFields={AppFieldLookup} />
+      <FormBuilder form={APP_FORM.NEW_POST} customFields={AppFieldLookup} />
 
       
     </SingleColumnLayout>

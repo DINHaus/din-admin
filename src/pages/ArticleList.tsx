@@ -29,7 +29,7 @@ export const ArticleList = () => {
   const { records } = useRecords({
     daoId: daoId,
     chainId: daoChain,
-    recordType: "DIN",
+    recordType: "DUCEREF",
   });
 
   // console.log("records >>", records);

@@ -82,7 +82,7 @@ export const AllComments = ({ hash, badge }: { hash?: string, badge?: boolean })
     const { records: comments, refetch: refetchComments } = useRecords({
         // daoId: daoId,
         chainId: chainId || "0xaa36a7", // Assign a default value to chainId
-        recordType: "DINComment",
+        recordType: "DUCE",
         hash,
     });
 
