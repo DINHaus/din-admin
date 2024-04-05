@@ -16,9 +16,6 @@ export const APP_FORM: Record<string, CustomFormLego> = {
     fields: [
       // APP_FIELD.IMAGE_FIELD,
       APP_FIELD.RELATED_RECORD_FIELD,
-      APP_FIELD.TITLE_FIELD,
-      {...APP_FIELD.CONTENT_FIELD, type: "mdxEditor"},
-      APP_FIELD.CONTENTHASH_FIELD,
       APP_FIELD.CREATEDAT_FIELD,
       APP_FIELD.TAGS_MULTISELECT_FIELD,
       FIELD.PROP_OFFERING,

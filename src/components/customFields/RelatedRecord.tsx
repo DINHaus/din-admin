@@ -17,6 +17,10 @@ export const RelatedRecordField = (props: Buildable<object>) => {
     const { daoChain = DEFAULT_NETWORK_ID, daoId = "", relatedRecord } = useParams();
     const [errorText, setErrorText] = useState<string | null>(null);
 
+    const getArticleUrl = (daoId: string, articleId: string, daoChain: string) => {
+        return `/molochv3/${daoChain}/${daoId}/articles/${articleId}`
+      }
+
     const { dao, isLoading } = useDaoData({ daoChain: daoChain, daoId: daoId });
     if (!relatedRecord) {
         setErrorText("missing record id");
@@ -40,8 +44,11 @@ export const RelatedRecordField = (props: Buildable<object>) => {
             setValue("dao", dao);
             setValue("daoChain", daoChain);
             setValue("daoAddress", daoId);
-            setValue("authorAddress", (record.parsedContent as unknown as BlogPost).author);
-
+            setValue("authorAddress", (record.parsedContent as unknown as BlogPost).authorAddress);
+            setValue("title", `Curate: ${(record.parsedContent as unknown as BlogPost).title}`);
+            setValue("content", ``);
+            setValue("contentHash", (record.parsedContent as unknown as BlogPost).id);
+            setValue("link", getArticleUrl(daoId, (record.parsedContent as unknown as BlogPost).id, daoChain));
             getShaman();
         }
     }, [relatedRecord, record, dao, daoId, setValue, props.id]);

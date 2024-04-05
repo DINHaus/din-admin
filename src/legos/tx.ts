@@ -100,6 +100,8 @@ export const APP_TX = {
         contentURI: `.formValues.link`,
         contentURIType: { type: "static", value: "url" },
         proposalType: { type: "static", value: PROPOSAL_TYPE_IDS.SubTopic },
+        parentId: { type: "static", value: "0" },
+        relatedRecordId: '.formValues.relatedRecord'
       },
     },
     actions: [{
@@ -120,7 +122,7 @@ export const APP_TX = {
               // contentURIType: { type: "static", value: "url" },
               // imageURI: ".formValues.image",
               // imageURIType: { type: "static", value: "url" },
-              id: ".formValues.contentHash",
+              // id: ".formValues.contentHash",
               authorAddress: ".memberAddress",
               createdAt: '.formValues.createdAt',
               chainId: `.chainId`,
