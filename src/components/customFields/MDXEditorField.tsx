@@ -3,79 +3,84 @@ import { Buildable, Field } from "@daohaus/ui";
 import { useFormContext } from "react-hook-form";
 
 import {
-	MDXEditor,
-	headingsPlugin,
-	UndoRedo,
-	BoldItalicUnderlineToggles,
-	toolbarPlugin,
-	BlockTypeSelect,
-	quotePlugin,
-	listsPlugin,
-	ListsToggle,
-	MDXEditorMethods,
-	linkPlugin,
-	linkDialogPlugin,
-	CreateLink,
+  MDXEditor,
+  headingsPlugin,
+  UndoRedo,
+  BoldItalicUnderlineToggles,
+  toolbarPlugin,
+  BlockTypeSelect,
+  quotePlugin,
+  listsPlugin,
+  ListsToggle,
+  MDXEditorMethods,
+  linkPlugin,
+  linkDialogPlugin,
+  CreateLink,
 } from "@mdxeditor/editor";
 import "@mdxeditor/editor/style.css";
 import styled from "styled-components";
 
+import { LinkStyles } from "@daohaus/ui";
+
 const MarkDownContainer = styled.div`
-	padding: 10px;
-	margin-bottom: 5rem;
-	border-radius: 5px;
-	background-color: hsl(228, 43.3%, 17.5%); // TODO: use theme
-	font-family: inherit;
-	min-height: 10vh;
-	max-height: 50vh;
-	overflow: auto;
+  padding: 10px;
+  margin-bottom: 5rem;
+  border-radius: 5px;
+  background-color: hsl(228, 43.3%, 17.5%); // TODO: use theme
+  font-family: inherit;
+  min-height: 10vh;
+  max-height: 50vh;
+  overflow: auto;
+  a {
+    ${LinkStyles};
+  }
 `;
 
 export const MDXEditorField = (props: Buildable<Field>) => {
-	const { setValue, watch } = useFormContext();
-	const [content, createdAt] = watch([props.id, "createdAt"]);
+  const { setValue, watch } = useFormContext();
+  const [content, createdAt] = watch([props.id, "createdAt"]);
 
-	const ref = useRef<MDXEditorMethods>(null);
+  const ref = useRef<MDXEditorMethods>(null);
 
-	const handleOnChange = (value: string) => {
-		setValue(props.id, value);
-	};
+  const handleOnChange = (value: string) => {
+    setValue(props.id, value);
+  };
 
-	useEffect(() => {
-		const drafts = localStorage.getItem("drafts") || ("{}" as string);
-		const parsedDrafts = JSON.parse(drafts);
+  useEffect(() => {
+    const drafts = localStorage.getItem("drafts") || ("{}" as string);
+    const parsedDrafts = JSON.parse(drafts);
 
-		if (parsedDrafts[createdAt]) {
-			ref.current?.setMarkdown(parsedDrafts[createdAt]?.content || "");
-			setValue(props.id, parsedDrafts[createdAt]?.content);
-		}
-	}, [createdAt, ref]);
+    if (parsedDrafts[createdAt]) {
+      ref.current?.setMarkdown(parsedDrafts[createdAt]?.content || "");
+      setValue(props.id, parsedDrafts[createdAt]?.content);
+    }
+  }, [createdAt, ref]);
 
-	return (
-		<MarkDownContainer>
-			<MDXEditor
-				ref={ref}
-				className="dark-theme dark-editor"
-				markdown={""}
-				plugins={[
-					listsPlugin(),
-					quotePlugin(),
-					headingsPlugin(),
-					linkPlugin(),
-					linkDialogPlugin(),
-					toolbarPlugin({
-						toolbarContents: () => (
-							<>
-								<UndoRedo />
-								<BoldItalicUnderlineToggles />
-								<CreateLink />
-								<ListsToggle /> <BlockTypeSelect />
-							</>
-						),
-					}),
-				]}
-				onChange={handleOnChange}
-			/>
-		</MarkDownContainer>
-	);
+  return (
+    <MarkDownContainer>
+      <MDXEditor
+        ref={ref}
+        className="dark-theme dark-editor"
+        markdown={""}
+        plugins={[
+          listsPlugin(),
+          quotePlugin(),
+          headingsPlugin(),
+          linkPlugin(),
+          linkDialogPlugin(),
+          toolbarPlugin({
+            toolbarContents: () => (
+              <>
+                <UndoRedo />
+                <BoldItalicUnderlineToggles />
+                <CreateLink />
+                <ListsToggle /> <BlockTypeSelect />
+              </>
+            ),
+          }),
+        ]}
+        onChange={handleOnChange}
+      />
+    </MarkDownContainer>
+  );
 };
