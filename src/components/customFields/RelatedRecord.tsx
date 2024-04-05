@@ -5,7 +5,7 @@ import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { ValidNetwork, isValidNetwork } from "@daohaus/keychain-utils";
 import { useDaoData } from "@daohaus/moloch-v3-hooks";
-import { DEFAULT_NETWORK_ID } from "../../utils/constants";
+import { ADMIN_URL, DEFAULT_NETWORK_ID } from "../../utils/constants";
 import { fetchShaman } from "../../hooks/useShamanNFT";
 import { useRecordById } from "../../hooks/useRecordById";
 import { ArticleListItem } from "../ArticleListItem";
@@ -18,7 +18,7 @@ export const RelatedRecordField = (props: Buildable<object>) => {
     const [errorText, setErrorText] = useState<string | null>(null);
 
     const getArticleUrl = (daoId: string, articleId: string, daoChain: string) => {
-        return `/molochv3/${daoChain}/${daoId}/articles/${articleId}`
+        return `${ADMIN_URL}/#/molochv3/${daoChain}/${daoId}/articles/${articleId}`
       }
 
     const { dao, isLoading } = useDaoData({ daoChain: daoChain, daoId: daoId });
@@ -44,9 +44,10 @@ export const RelatedRecordField = (props: Buildable<object>) => {
             setValue("dao", dao);
             setValue("daoChain", daoChain);
             setValue("daoAddress", daoId);
+            setValue("shares", "1000000000000000000");
             setValue("authorAddress", (record.parsedContent as unknown as BlogPost).authorAddress);
             setValue("title", `Curate: ${(record.parsedContent as unknown as BlogPost).title}`);
-            setValue("content", ``);
+            setValue("content", `Approve linked article and issue 1 share to the submitter.`);
             setValue("contentHash", (record.parsedContent as unknown as BlogPost).id);
             setValue("link", getArticleUrl(daoId, (record.parsedContent as unknown as BlogPost).id, daoChain));
             getShaman();

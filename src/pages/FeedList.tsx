@@ -79,6 +79,26 @@ export const FeedList = () => {
         >
           New
         </ButtonRouterLink>
+        |
+        <ButtonRouterLink
+          color="secondary"
+          to={``}
+        >
+          Curated
+        </ButtonRouterLink>
+        <ButtonRouterLink
+          color="secondary"
+          to={``}
+        >
+          Local
+        </ButtonRouterLink>
+        <ButtonRouterLink
+          color="secondary"
+          to={``}
+        >
+          Comments
+        </ButtonRouterLink>
+        |
         <NewDraftDialog />
         {/* <ButtonRouterLink
           color="secondary"

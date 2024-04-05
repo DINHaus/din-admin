@@ -9,7 +9,7 @@ export const APP_FORM: Record<string, CustomFormLego> = {
     id: "NEW_POST",
     title: "Sub Topic Form",
     subtitle: "Your subtopic will be reviewed by the Topic curators",
-    description: "If accepted it will be ratify Smith on-chain, and you will become a curator of the Topic DAO.",
+    description: "If accepted it will be ratify on-chain, and you will recieve 1 curator share of the Topic DAO.",
     requiredFields: { pubTitle: true, content: true },
     log: true,
     tx: APP_TX.NEW_SUBTOPIC as TXLego,

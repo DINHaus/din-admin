@@ -6,6 +6,8 @@ export const NFT_DAO_REFERRER = "DHNFTCuratorShamanSummonerV0.2";
 export const DEFAULT_NETWORK_ID = "0xaa36a7";
 
 export const SUMMONER_URL = "https://dinhaus.github.io/din-summoner/";
+export const ADMIN_URL = "https://dinhaus.github.io/din-admin/";
+
 
 export const TCR_GRAPH_URL: Keychain = {
     "0x1": "https://api.thegraph.com/subgraphs/name/hausdao/dh-signal-tcr",
