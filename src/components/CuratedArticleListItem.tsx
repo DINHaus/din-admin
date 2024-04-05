@@ -11,6 +11,8 @@ import { ZERO_ADDRESS } from "@daohaus/utils";
 import { BlogPost } from "../utils/types";
 import { DEFAULT_NETWORK_ID } from "../utils/constants";
 import styled from "styled-components";
+import { useRecordById } from "../hooks/useRecordById";
+import { ValidNetwork, isValidNetwork } from "@daohaus/keychain-utils";
 
 const Tags = styled.div`
 display: flex;
@@ -25,32 +27,27 @@ const DialogContentWrapper = styled.div`
 `;
 
 
-export const ArticleListItem = ({ parsedContent }: { parsedContent: BlogPost }) => {
+export const CuratedArticleListItem = ({ relatedRecordId }: { relatedRecordId: string }) => {
   const { daoChain } = useParams();
   const navigate = useNavigate();
-  const [curateFormLink, setCurateFormLink] = useState<string | null>(null);
 
+  const daoId = relatedRecordId.split("-")[0];
+
+
+  const { record } = useRecordById({ daoId, chainId: daoChain as ValidNetwork, recordId: relatedRecordId });
+
+  if (
+    (!daoChain || !isValidNetwork(daoChain)) ||
+    !daoId ||
+    !record 
+) {
+    return
+}
+  
+  const parsedContent: BlogPost = record.parsedContent as unknown as BlogPost;
 
   const getArticleUrl = (daoId: string, articleId: string, daoChain?: string) => {
     return `/molochv3/${daoChain || DEFAULT_NETWORK_ID}/${daoId}/articles/${articleId}`
-  }
-
-  const getCurateUrl = (daoId: string, relatedArticle: string, daoChain?: string) => {
-    return `/molochv3/${daoChain || DEFAULT_NETWORK_ID}/${daoId}/curate/${daoId}/${relatedArticle}`
-  }
-
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    // TODO: validate DAO
-    const link = getCurateUrl(event.target.value, parsedContent.recordId, daoChain);
-    console.log(event, link)
-    setCurateFormLink(link);
-  }
-
-  const handleClick = () => {
-    if(!curateFormLink) return;
-    navigate(curateFormLink)
   }
 
 
@@ -78,7 +75,7 @@ export const ArticleListItem = ({ parsedContent }: { parsedContent: BlogPost }) 
               </CardImg> */}
       <CardAvatar>
 
-
+              <Tag tagColor="green">CURATED</Tag>
         {parsedContent?.authorAddress ? (
           <AuthorAvatar address={parsedContent?.authorAddress} />
         ) : (
@@ -109,27 +106,6 @@ export const ArticleListItem = ({ parsedContent }: { parsedContent: BlogPost }) 
         )}
 
         <StyledLink to={``}> created at: {formattedDate} </StyledLink>
-        {(!parsedContent?.parentId || parsedContent?.parentId === "0") && (
-          <Dialog>
-            <DialogTrigger asChild>
-              <StyledLink to={``}> Submit for curation </StyledLink>
-            </DialogTrigger>
-            <DialogContent
-              title="Submit for curation to Topic Hub"
-              rightButton={{
-                children: "Submit for curation",
-              }}
-              onClick={handleClick}
-
-            >
-              <DialogContentWrapper>
-                <ParSm>Enter the Hub Id to submit to the editors for curation</ParSm>
-                <Input long id="daoAddress" placeholder="DAO Address" onChange={handleChange}></Input>
-              </DialogContentWrapper>
-            </DialogContent>
-          </Dialog>
-        )}
-
 
       </ArticleLinks>
 

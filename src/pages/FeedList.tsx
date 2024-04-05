@@ -16,6 +16,7 @@ import { Comments } from "./Comments";
 import { ArticleListItem } from "../components/ArticleListItem";
 import { NewDraftDialog } from "../components/NewDraftDialog";
 import { useEffect, useState } from "react";
+import { CuratedArticleListItem } from "../components/CuratedArticleListItem";
 
 
 
@@ -31,26 +32,27 @@ export const FeedList = () => {
   const { records: dinCuratedRecords } = useRecords({
     daoId: daoId,
     chainId: daoChain,
-    recordType: "DIN",
+    recordType: "DUCEREF",
   });
 
   const { records: dinCommentRecords } = useRecords({
     daoId: daoId,
     chainId: daoChain,
-    recordType: "DINComment",
+    recordType: "DUCE",
   });
 
   useEffect(() => {
 
     if (dinCuratedRecords && dinCommentRecords) {
+      console.log("dinCuratedRecords >>", dinCuratedRecords);
       const combinedRecords = [...dinCuratedRecords, ...dinCommentRecords];
       const sortedRecords = combinedRecords.sort((a, b) => {
         return Number(b.createdAt) - Number(a.createdAt);
       });
       const combinedParsedContent: BlogPost[] = [];
-      
+
       sortedRecords.forEach((record) => {
-        combinedParsedContent.push({...(record.parsedContent as BlogPost), ...{recordId: record.id}});
+        combinedParsedContent.push({ ...(record.parsedContent as BlogPost), ...{ recordId: record.id } });
       }
       );
       setDinRecords(combinedParsedContent);
@@ -59,7 +61,7 @@ export const FeedList = () => {
 
 
   }
-  , [dinCuratedRecords, dinCommentRecords]);
+    , [dinCuratedRecords, dinCommentRecords]);
 
 
   // console.log("dinCuratedRecords >>", dinCuratedRecords);
@@ -67,7 +69,7 @@ export const FeedList = () => {
   return (
     <SingleColumnLayout>
       <ButtonList>
-      <ButtonRouterLink
+        <ButtonRouterLink
           color="secondary"
           to={``}
         >
@@ -98,7 +100,7 @@ export const FeedList = () => {
         >
           Comments
         </ButtonRouterLink>
-        |
+
         <NewDraftDialog />
         {/* <ButtonRouterLink
           color="secondary"
@@ -109,8 +111,23 @@ export const FeedList = () => {
 
       </ButtonList>
       <CardWrapper>
+        {dinRecords.length === 0 && (
+          <ArticleCard>
+            <ParMd>No content yet. You can be the first. </ParMd>
+            <ParMd>Start by creating a new draft then immortalize it on chain.</ParMd>
+            <ParMd>Collectors can post comments on posts.</ParMd>
+            <ParMd>idk maybe write about your pets</ParMd>
+          </ArticleCard>
+        )}
         {dinRecords?.map((record, key) => {
-          
+
+          console.log("record >>", record.relatedRecordId);
+          if(record.relatedRecordId){
+            return (
+              <CuratedArticleListItem relatedRecordId={record.relatedRecordId} key={key} />
+            )
+          }
+
           return (
             <ArticleListItem parsedContent={record} key={key} />
           );

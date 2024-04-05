@@ -114,7 +114,7 @@ export const ArticleDetails = () => {
   const { records } = useRecords({
     daoId: daoId,
     chainId: daoChain,
-    recordType: "DINComment",
+    recordType: "DUCE",
     hash,
   });
 

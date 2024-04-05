@@ -100,14 +100,14 @@ export const Comments = ({ hash, badge }: { hash?: string, badge?: boolean }) =>
     const { records: parent } = useRecords({
         daoId: daoId,
         chainId: daoChain,
-        recordType: "DINComment",
+        recordType: "DUCE",
         hash: hash,
     });
 
     const { records: comments, refetch: refetchComments } = useRecords({
         daoId: daoId,
         chainId: daoChain,
-        recordType: "DINComment",
+        recordType: "DUCE",
         parentHash: hash,
     });
 

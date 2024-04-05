@@ -85,7 +85,7 @@ const fetchRecords = async ({
     }
 
 
-    if (hash && recordType === "DIN") {
+    if (hash && recordType === "DUCEREF") {
       console.log("hash recordtype", hash, recordType);
       const filteredData = data.items.filter(
         (item) => {
@@ -95,7 +95,7 @@ const fetchRecords = async ({
       );
       console.log("filteredData DIN", filteredData);
       return filteredData;
-    } else if (hash && recordType === "DINComment") {
+    } else if (hash && recordType === "DUCE") {
 
       const filteredData = data.items.filter(
         (item) => {
@@ -104,7 +104,7 @@ const fetchRecords = async ({
       );
       console.log("filteredData", filteredData);
       return filteredData;
-    } else if (parentHash && recordType === "DINComment") {
+    } else if (parentHash && recordType === "DUCE") {
 
       const filteredData = data.items.filter(
         (item) => {
@@ -113,7 +113,7 @@ const fetchRecords = async ({
       );
       console.log("filteredData", filteredData);
       return filteredData;
-    } else if (recordType === "DINComment") {
+    } else if (recordType === "DUCE") {
 
       return data.items.filter(
         (item) => {

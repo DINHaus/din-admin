@@ -14,4 +14,5 @@ export type BlogPost = {
     daoChain?: string;
     tag?: string;
     tags?: string[];
+    relatedRecordId?: string;
   };

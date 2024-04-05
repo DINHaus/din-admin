@@ -1,6 +1,6 @@
 import { Keychain } from "@daohaus/keychain-utils";
 
-export const NFT_DAO_REFERRER = "DHNFTCuratorShamanSummonerV0.2"; 
+export const NFT_DAO_REFERRER = "DHNFTCuratorShamanSummonerV0.3"; 
 // NFT shaman name NFTCuratorShamanV0.2
 
 export const DEFAULT_NETWORK_ID = "0xaa36a7";

@@ -18,7 +18,7 @@ export const RelatedRecordField = (props: Buildable<object>) => {
     const [errorText, setErrorText] = useState<string | null>(null);
 
     const getArticleUrl = (daoId: string, articleId: string, daoChain: string) => {
-        return `${ADMIN_URL}/#/molochv3/${daoChain}/${daoId}/articles/${articleId}`
+        return `${ADMIN_URL}#/molochv3/${daoChain}/${daoId}/articles/${articleId}`
       }
 
     const { dao, isLoading } = useDaoData({ daoChain: daoChain, daoId: daoId });
@@ -49,7 +49,7 @@ export const RelatedRecordField = (props: Buildable<object>) => {
             setValue("title", `Curate: ${(record.parsedContent as unknown as BlogPost).title}`);
             setValue("content", `Approve linked article and issue 1 share to the submitter.`);
             setValue("contentHash", (record.parsedContent as unknown as BlogPost).id);
-            setValue("link", getArticleUrl(daoId, (record.parsedContent as unknown as BlogPost).id, daoChain));
+            setValue("link", getArticleUrl(record.parsedContent.daoId, (record.parsedContent as unknown as BlogPost).id, daoChain));
             getShaman();
         }
     }, [relatedRecord, record, dao, daoId, setValue, props.id]);

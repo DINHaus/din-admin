@@ -30,7 +30,7 @@ export const APP_TX = {
           type: 'JSONDetails',
           jsonSchema: {
             daoId: ".dao.id",
-            table: { type: 'static', value: 'DINComment' },
+            table: { type: 'static', value: 'DUCE' },
             queryType: { type: 'static', value: 'list' },
             content: '.formValues.content',
             parentId: '.formValues.commentParentId',
@@ -54,7 +54,7 @@ export const APP_TX = {
             type: "JSONDetails",
             jsonSchema: {
               daoId: ".dao.id",
-              table: { type: 'static', value: 'DINComment' },
+              table: { type: 'static', value: 'DUCE' },
               queryType: { type: 'static', value: 'list' },
               title: `.formValues.title`,
               content: ".formValues.content",
@@ -93,6 +93,35 @@ export const APP_TX = {
       args: [
         nestInArray(".memberAddress"),
         nestInArray(".formValues.shares")
+      ],
+    },
+    {
+      contract: {...DOMAIN_CONTRACT.NEW_POST, ...{targetAddress: ".formValues.shamanAddress"}}, // DOMAIN_CONTRACT.NEW_POST,
+      method: 'post',
+      args: [
+        ".formValues.authorAddress",
+        ".formValues.contentHash",
+        {
+          type: "JSONDetails",
+          jsonSchema: {
+            daoId: ".formValues.daoAddress",
+            table: { type: 'static', value: 'DUCEREF' },
+            queryType: { type: 'static', value: 'list' },
+            title: ".formValues.title",
+            content: { type: 'static', value: '' },
+            contentURI: ".formValues.link",
+            contentURIType: { type: "static", value: "url" },
+            // imageURI: ".formValues.image",
+            // imageURIType: { type: "static", value: "url" },
+            id: ".formValues.contentHash",
+            authorAddress: ".memberAddress",
+            createdAt: '.formValues.createdAt',
+            chainId: `.chainId`,
+            tags: '.formValues.tags',
+            parentId: { type: "static", value: "0" },
+            relatedRecordId: '.formValues.relatedRecord'
+          },
+        },
       ],
     }
   ],

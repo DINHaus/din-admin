@@ -95,7 +95,7 @@ export const StagingDAO = ({ badge }: { daoId?: string, badge?: boolean }) => {
     const { records: comments, refetch: refetchComments } = useRecords({
         daoId: daoId,
         chainId: chainId || "0xaa36a7", // Assign a default value to chainId
-        recordType: "DINComment",
+        recordType: "DUCE",
     });
 
     const onFormComplete = () => {
