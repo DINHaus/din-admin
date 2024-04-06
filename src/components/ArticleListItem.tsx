@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { useCurrentDao, useDaoData } from "@daohaus/moloch-v3-hooks";
-import { Badge, Button, Dialog, DialogContent, DialogTrigger, Input, ParLg, ParMd, ParSm, Tag, Tooltip } from "@daohaus/ui";
+import { Badge, Button, Dialog, DialogContent, DialogTrigger, Input, LinkStyles, ParLg, ParMd, ParSm, Tag, Tooltip } from "@daohaus/ui";
 import { ArticleCard, ArticleLinks, CardAvatar, CardDescription, CardTitle, CardTitleWrapper, StyledLink } from "../utils/listStyles";
 import { AuthorAvatar } from "./AuthorAvatar";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
@@ -22,6 +22,10 @@ const DialogContentWrapper = styled.div`
   justify-content: center;
   align-items: center;
   padding: 2rem;
+`;
+
+const StyledExternalLink = styled.a`
+${LinkStyles};
 `;
 
 
@@ -91,7 +95,7 @@ export const ArticleListItem = ({ parsedContent }: { parsedContent: BlogPost }) 
       </CardTitleWrapper>)}
 
       <CardDescription>{parsedContent?.content}</CardDescription>
-      <ParMd><a href={parsedContent?.contentURI} target="_blank">external link</a></ParMd>
+      {parsedContent?.contentURI && <ParSm><StyledExternalLink href={parsedContent?.contentURI} target="_blank">external link</StyledExternalLink></ParSm>}
       <Tags>{parsedContent?.tags?.map((tag, key) => {
         return (
           <Tag key={key} tagColor="violet">{tag}</Tag>
@@ -104,7 +108,7 @@ export const ArticleListItem = ({ parsedContent }: { parsedContent: BlogPost }) 
         {(!parsedContent?.parentId || parsedContent?.parentId === "0") && (<StyledLink to={getArticleUrl(parsedContent.daoId, parsedContent.id, daoChain)}> detail</StyledLink>)}
         {(!parsedContent?.parentId || parsedContent?.parentId === "0") && (<StyledLink to={`${getArticleUrl(parsedContent.daoId, parsedContent.id, daoChain)}/comments`}> comments <Comments hash={parsedContent?.id} badge /> </StyledLink>)}
         {parsedContent?.parentId && parsedContent?.parentId != "0" && (
-          <StyledLink to={`/molochv3/${parsedContent.daoChain}/${parsedContent.daoId}/articles/${parsedContent.parentId}`}> See parent ↩
+          <StyledLink to={`/molochv3/${daoChain}/${parsedContent.daoId}/articles/${parsedContent.parentId}`}> See parent ↩
           </StyledLink>
         )}
 

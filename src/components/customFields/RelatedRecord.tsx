@@ -10,6 +10,7 @@ import { fetchShaman } from "../../hooks/useShamanNFT";
 import { useRecordById } from "../../hooks/useRecordById";
 import { ArticleListItem } from "../ArticleListItem";
 import { BlogPost } from "../../utils/types";
+import { truncateAddress } from "@daohaus/utils";
 
 
 export const RelatedRecordField = (props: Buildable<object>) => {
@@ -47,8 +48,7 @@ export const RelatedRecordField = (props: Buildable<object>) => {
             setValue("shares", "1000000000000000000");
             setValue("authorAddress", (record.parsedContent as unknown as BlogPost).authorAddress);
             setValue("title", `Curate: ${(record.parsedContent as unknown as BlogPost).title}`);
-            setValue("content", `Approve linked article and issue 1 share to the submitter.`);
-            setValue("contentHash", (record.parsedContent as unknown as BlogPost).id);
+            setValue("content", `Approve linked article and issue 1 share to the submitter. id:${truncateAddress((record.parsedContent as unknown as BlogPost).id)} `);
             setValue("link", getArticleUrl(record.parsedContent.daoId, (record.parsedContent as unknown as BlogPost).id, daoChain));
             getShaman();
         }

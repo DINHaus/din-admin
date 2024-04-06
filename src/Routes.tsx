@@ -75,7 +75,9 @@ export const Routes = ({
         <Route path="members/ragequit" element={<RageQuit />} />
         <Route path="articles" element={<FeedList/>} />
         <Route path="articles/:hash" element={<ArticleDetails/>} />
+        <Route path="rarticles/:hash" element={<ArticleDetails tableName={"DUCEREF"}/>} />
         <Route path="articles/:hash/comments" element={<Comments/>} />
+        <Route path="rarticles/:hash/comments" element={<Comments tableName={"DUCEREF"}/>} />
         <Route path="comments" element={<StagingDAO/>} />
         <Route path="new" element={<SubmitForm/>} />
         <Route path="edit/:createdAt" element={<PromoteDraftForm/>} />
