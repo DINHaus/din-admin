@@ -96,7 +96,7 @@ const ShareLinks = styled.div`
     margin-top: 2rem;
     `;
 
-export const ArticleDetails = () => {
+export const ArticleDetails = ({tableName = "DUCE"}: {tableName?:string}) => {
   //   const location = useLocation(); // for share link
 
 
@@ -114,7 +114,7 @@ export const ArticleDetails = () => {
   const { records } = useRecords({
     daoId: daoId,
     chainId: daoChain,
-    recordType: "DUCE",
+    recordType: tableName,
     hash,
   });
 

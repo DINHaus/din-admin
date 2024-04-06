@@ -73,7 +73,7 @@ const ReactMarkdownWrapper = styled.div`
     font-size: 1.5rem;
     `;
 
-export const AllComments = ({ hash, badge }: { hash?: string, badge?: boolean }) => {
+export const AllComments = ({ hash, badge, tableName = "DUCE" }: { hash?: string, badge?: boolean, tableName?: string }) => {
     //   const location = useLocation(); // for share link
 
     const { address, chainId } = useDHConnect();
@@ -82,7 +82,7 @@ export const AllComments = ({ hash, badge }: { hash?: string, badge?: boolean })
     const { records: comments, refetch: refetchComments } = useRecords({
         // daoId: daoId,
         chainId: chainId || "0xaa36a7", // Assign a default value to chainId
-        recordType: "DUCE",
+        recordType: tableName,
         hash,
     });
 

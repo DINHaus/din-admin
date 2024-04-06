@@ -63,7 +63,7 @@ export const RandomSubTopic = ({daoChain}: {daoChain: ValidNetwork}) => {
             const res = await listRecords({
                 networkId: daoChain,
                 graphApiKeys: GRAPH_API_KEYS,
-                filter: { dao: daos[random1].id, table: "DIN"},
+                filter: { dao: daos[random1].id, table: "DUCE"},
 
 
               });

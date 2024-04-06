@@ -18,6 +18,7 @@ export const APP_FORM: Record<string, CustomFormLego> = {
       APP_FIELD.RELATED_RECORD_FIELD,
       APP_FIELD.CREATEDAT_FIELD,
       APP_FIELD.TAGS_MULTISELECT_FIELD,
+      APP_FIELD.CONTENTHASH_FIELD,
       FIELD.PROP_OFFERING,
     ],
   },

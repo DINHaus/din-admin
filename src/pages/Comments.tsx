@@ -73,7 +73,7 @@ const ReactMarkdownWrapper = styled.div`
     font-size: 1.5rem;
     `;
 
-export const Comments = ({ hash, badge }: { hash?: string, badge?: boolean }) => {
+export const Comments = ({ hash, badge, tableName = "DUCE" }: { hash?: string, badge?: boolean, tableName?: string }) => {
     //   const location = useLocation(); // for share link
     const [isLoadingTx, setIsLoadingTx] = useState(false);
     const [isSuccessTx, setIsSuccessTx] = useState(false);
@@ -100,7 +100,7 @@ export const Comments = ({ hash, badge }: { hash?: string, badge?: boolean }) =>
     const { records: parent } = useRecords({
         daoId: daoId,
         chainId: daoChain,
-        recordType: "DUCE",
+        recordType: tableName,
         hash: hash,
     });
 
@@ -117,6 +117,8 @@ export const Comments = ({ hash, badge }: { hash?: string, badge?: boolean }) =>
     }
     console.log("parent~~~~~~~~~~~~~~", parent)
     const parsedContent: BlogPost = parent[0]?.parsedContent as BlogPost;
+    const tableRoute = tableName === "DUCE" ? "articles" : "rarticles";
+
 
     const onFormComplete = () => {
         refetchComments?.();
@@ -133,6 +135,9 @@ export const Comments = ({ hash, badge }: { hash?: string, badge?: boolean }) =>
             subtitle={"Collectors can post comments here."}
             description={`Comments (${comments.length})`}
         >
+            <StyledLink to={`/molochv3/${daoChain}/${daoId}/${tableRoute}/${hash}`}>
+                <ParLg>OP detail</ParLg>
+            </StyledLink>
 
             <CardWrapper>
                 {comments.length === 0 && (
@@ -150,9 +155,8 @@ export const Comments = ({ hash, badge }: { hash?: string, badge?: boolean }) =>
                             )}
                             <ReactMarkdown>{parsedComment.content}</ReactMarkdown>
                             <ArticleLinks>
-                                <StyledLink to={`/molochv3/${daoChain}/${daoId}/articles/${parsedComment.parentId}`}> OP detail
-                                </StyledLink>
-                                <StyledLink to={`/molochv3/${daoChain}/${daoId}/articles/${parsedComment.parentId}`}>
+
+                                <StyledLink to={`/molochv3/${daoChain}/${daoId}/${tableRoute}/${parsedComment.parentId}`}>
                                     created at: {new Date(Number(parsedComment.createdAt) * 1000).toString()}
                                 </StyledLink>
 

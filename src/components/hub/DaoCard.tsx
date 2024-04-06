@@ -127,8 +127,8 @@ export const DaoCard = ({
             <ParMd>
               <Bold>{readableNumbers.toNumber({ value: proposalCount })}</Bold>{" "}
               {parseInt(readableNumbers.toNumber({ value: proposalCount })) === 1
-                ? "Article"
-                : "Articles"}
+                ? "Curated Article"
+                : "Curated Articles"}
             </ParMd>
           )}
         </div>

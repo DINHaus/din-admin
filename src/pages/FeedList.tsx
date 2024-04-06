@@ -124,7 +124,7 @@ export const FeedList = () => {
           console.log("record >>", record.relatedRecordId);
           if(record.relatedRecordId){
             return (
-              <CuratedArticleListItem relatedRecordId={record.relatedRecordId} key={key} />
+              <CuratedArticleListItem relatedRecordId={record.relatedRecordId} parsedContent={record} key={key} />
             )
           }
 
