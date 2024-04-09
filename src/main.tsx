@@ -7,7 +7,7 @@ import { HausThemeProvider } from "@daohaus/ui";
 import { App } from "./App";
 
 import "./App.css";
-import { protocolGuildDarkTheme } from "./themes/dark";
+import { dinDarkTheme } from "./themes/dark";
 
 // import { Buffer } from "buffer";
 // // This solves an issue when using WalletConnect and intercept Txs to create dao proposals
@@ -20,7 +20,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <HashRouter>
       <QueryClientProvider client={queryClient}>
-        <HausThemeProvider defaultDark={protocolGuildDarkTheme}>
+        <HausThemeProvider defaultDark={dinDarkTheme}>
           <App />
         </HausThemeProvider>
       </QueryClientProvider>

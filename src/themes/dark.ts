@@ -30,7 +30,7 @@ import {
   yellowDark,
 } from "@radix-ui/colors";
 
-export const pgPrimaryDarkBtn: ButtonTheme = {
+export const dinPrimaryDarkBtn: ButtonTheme = {
   solid: {
     text: primaryDark.step1,
     bg: primaryDark.step9,
@@ -63,7 +63,7 @@ export const pgPrimaryDarkBtn: ButtonTheme = {
   },
 };
 
-export const pgSecondaryDarkBtn: ButtonTheme = {
+export const dinSecondaryDarkBtn: ButtonTheme = {
   solid: {
     text: secondaryDark.step12,
     bg: secondaryDark.step6,
@@ -96,7 +96,7 @@ export const pgSecondaryDarkBtn: ButtonTheme = {
   },
 };
 
-export const protocolGuildDarkTheme: DefaultTheme = {
+export const dinDarkTheme: DefaultTheme = {
   themeName: "dark",
   font,
   transparent: "transparent",
@@ -135,8 +135,8 @@ export const protocolGuildDarkTheme: DefaultTheme = {
     bg: neutralDark.step9,
   },
   button: {
-    primary: pgPrimaryDarkBtn,
-    secondary: pgSecondaryDarkBtn,
+    primary: dinPrimaryDarkBtn,
+    secondary: dinSecondaryDarkBtn,
     success: successDarkBtn,
     warning: warningDarkBtn,
     danger: dangerDarkBtn,
