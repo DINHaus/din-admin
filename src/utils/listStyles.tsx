@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const CardWrapper = styled.div`
-  margin: .1rem;
+  margin: 0.1rem;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -15,7 +15,7 @@ export const ArticleCard = styled(Card)`
   width: 100%;
   min-height: 10rem;
   padding: 1rem;
-  margin: .2rem;
+  margin: 0.2rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -33,7 +33,6 @@ export const CardTitleWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 0;
-
 `;
 
 export const CardDescription = styled(ParSm)`
@@ -48,7 +47,7 @@ export const CardAvatar = styled.div`
 `;
 
 export const CardImg = styled.div`
-height: 20rem;
+  height: 20rem;
   img {
     width: 100%;
     height: 100%;
@@ -65,9 +64,11 @@ export const ButtonList = styled.div`
   margin-bottom: 1rem;
 `;
 
-export const StyledLink = styled(Link)`
+export const StyledLink = styled(Link)<{ variant?: "dead" }>`
   text-decoration: none;
   color: ${({ theme }) => theme.primary.step10};
+  pointer-events: ${({ variant }) => (variant === "dead" ? "none" : "auto")};
+  cursor: ${({ variant }) => (variant === "dead" ? "default" : "pointer")};
   &:hover {
     text-decoration: none;
     font-weight: bold;

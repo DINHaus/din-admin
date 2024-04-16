@@ -1,8 +1,28 @@
-
 import React, { useState } from "react";
 import { useCurrentDao, useDaoData } from "@daohaus/moloch-v3-hooks";
-import { Badge, Button, Dialog, DialogContent, DialogTrigger, Input, LinkStyles, ParLg, ParMd, ParSm, Tag, Tooltip } from "@daohaus/ui";
-import { ArticleCard, ArticleLinks, CardAvatar, CardDescription, CardTitle, CardTitleWrapper, StyledLink } from "../utils/listStyles";
+import {
+  Badge,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+  Input,
+  LinkStyles,
+  ParLg,
+  ParMd,
+  ParSm,
+  Tag,
+  Tooltip,
+} from "@daohaus/ui";
+import {
+  ArticleCard,
+  ArticleLinks,
+  CardAvatar,
+  CardDescription,
+  CardTitle,
+  CardTitleWrapper,
+  StyledLink,
+} from "../utils/listStyles";
 import { AuthorAvatar } from "./AuthorAvatar";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { CollectButton } from "./CollectButton";
@@ -13,9 +33,8 @@ import { DEFAULT_NETWORK_ID } from "../utils/constants";
 import styled from "styled-components";
 
 const Tags = styled.div`
-display: flex;
-
-`
+  display: flex;
+`;
 const DialogContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -25,48 +44,66 @@ const DialogContentWrapper = styled.div`
 `;
 
 const StyledExternalLink = styled.a`
-${LinkStyles};
+  ${LinkStyles};
 `;
 
-
-export const ArticleListItem = ({ parsedContent }: { parsedContent: BlogPost }) => {
+export const ArticleListItem = ({
+  parsedContent,
+}: {
+  parsedContent: BlogPost;
+}) => {
   const { daoChain } = useParams();
   const navigate = useNavigate();
   const [curateFormLink, setCurateFormLink] = useState<string | null>(null);
 
-
-  const getArticleUrl = (daoId: string, articleId: string, daoChain?: string) => {
-    return `/molochv3/${daoChain || DEFAULT_NETWORK_ID}/${daoId}/articles/${articleId}`
-  }
-
-  const getCurateUrl = (daoId: string, relatedArticle: string, daoChain?: string) => {
-    return `/molochv3/${daoChain || DEFAULT_NETWORK_ID}/${daoId}/curate/${daoId}/${relatedArticle}`
-  }
-
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement>
+  const getArticleUrl = (
+    daoId: string,
+    articleId: string,
+    daoChain?: string
   ) => {
+    return `/molochv3/${
+      daoChain || DEFAULT_NETWORK_ID
+    }/${daoId}/articles/${articleId}`;
+  };
+
+  const getCurateUrl = (
+    daoId: string,
+    relatedArticle: string,
+    daoChain?: string
+  ) => {
+    return `/molochv3/${
+      daoChain || DEFAULT_NETWORK_ID
+    }/${daoId}/curate/${daoId}/${relatedArticle}`;
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     // TODO: validate DAO
-    const link = getCurateUrl(event.target.value, parsedContent.recordId, daoChain);
-    console.log(event, link)
+    const link = getCurateUrl(
+      event.target.value,
+      parsedContent.recordId,
+      daoChain
+    );
+    console.log(event, link);
     setCurateFormLink(link);
-  }
+  };
 
   const handleClick = () => {
-    if(!curateFormLink) return;
-    navigate(curateFormLink)
-  }
-
-
+    if (!curateFormLink) return;
+    navigate(curateFormLink);
+  };
 
   if (!parsedContent.id || !parsedContent.daoId || !parsedContent.content) {
-    return <ParMd>Invalid Metadata Format</ParMd>
+    return <ParMd>Invalid Metadata Format</ParMd>;
   }
 
-  console.log("parsedContent *****************>>", parsedContent)
+  console.log("parsedContent *****************>>", parsedContent);
   const date = new Date(Number(parsedContent.createdAt) * 1000);
-  const formattedDate = `${date.getFullYear()} ${date.toLocaleString('default', { month: 'short' })} ${date.getDate()} ${date.getHours()}:${date.getMinutes() < 10 ? '0' : ''}${date.getMinutes()}`;
-
+  const formattedDate = `${date.getFullYear()} ${date.toLocaleString(
+    "default",
+    { month: "short" }
+  )} ${date.getDate()} ${date.getHours()}:${
+    date.getMinutes() < 10 ? "0" : ""
+  }${date.getMinutes()}`;
 
   return (
     <ArticleCard>
@@ -81,38 +118,82 @@ export const ArticleListItem = ({ parsedContent }: { parsedContent: BlogPost }) 
                 </Link>
               </CardImg> */}
       <CardAvatar>
-
-
         {parsedContent?.authorAddress ? (
           <AuthorAvatar address={parsedContent?.authorAddress} />
         ) : (
           <AuthorAvatar address={ZERO_ADDRESS} />
         )}
       </CardAvatar>
-      {(parsedContent?.tag == "DUCEREF" || (parsedContent?.tag == "DUCE" && parsedContent?.parentId == "0")) && (<CardTitleWrapper>
-        <Link to={`${getArticleUrl(parsedContent.daoId, parsedContent.id, daoChain)}/comments`}><CardTitle>{parsedContent?.title}</CardTitle></Link>
-        <Tooltip key={parsedContent?.id} content={`tip`} triggerEl={(<CollectButton hash={parsedContent?.id} link={true} />)} />
-      </CardTitleWrapper>)}
+      {(parsedContent?.tag == "DUCEREF" ||
+        (parsedContent?.tag == "DUCE" && parsedContent?.parentId == "0")) && (
+        <CardTitleWrapper>
+          <Link
+            to={`${getArticleUrl(
+              parsedContent.daoId,
+              parsedContent.id,
+              daoChain
+            )}/comments`}
+          >
+            <CardTitle>{parsedContent?.title}</CardTitle>
+          </Link>
+          <Tooltip
+            key={parsedContent?.id}
+            content={`tip`}
+            triggerEl={<CollectButton hash={parsedContent?.id} link={true} />}
+          />
+        </CardTitleWrapper>
+      )}
 
       <CardDescription>{parsedContent?.content}</CardDescription>
-      {parsedContent?.contentURI && <ParSm><StyledExternalLink href={parsedContent?.contentURI} target="_blank">external link</StyledExternalLink></ParSm>}
-      <Tags>{parsedContent?.tags?.map((tag, key) => {
-        return (
-          <Tag key={key} tagColor="violet">{tag}</Tag>
-        )
-      }
-      )
-
-      }</Tags>
+      {parsedContent?.contentURI && (
+        <ParSm>
+          <StyledExternalLink href={parsedContent?.contentURI} target="_blank">
+            external link
+          </StyledExternalLink>
+        </ParSm>
+      )}
+      <Tags>
+        {parsedContent?.tags?.map((tag, key) => {
+          return (
+            <Tag key={key} tagColor="violet">
+              {tag}
+            </Tag>
+          );
+        })}
+      </Tags>
       <ArticleLinks>
-        {(!parsedContent?.parentId || parsedContent?.parentId === "0") && (<StyledLink to={getArticleUrl(parsedContent.daoId, parsedContent.id, daoChain)}> detail</StyledLink>)}
-        {(!parsedContent?.parentId || parsedContent?.parentId === "0") && (<StyledLink to={`${getArticleUrl(parsedContent.daoId, parsedContent.id, daoChain)}/comments`}> comments <Comments hash={parsedContent?.id} badge /> </StyledLink>)}
+        {(!parsedContent?.parentId || parsedContent?.parentId === "0") && (
+          <StyledLink
+            to={getArticleUrl(parsedContent.daoId, parsedContent.id, daoChain)}
+          >
+            {" "}
+            detail
+          </StyledLink>
+        )}
+        {(!parsedContent?.parentId || parsedContent?.parentId === "0") && (
+          <StyledLink
+            to={`${getArticleUrl(
+              parsedContent.daoId,
+              parsedContent.id,
+              daoChain
+            )}/comments`}
+          >
+            {" "}
+            comments <Comments hash={parsedContent?.id} badge />{" "}
+          </StyledLink>
+        )}
         {parsedContent?.parentId && parsedContent?.parentId != "0" && (
-          <StyledLink to={`/molochv3/${daoChain}/${parsedContent.daoId}/articles/${parsedContent.parentId}`}> See parent ↩
+          <StyledLink
+            to={`/molochv3/${daoChain}/${parsedContent.daoId}/articles/${parsedContent.parentId}`}
+          >
+            {" "}
+            See parent ↩
           </StyledLink>
         )}
 
-        <StyledLink to={``}> created at: {formattedDate} </StyledLink>
+        <StyledLink to={``} variant="dead">
+          created at: {formattedDate}
+        </StyledLink>
         {(!parsedContent?.parentId || parsedContent?.parentId === "0") && (
           <Dialog>
             <DialogTrigger asChild>
@@ -124,20 +205,22 @@ export const ArticleListItem = ({ parsedContent }: { parsedContent: BlogPost }) 
                 children: "Submit for curation",
               }}
               onClick={handleClick}
-
             >
               <DialogContentWrapper>
-                <ParSm>Enter the Hub Id to submit to the editors for curation</ParSm>
-                <Input long id="daoAddress" placeholder="DAO Address" onChange={handleChange}></Input>
+                <ParSm>
+                  Enter the Hub Id to submit to the editors for curation
+                </ParSm>
+                <Input
+                  long
+                  id="daoAddress"
+                  placeholder="DAO Address"
+                  onChange={handleChange}
+                ></Input>
               </DialogContentWrapper>
             </DialogContent>
           </Dialog>
         )}
-
-
       </ArticleLinks>
-
-
     </ArticleCard>
   );
 };
