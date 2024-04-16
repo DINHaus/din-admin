@@ -166,7 +166,6 @@ export const ArticleListItem = ({
           <StyledLink
             to={getArticleUrl(parsedContent.daoId, parsedContent.id, daoChain)}
           >
-            {" "}
             detail
           </StyledLink>
         )}
@@ -178,15 +177,17 @@ export const ArticleListItem = ({
               daoChain
             )}/comments`}
           >
-            {" "}
             comments <Comments hash={parsedContent?.id} badge />{" "}
           </StyledLink>
         )}
         {parsedContent?.parentId && parsedContent?.parentId != "0" && (
           <StyledLink
-            to={`/molochv3/${daoChain}/${parsedContent.daoId}/articles/${parsedContent.parentId}`}
+            to={getArticleUrl(
+              parsedContent.daoId,
+              parsedContent.parentId,
+              daoChain
+            )}
           >
-            {" "}
             See parent ↩
           </StyledLink>
         )}
