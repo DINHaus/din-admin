@@ -40,7 +40,6 @@ const StyledDaoCard = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
   }
   .top-box {
     display: flex;
@@ -70,7 +69,6 @@ const StyledDaoCard = styled.div`
     display: flex;
     flex-direction: row;
   }
-  
 `;
 
 export const DaoCard = ({
@@ -107,17 +105,23 @@ export const DaoCard = ({
             )}
           </div>
         </div>
-        <StyledLink to={`/molochv3/${chainIdLocal}/${id}/articles`}><ParLg className="dao-title">
-          {name ? charLimit(name, 31) : charLimit(id, 31)}{" "}
-        </ParLg></StyledLink>
+        <StyledLink to={`/molochv3/${chainIdLocal}/${id}/articles`}>
+          <ParLg className="dao-title">
+            {name ? charLimit(name, 31) : charLimit(id, 31)}{" "}
+          </ParLg>
+        </StyledLink>
         <div className="stats-box">
           {activeMemberCount && (
             <ParMd>
               <Bold>
-                {readableNumbers.toNumber({ value: (Number(activeMemberCount) - 1).toString() })}
+                {readableNumbers.toNumber({
+                  value: (Number(activeMemberCount) - 1).toString(),
+                })}
               </Bold>{" "}
               {parseInt(
-                readableNumbers.toNumber({ value: (Number(activeMemberCount) - 1).toString() })
+                readableNumbers.toNumber({
+                  value: (Number(activeMemberCount) - 1).toString(),
+                })
               ) === 1
                 ? "Curator"
                 : "Curators"}
@@ -126,31 +130,36 @@ export const DaoCard = ({
           {proposalCount && (
             <ParMd>
               <Bold>{readableNumbers.toNumber({ value: proposalCount })}</Bold>{" "}
-              {parseInt(readableNumbers.toNumber({ value: proposalCount })) === 1
+              {parseInt(readableNumbers.toNumber({ value: proposalCount })) ===
+              1
                 ? "Curated Article"
                 : "Curated Articles"}
             </ParMd>
           )}
         </div>
 
-        {tags?.length && (<div class-name="tag-box">
-          <ParSm>Tags:</ParSm>
-          {tags.map((tag) => (
-            <Tag key={tag} tagColor="blue">
-              {tag}
-            </Tag>
-          ))}
-        </div>)}
+        {tags?.length && (
+          <div class-name="tag-box">
+            <ParSm>Tags:</ParSm>
+            {tags.map((tag) => (
+              <Tag key={tag} tagColor="blue">
+                {tag}
+              </Tag>
+            ))}
+          </div>
+        )}
 
         {/* <div className="tag-box">
           <Tag tagColor="red">{getNetworkName(chainIdLocal || DEFAULT_NETWORK_ID)}</Tag>
         </div> */}
       </div>
-      {description && (<div className="description-box">
-        <ReactMarkdown>{description}</ReactMarkdown>
-      </div>)}
+      {description && (
+        <div className="description-box">
+          <ReactMarkdown>{description}</ReactMarkdown>
+        </div>
+      )}
       <div className="button-box">
-      <ButtonRouterLink
+        <ButtonRouterLink
           color="secondary"
           to={`/molochv3/${chainIdLocal}/${id}/articles`}
         >
@@ -160,7 +169,7 @@ export const DaoCard = ({
           color="secondary"
           to={`/molochv3/${chainIdLocal}/${id}`}
         >
-          Currator Dashboard
+          Curator Dashboard
         </ButtonRouterLink>
         <ButtonRouterLink
           color="secondary"
