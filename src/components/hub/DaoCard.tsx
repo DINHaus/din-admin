@@ -58,6 +58,7 @@ const StyledDaoCard = styled.div`
       margin-bottom: 0.6rem;
     }
   }
+
   .tag-box {
     font-size: 1.4rem;
     margin-bottom: 2.4rem;
@@ -80,9 +81,18 @@ export const DaoCard = ({
   avatarImg,
   description,
   tags,
+  createdAt,
 }: ListDaosQueryResDaos[0]) => {
   const { chainId } = useDHConnect();
   const chainIdLocal = chainId || DEFAULT_NETWORK_ID;
+
+  const date = new Date(Number(createdAt) * 1000);
+  const formattedDate = `${date.getFullYear()} ${date.toLocaleString(
+    "default",
+    { month: "short" }
+  )} ${date.getDate()} ${date.getHours()}:${
+    date.getMinutes() < 10 ? "0" : ""
+  }${date.getMinutes()}`;
 
   return (
     <StyledDaoCard className="dao-card">
@@ -129,9 +139,16 @@ export const DaoCard = ({
           )}
           {proposalCount && (
             <ParMd>
-              <Bold>{readableNumbers.toNumber({ value: proposalCount })}</Bold>{" "}
-              {parseInt(readableNumbers.toNumber({ value: proposalCount })) ===
-              1
+              <Bold>
+                {readableNumbers.toNumber({
+                  value: proposalCount,
+                })}
+              </Bold>{" "}
+              {parseInt(
+                readableNumbers.toNumber({
+                  value: proposalCount,
+                })
+              ) === 1
                 ? "Curated Article"
                 : "Curated Articles"}
             </ParMd>
@@ -139,11 +156,11 @@ export const DaoCard = ({
         </div>
 
         {tags?.length && (
-          <div class-name="tag-box">
+          <div className="tag-box">
             <ParSm>Tags:</ParSm>
             {tags.map((tag) => (
               <Tag key={tag} tagColor="blue">
-                {tag}
+                {tag.toLowerCase()}
               </Tag>
             ))}
           </div>
@@ -176,6 +193,9 @@ export const DaoCard = ({
           to={`/molochv3/${chainIdLocal}/${id}/polls`}
         >
           Collector Dashboard
+        </ButtonRouterLink>
+        <ButtonRouterLink color="secondary" to="#" isDead>
+          Created At: {formattedDate}
         </ButtonRouterLink>
       </div>
     </StyledDaoCard>
