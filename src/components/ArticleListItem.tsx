@@ -34,6 +34,10 @@ import styled from "styled-components";
 
 const Tags = styled.div`
   display: flex;
+
+  .article-tag {
+    margin: 0.5rem;
+  }
 `;
 const DialogContentWrapper = styled.div`
   display: flex;
@@ -155,7 +159,7 @@ export const ArticleListItem = ({
       <Tags>
         {parsedContent?.tags?.map((tag, key) => {
           return (
-            <Tag key={key} tagColor="violet">
+            <Tag className="article-tag" key={key} tagColor="violet">
               {tag}
             </Tag>
           );
@@ -192,7 +196,7 @@ export const ArticleListItem = ({
           </StyledLink>
         )}
 
-        <StyledLink to={``} variant="dead">
+        <StyledLink to={`#`} isDead>
           created at: {formattedDate}
         </StyledLink>
         {(!parsedContent?.parentId || parsedContent?.parentId === "0") && (

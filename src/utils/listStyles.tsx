@@ -64,11 +64,11 @@ export const ButtonList = styled.div`
   margin-bottom: 1rem;
 `;
 
-export const StyledLink = styled(Link)<{ variant?: "dead" }>`
+export const StyledLink = styled(Link)<{ isDead?: boolean }>`
   text-decoration: none;
   color: ${({ theme }) => theme.primary.step10};
-  pointer-events: ${({ variant }) => (variant === "dead" ? "none" : "auto")};
-  cursor: ${({ variant }) => (variant === "dead" ? "default" : "pointer")};
+  pointer-events: ${({ isDead }) => (isDead ? "none" : "auto")};
+  cursor: ${({ isDead }) => (isDead ? "default" : "pointer")};
   &:hover {
     text-decoration: none;
     font-weight: bold;
