@@ -2,27 +2,30 @@ import ReactMarkdown from "react-markdown";
 import styled from "styled-components";
 
 import { useParams } from "react-router-dom";
-import {
-    H1,
-    ParLg,
-    SingleColumnLayout,
-    useToast,
-} from "@daohaus/ui";
+import { H1, ParLg, SingleColumnLayout, useToast } from "@daohaus/ui";
 import { useDHConnect } from "@daohaus/connect";
 
-
 import { useState } from "react";
-import { useCurrentDao, useDaoData, useDaoMember } from "@daohaus/moloch-v3-hooks";
+import {
+  useCurrentDao,
+  useDaoData,
+  useDaoMember,
+} from "@daohaus/moloch-v3-hooks";
 import { useRecords } from "../hooks/useRecords";
 
 import { FormBuilder } from "@daohaus/form-builder";
 import { APP_FORM } from "../legos/forms";
 import { AppFieldLookup } from "../legos/legoConfig";
 import { BlogPost } from "../utils/types";
-import { ArticleCard, ArticleLinks, CardWrapper, StyledLink } from "../utils/listStyles";
+import {
+  ArticleCard,
+  ArticleLinks,
+  CardWrapper,
+  StyledLink,
+} from "../utils/listStyles";
 import { AuthorAvatar } from "../components/AuthorAvatar";
 import { ZERO_ADDRESS } from "@daohaus/utils";
-
+import { formatDate } from "../utils/helperFunctions";
 
 const ArticleLayout = styled.div`
   display: flex;
@@ -61,123 +64,136 @@ const DialogContentWrapper = styled.div`
 `;
 
 const SmallCardImg = styled.img`
-    width: 10rem;
-    height: 10rem;
-    object-fit: cover;
-    margin-bottom: 2rem;
-    `;
+  width: 10rem;
+  height: 10rem;
+  object-fit: cover;
+  margin-bottom: 2rem;
+`;
 
 const ReactMarkdownWrapper = styled.div`
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    font-size: 1.5rem;
-    `;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+`;
 
-export const Comments = ({ hash, badge, tableName = "DUCE" }: { hash?: string, badge?: boolean, tableName?: string }) => {
-    //   const location = useLocation(); // for share link
-    const [isLoadingTx, setIsLoadingTx] = useState(false);
-    const [isSuccessTx, setIsSuccessTx] = useState(false);
+export const Comments = ({
+  hash,
+  badge,
+  tableName = "DUCE",
+}: {
+  hash?: string;
+  badge?: boolean;
+  tableName?: string;
+}) => {
+  //   const location = useLocation(); // for share link
+  const [isLoadingTx, setIsLoadingTx] = useState(false);
+  const [isSuccessTx, setIsSuccessTx] = useState(false);
 
-    const { hash: hashParam } = useParams();
-    const { address } = useDHConnect();
-    const { daoChain, daoId } = useCurrentDao();
-    const { dao } = useDaoData();
+  const { hash: hashParam } = useParams();
+  const { address } = useDHConnect();
+  const { daoChain, daoId } = useCurrentDao();
+  const { dao } = useDaoData();
 
-    const { successToast, errorToast, defaultToast } = useToast();
-    console.log("hashParam", hashParam, hash)
-    if (!hash) {
-        hash = hashParam;
-    }
+  const { successToast, errorToast, defaultToast } = useToast();
+  console.log("hashParam", hashParam, hash);
+  if (!hash) {
+    hash = hashParam;
+  }
 
-    if (!daoId || !daoChain) {
-        return null;
-    }
-    const { member } = useDaoMember({
-        daoChain: daoChain,
-        daoId: daoId,
-        memberAddress: address,
-    });
-    const { records: parent } = useRecords({
-        daoId: daoId,
-        chainId: daoChain,
-        recordType: tableName,
-        hash: hash,
-    });
+  if (!daoId || !daoChain) {
+    return null;
+  }
+  const { member } = useDaoMember({
+    daoChain: daoChain,
+    daoId: daoId,
+    memberAddress: address,
+  });
+  const { records: parent } = useRecords({
+    daoId: daoId,
+    chainId: daoChain,
+    recordType: tableName,
+    hash: hash,
+  });
 
-    const { records: comments, refetch: refetchComments } = useRecords({
-        daoId: daoId,
-        chainId: daoChain,
-        recordType: "DUCE",
-        parentHash: hash,
-    });
+  const { records: comments, refetch: refetchComments } = useRecords({
+    daoId: daoId,
+    chainId: daoChain,
+    recordType: "DUCE",
+    parentHash: hash,
+  });
 
+  if (!parent || !comments) {
+    return <div>Loading...</div>;
+  }
+  console.log("parent~~~~~~~~~~~~~~", parent);
+  const parsedContent: BlogPost = parent[0]?.parsedContent as BlogPost;
+  const tableRoute = tableName === "DUCE" ? "articles" : "rarticles";
 
-    if (!parent || !comments) {
-        return <div>Loading...</div>;
-    }
-    console.log("parent~~~~~~~~~~~~~~", parent)
-    const parsedContent: BlogPost = parent[0]?.parsedContent as BlogPost;
-    const tableRoute = tableName === "DUCE" ? "articles" : "rarticles";
+  const onFormComplete = () => {
+    refetchComments?.();
+  };
 
+  if (badge) {
+    return `(${comments.length})`;
+  }
 
-    const onFormComplete = () => {
-        refetchComments?.();
-    };
+  return (
+    <SingleColumnLayout
+      title={parsedContent?.title || "no title"}
+      subtitle={"Collectors can post comments here."}
+      description={`Comments (${comments.length})`}
+    >
+      <StyledLink to={`/molochv3/${daoChain}/${daoId}/${tableRoute}/${hash}`}>
+        <ParLg>OP detail</ParLg>
+      </StyledLink>
 
-    if (badge) {
-        return `(${comments.length})`
-    }
-
-
-    return (
-        <SingleColumnLayout
-            title={parsedContent?.title || "no title"}
-            subtitle={"Collectors can post comments here."}
-            description={`Comments (${comments.length})`}
-        >
-            <StyledLink to={`/molochv3/${daoChain}/${daoId}/${tableRoute}/${hash}`}>
-                <ParLg>OP detail</ParLg>
-            </StyledLink>
-
-            <CardWrapper>
-                {comments.length === 0 && (
-                    <ArticleCard><ParLg>No comments yet. You can be the first.</ParLg></ArticleCard>
-                )}
-                {comments.map((comment, key) => {
-                    const parsedComment: BlogPost = comment.parsedContent as BlogPost;
-                    return (
-
-                        <ArticleCard key={key}>
-                            {parsedComment?.authorAddress || parsedComment?.author ? (
-                                <AuthorAvatar address={parsedComment?.authorAddress || parsedComment?.author} />
-                            ) : (
-                                <AuthorAvatar address={ZERO_ADDRESS} />
-                            )}
-                            <ReactMarkdown>{parsedComment.content}</ReactMarkdown>
-                            <ArticleLinks>
-
-                                <StyledLink to={`/molochv3/${daoChain}/${daoId}/${tableRoute}/${parsedComment.parentId}`}>
-                                    created at: {new Date(Number(parsedComment.createdAt) * 1000).toString()}
-                                </StyledLink>
-
-                            </ArticleLinks>
-                        </ArticleCard>
-
-                    );
-                })
-                }
-            </CardWrapper>
-            {member && Number(member?.sharesLootDelegateShares) > 0 ? (
-                <FormBuilder form={APP_FORM.NEW_COMMENT} customFields={AppFieldLookup} lifeCycleFns={{
-                    onPollSuccess: () => {
-                        onFormComplete();
-                    },
-                }} />
-            ) : (
-                <ParLg>Only Collectors can comment</ParLg>
-            )}
-
-        </SingleColumnLayout>
-
-    );
+      <CardWrapper>
+        {comments.length === 0 && (
+          <ArticleCard>
+            <ParLg>No comments yet. You can be the first.</ParLg>
+          </ArticleCard>
+        )}
+        {comments.map((comment, key) => {
+          const parsedComment: BlogPost = comment.parsedContent as BlogPost;
+          return (
+            <ArticleCard key={key}>
+              {parsedComment?.authorAddress || parsedComment?.author ? (
+                <AuthorAvatar
+                  address={
+                    parsedComment?.authorAddress || parsedComment?.author
+                  }
+                />
+              ) : (
+                <AuthorAvatar address={ZERO_ADDRESS} />
+              )}
+              <ReactMarkdown>{parsedComment.content}</ReactMarkdown>
+              <ArticleLinks>
+                <StyledLink
+                  to={`/molochv3/${daoChain}/${daoId}/${tableRoute}/${parsedComment.parentId}`}
+                >
+                  details
+                </StyledLink>
+                <StyledLink to="#" isDead>
+                  Created At: {formatDate(Number(parsedComment.createdAt))}
+                </StyledLink>
+              </ArticleLinks>
+            </ArticleCard>
+          );
+        })}
+      </CardWrapper>
+      {member && Number(member?.sharesLootDelegateShares) > 0 ? (
+        <FormBuilder
+          form={APP_FORM.NEW_COMMENT}
+          customFields={AppFieldLookup}
+          lifeCycleFns={{
+            onPollSuccess: () => {
+              onFormComplete();
+            },
+          }}
+        />
+      ) : (
+        <ParLg>Only Collectors can comment</ParLg>
+      )}
+    </SingleColumnLayout>
+  );
 };

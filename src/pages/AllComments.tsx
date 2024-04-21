@@ -26,6 +26,7 @@ import {
 import { AuthorAvatar } from "../components/AuthorAvatar";
 import { ZERO_ADDRESS } from "@daohaus/utils";
 import { DEFAULT_NETWORK_ID } from "../utils/constants";
+import { formatDate, getArticleUrl } from "../utils/helperFunctions";
 
 const ArticleLayout = styled.div`
   display: flex;
@@ -96,28 +97,6 @@ export const AllComments = ({
     hash,
   });
 
-  function formatDate(createdAt: number) {
-    const date = new Date(createdAt * 1000);
-    const formattedDate = `${date.getFullYear()} ${date.toLocaleString(
-      "default",
-      { month: "short" }
-    )} ${date.getDate()} ${date.getHours()}:${
-      date.getMinutes() < 10 ? "0" : ""
-    }${date.getMinutes()}`;
-
-    return formattedDate;
-  }
-
-  const getArticleUrl = (
-    daoId: string,
-    articleId: string,
-    daoChain?: string
-  ) => {
-    return `/molochv3/${
-      daoChain || DEFAULT_NETWORK_ID
-    }/${daoId}/articles/${articleId}`;
-  };
-
   if (!comments) {
     return <div>Loading Comments on {chainId}...</div>;
   }
@@ -165,14 +144,7 @@ export const AllComments = ({
                 >
                   OP detail
                 </StyledLink>
-                <StyledLink
-                  to={getArticleUrl(
-                    parsedComment.daoId,
-                    parsedComment.id,
-                    chainId
-                  )}
-                  isDead
-                >
+                <StyledLink to="#" isDead>
                   created at: {formatDate(Number(parsedComment.createdAt))}
                 </StyledLink>
               </ArticleLinks>
