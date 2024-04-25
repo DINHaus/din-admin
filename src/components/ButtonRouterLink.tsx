@@ -1,22 +1,25 @@
-import React, { ComponentProps } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import styled from 'styled-components';
-import { Button } from '@daohaus/ui';
+import React, { ComponentProps } from "react";
+import { Link as RouterLink } from "react-router-dom";
+import styled from "styled-components";
+import { Button } from "@daohaus/ui";
 
 type ProfileLinkProps = {
   href?: string;
   to: string;
   selected?: boolean;
+  isDead?: boolean;
   disabled?: boolean;
-  linkType?: 'internal' | 'external' | 'no-icon-external';
+  linkType?: "internal" | "external" | "no-icon-external";
   hideIcon?: boolean;
   target?: string;
   rel?: string;
 } & Partial<ComponentProps<typeof Button>>;
 
-const StyledRouterLink = styled(RouterLink)`
+const StyledRouterLink = styled(RouterLink)<{ isDead?: boolean }>`
   text-decoration: none;
   color: unset;
+  pointer-events: ${({ isDead }) => (isDead ? "none" : "auto")};
+  cursor: ${({ isDead }) => (isDead ? "default" : "pointer")};
   &:hover {
     text-decoration: none;
   }
@@ -30,11 +33,18 @@ export const ButtonRouterLink = ({
   linkType,
   hideIcon,
   rel,
+  isDead,
   ...buttonProps
 }: ProfileLinkProps) => {
   return (
-    <StyledRouterLink to={to} target={target} className="button-link" rel={rel}>
-      <Button size="sm" variant='link' disabled={disabled} {...buttonProps}>
+    <StyledRouterLink
+      to={to}
+      target={target}
+      className="button-link"
+      rel={rel}
+      isDead={isDead}
+    >
+      <Button size="sm" variant="link" disabled={disabled} {...buttonProps}>
         {children}
       </Button>
     </StyledRouterLink>

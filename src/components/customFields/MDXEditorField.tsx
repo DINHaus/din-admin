@@ -16,6 +16,9 @@ import {
   linkPlugin,
   linkDialogPlugin,
   CreateLink,
+  DiffSourceToggleWrapper,
+  diffSourcePlugin,
+  codeBlockPlugin,
 } from "@mdxeditor/editor";
 import "@mdxeditor/editor/style.css";
 import styled from "styled-components";
@@ -65,6 +68,11 @@ export const MDXEditorField = (props: Buildable<Field>) => {
         className="dark-theme dark-editor"
         markdown={""}
         plugins={[
+          diffSourcePlugin({
+            diffMarkdown: content || "",
+            viewMode: "rich-text",
+          }),
+          codeBlockPlugin(),
           listsPlugin(),
           quotePlugin(),
           headingsPlugin(),
@@ -73,10 +81,12 @@ export const MDXEditorField = (props: Buildable<Field>) => {
           toolbarPlugin({
             toolbarContents: () => (
               <>
-                <UndoRedo />
-                <BoldItalicUnderlineToggles />
-                <CreateLink />
-                <ListsToggle /> <BlockTypeSelect />
+                <DiffSourceToggleWrapper>
+                  <BoldItalicUnderlineToggles />
+                  <CreateLink />
+                  <ListsToggle /> <BlockTypeSelect />
+                  <UndoRedo />
+                </DiffSourceToggleWrapper>
               </>
             ),
           }),
