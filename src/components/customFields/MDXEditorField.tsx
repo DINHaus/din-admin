@@ -19,6 +19,8 @@ import {
   DiffSourceToggleWrapper,
   diffSourcePlugin,
   codeBlockPlugin,
+  imagePlugin,
+  InsertImage,
 } from "@mdxeditor/editor";
 import "@mdxeditor/editor/style.css";
 import styled from "styled-components";
@@ -78,12 +80,14 @@ export const MDXEditorField = (props: Buildable<Field>) => {
           headingsPlugin(),
           linkPlugin(),
           linkDialogPlugin(),
+          imagePlugin(),
           toolbarPlugin({
             toolbarContents: () => (
               <>
                 <DiffSourceToggleWrapper>
                   <BoldItalicUnderlineToggles />
                   <CreateLink />
+                  <InsertImage />
                   <ListsToggle /> <BlockTypeSelect />
                   <UndoRedo />
                 </DiffSourceToggleWrapper>
