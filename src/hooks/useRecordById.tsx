@@ -8,6 +8,7 @@ import { BlogPost } from "../utils/types";
 const defaultGraphApiKeys = {
   "0x1": import.meta.env.VITE_GRAPH_API_KEY_MAINNET,
   "0x64": import.meta.env.VITE_GRAPH_API_KEY_MAINNET,
+  "0xa": import.meta.env.VITE_GRAPH_API_KEY_MAINNET,
 };
 
 type Record = {

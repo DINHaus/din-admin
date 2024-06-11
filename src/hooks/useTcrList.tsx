@@ -18,7 +18,6 @@ export type ListTcr = {
 
 export const useTcrList = ({ daoId }: { daoId: string }) => {
   const { daoChain } = useParams();
-  // TODO: is this inside bad?
   const API_URL = TCR_GRAPH_URL[daoChain as ValidNetwork];
   const graphQLClient = new GraphQLClient(API_URL || DEFAULT_GRAPH_URL);
 

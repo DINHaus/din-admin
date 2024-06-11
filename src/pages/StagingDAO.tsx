@@ -94,7 +94,7 @@ export const StagingDAO = ({ badge }: { daoId?: string, badge?: boolean }) => {
 
     const { records: comments, refetch: refetchComments } = useRecords({
         daoId: daoId,
-        chainId: chainId || "0xaa36a7", // Assign a default value to chainId
+        chainId: chainId || "0xa", // Assign a default value to chainId
         recordType: "DUCE",
     });
 
