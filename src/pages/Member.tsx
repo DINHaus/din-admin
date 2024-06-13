@@ -1,8 +1,8 @@
 import { BsArrowLeft, BsShareFill } from "react-icons/bs";
 import styled from "styled-components";
 
-import { useCurrentDao, useDaoData, useDaoMember } from "@daohaus/moloch-v3-hooks";
-import { MemberProfileCard } from "@daohaus/moloch-v3-macro-ui";
+import { useCurrentDao, useDaoData, useDaoMember, useProfile } from "@daohaus/moloch-v3-hooks";
+import { MemberProfile, MemberProfileCard } from "@daohaus/moloch-v3-macro-ui";
 import {
   Button,
   ParLg,
@@ -48,6 +48,10 @@ export const Member = () => {
   const { successToast } = useToast();
   const isMobile = useBreakpoint(widthQuery.sm);
 
+  const { profile: currentProfile, isLoading: isLoadingProfile } = useProfile({
+    address: member?.memberAddress || '',
+  });
+
 
   const handleOnClick = () => {
     navigator.clipboard.writeText(`${window.location.href}`);
@@ -86,13 +90,23 @@ export const Member = () => {
             </Button>
           </ButtonsContainer>
 
-          <MemberProfileCard
+          {/* <MemberProfileCard
             daoChain={daoChain}
             daoId={daoId}
             member={member}
             allowLinks={true}
             allowMemberMenu={true}
+          /> */}
+          {isLoadingProfile ? <Loading size={12} /> :(
+          <MemberProfile
+            daoChain={daoChain}
+            dao={dao}
+            profile={currentProfile}
+            membership={member}
+            allowLinks={true}
+            allowMemberMenu={true}
           />
+          )}
           <LocalDrafts memberAddress={member.memberAddress as EthAddress} dao={dao} daoChain={daoChain} />
           <MemberNFts memberAddress={member.memberAddress as EthAddress} dao={dao} daoChain={daoChain} />
 

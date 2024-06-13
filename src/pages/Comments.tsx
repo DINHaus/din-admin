@@ -144,7 +144,7 @@ export const Comments = ({
       description={`Comments (${comments.length})`}
     >
       <StyledLink to={`/molochv3/${daoChain}/${daoId}/${tableRoute}/${hash}`}>
-        <ParLg>OP detail</ParLg>
+        <ParLg>OP detail   ↩</ParLg>
       </StyledLink>
 
       <CardWrapper>
@@ -173,7 +173,7 @@ export const Comments = ({
                 >
                   details
                 </StyledLink>
-                <StyledLink to="#" isDead>
+                <StyledLink to="#" isdead="true">
                   Created At: {formatDate(Number(parsedComment.createdAt))}
                 </StyledLink>
               </ArticleLinks>

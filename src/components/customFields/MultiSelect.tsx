@@ -12,9 +12,11 @@ export const MultiSelect = (props: Buildable<Field>) => {
   const [content, createdAt] = watch([props.id, "createdAt"]);
 
   const options = [
-    { value: "publication", label: "Publication" },
-    { value: "event", label: "Event" },
     { value: "document", label: "Document" },
+    { value: "event", label: "Event" },
+    { value: "publication", label: "Publication" },
+    { value: "proposal", label: "Proposal" },
+    { value: "RFC", label: "Request For Comment" },
     { value: "special", label: "Special" },
   ];
 
@@ -42,6 +44,7 @@ export const MultiSelect = (props: Buildable<Field>) => {
         };
       });
       setSelectedOption(tags || []);
+      setValue(props.id, tags || []);
     }
   }, [createdAt]);
 

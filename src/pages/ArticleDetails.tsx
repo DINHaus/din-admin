@@ -152,7 +152,7 @@ export const ArticleDetails = ({
       <TitleWrapper>
         <H1>{parsedContent?.title}</H1>
         {parsedContent?.createdAt && (
-          <StyledLink to={``} isDead>
+          <StyledLink to={``} isdead="true">
             Created at: {formatDate(Number(parsedContent.createdAt))}
           </StyledLink>
         )}

@@ -64,11 +64,11 @@ export const ButtonList = styled.div`
   margin-bottom: 1rem;
 `;
 
-export const StyledLink = styled(Link)<{ isDead?: boolean }>`
+export const StyledLink = styled(Link)<{ isdead?: string }>`
   text-decoration: none;
   color: ${({ theme }) => theme.primary.step10};
-  pointer-events: ${({ isDead }) => (isDead ? "none" : "auto")};
-  cursor: ${({ isDead }) => (isDead ? "default" : "pointer")};
+  pointer-events: ${({ isdead }) => (isdead == "true" ? "none" : "auto")};
+  cursor: ${({ isdead }) => (isdead == "true" ? "default" : "pointer")};
   &:hover {
     text-decoration: none;
     font-weight: bold;
