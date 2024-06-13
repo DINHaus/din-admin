@@ -194,7 +194,7 @@ export const DaoCard = ({
         >
           Collector Dashboard
         </ButtonRouterLink>
-        <ButtonRouterLink color="secondary" to="#" isDead>
+        <ButtonRouterLink color="secondary" to="#" isdead="true">
           Created At: {formattedDate}
         </ButtonRouterLink>
       </div>

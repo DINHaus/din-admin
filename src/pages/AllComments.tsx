@@ -144,7 +144,7 @@ export const AllComments = ({
                 >
                   OP detail
                 </StyledLink>
-                <StyledLink to="#" isDead>
+                <StyledLink to="#" isdead="true">
                   created at: {formatDate(Number(parsedComment.createdAt))}
                 </StyledLink>
               </ArticleLinks>

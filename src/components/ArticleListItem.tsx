@@ -158,12 +158,13 @@ export const ArticleListItem = ({
       )}
       <Tags>
         {parsedContent?.tags?.map((tag, key) => {
+          const tagObj = tag as unknown as {label: string, value: string};
           return (
             <Tag className="article-tag" key={key} tagColor="violet">
-              {tag}
+              {tagObj.label}
             </Tag>
           );
-        })}
+        }) || []}
       </Tags>
       <ArticleLinks>
         {(!parsedContent?.parentId || parsedContent?.parentId === "0") && (
@@ -196,7 +197,7 @@ export const ArticleListItem = ({
           </StyledLink>
         )}
 
-        <StyledLink to={`#`} isDead>
+        <StyledLink to={`#`} isdead="true">
           created at: {formattedDate}
         </StyledLink>
         {(!parsedContent?.parentId || parsedContent?.parentId === "0") && (

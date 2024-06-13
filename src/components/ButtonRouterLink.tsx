@@ -7,7 +7,7 @@ type ProfileLinkProps = {
   href?: string;
   to: string;
   selected?: boolean;
-  isDead?: boolean;
+  isdead?: string;
   disabled?: boolean;
   linkType?: "internal" | "external" | "no-icon-external";
   hideIcon?: boolean;
@@ -15,11 +15,11 @@ type ProfileLinkProps = {
   rel?: string;
 } & Partial<ComponentProps<typeof Button>>;
 
-const StyledRouterLink = styled(RouterLink)<{ isDead?: boolean }>`
+const StyledRouterLink = styled(RouterLink)<{ isdead?: string }>`
   text-decoration: none;
   color: unset;
-  pointer-events: ${({ isDead }) => (isDead ? "none" : "auto")};
-  cursor: ${({ isDead }) => (isDead ? "default" : "pointer")};
+  pointer-events: ${({ isdead }) => (isdead == "true" ? "none" : "auto")};
+  cursor: ${({ isdead }) => (isdead =="true" ? "default" : "pointer")};
   &:hover {
     text-decoration: none;
   }
@@ -33,7 +33,7 @@ export const ButtonRouterLink = ({
   linkType,
   hideIcon,
   rel,
-  isDead,
+  isdead,
   ...buttonProps
 }: ProfileLinkProps) => {
   return (
@@ -42,7 +42,7 @@ export const ButtonRouterLink = ({
       target={target}
       className="button-link"
       rel={rel}
-      isDead={isDead}
+      isdead={isdead?.toString()}
     >
       <Button size="sm" variant="link" disabled={disabled} {...buttonProps}>
         {children}
