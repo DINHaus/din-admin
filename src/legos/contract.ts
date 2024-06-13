@@ -23,6 +23,7 @@ export const APP_CONTRACT: Record<string, ContractLego> = {
       "0x1": "0x000000000000cd17345801aa8147b8d3950260ff",
       "0x5": "0x000000000000cd17345801aa8147b8d3950260ff",
       "0x64": "0x000000000000cd17345801aa8147b8d3950260ff",
+      "0xa": "0x000000000000cd17345801aa8147b8d3950260ff",
     },
   },
   ERC_20: {
