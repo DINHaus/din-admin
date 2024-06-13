@@ -33,6 +33,7 @@ import { AllComments } from "./pages/AllComments";
 import { StagingDAO } from "./pages/StagingDAO";
 import { PromoteDraftForm } from "./pages/PromoteDraftForm";
 import { FeedList } from "./pages/FeedList";
+import Support from "./pages/Support";
 
 export const Routes = ({
   setDaoChainId,
@@ -59,6 +60,7 @@ export const Routes = ({
       <Route path="/" element={<HomeContainer />}>
         <Route path="/" element={<Home />} />
         <Route path="/comments" element={<AllComments />} />
+        <Route path="/support" element={<Support />} />
       </Route>
       <Route path={MULTI_DAO_ROUTER} element={<DaoContainer />}>
         <Route index element={<Dao />} />

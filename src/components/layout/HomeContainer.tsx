@@ -12,6 +12,7 @@ export const HomeContainer = () => {
       navLinks={[
         { label: "Topics", href: `/` },
         { label: "All Feed", href: `/comments` },
+        { label: "?", href: `/support` },
       ]}
       footer={<Footer />}
     >
