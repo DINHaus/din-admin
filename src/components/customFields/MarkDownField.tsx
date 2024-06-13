@@ -34,6 +34,8 @@ const MarkDownContainer = styled.div`
   background-color: hsl(228, 43.3%, 17.5%);
   font-size: 1.5rem;
   font-family: inherit;
+
+  
 `;
 
 const DialogMarkDownContainer = styled.div`
@@ -140,7 +142,9 @@ export const MarkdownField = (props: Buildable<Field>) => {
                   <Label>Preview</Label>
                 </LabelContainer>
                 <DialogMarkDownContainer>
-                  <ReactMarkdown>{value}</ReactMarkdown>
+                  <ReactMarkdown components={{
+                    a: ({ node, ...props }) => <a style={{ color: '#00dd65' }} {...props} />
+                  }}>{value}</ReactMarkdown>
                 </DialogMarkDownContainer>
               </>
             )}

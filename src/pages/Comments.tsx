@@ -166,7 +166,9 @@ export const Comments = ({
               ) : (
                 <AuthorAvatar address={ZERO_ADDRESS} />
               )}
-              <ReactMarkdown>{parsedComment.content}</ReactMarkdown>
+              <ReactMarkdown components={{
+                a: ({ node, ...props }) => <a style={{ color: '#00dd65' }} {...props} />
+              }}>{parsedComment.content}</ReactMarkdown>
               <ArticleLinks>
                 <StyledLink
                   to={`/molochv3/${daoChain}/${daoId}/${tableRoute}/${parsedComment.parentId}`}

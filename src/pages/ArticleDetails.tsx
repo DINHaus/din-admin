@@ -165,7 +165,9 @@ export const ArticleDetails = ({
       )}
 
       <ReactMarkdownWrapper>
-        <ReactMarkdown>{parsedContent?.content}</ReactMarkdown>
+        <ReactMarkdown components={{
+          a: ({ node, ...props }) => <a style={{ color: '#00dd65' }} {...props} />
+        }}>{parsedContent?.content}</ReactMarkdown>
       </ReactMarkdownWrapper>
       {shamanAddress && hash && <CollectedBy hash={hash} />}
       <ArticleLinks>

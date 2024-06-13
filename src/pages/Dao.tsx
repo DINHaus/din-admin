@@ -57,7 +57,9 @@ export function Dao() {
         title={dao?.name}
       >
         <ReactMarkdown>{dao?.description}</ReactMarkdown>
-        <ReactMarkdown>{dao?.longDescription}</ReactMarkdown>
+        <ReactMarkdown components={{
+          a: ({ node, ...props }) => <a style={{ color: '#00dd65' }} {...props} />
+        }}>{dao?.longDescription}</ReactMarkdown>
 
       </Card>)}
 
