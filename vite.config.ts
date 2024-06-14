@@ -9,6 +9,7 @@ export default ({ mode }) => {
     define: {
       "process.env": {
         NX_RIVET_KEY: process.env.VITE_RIVET_KEY,
+        NX_ETHEREUM_ALCHEMY_KEY: process.env.VITE_ETHEREUM_ALCHEMY_KEY,
         NX_MAINNET_RPC: process.env.VITE_MAINNET_RPC,
         NX_GOERLI_RPC: process.env.VITE_GOERLI_RPC,
         NX_GNOSISCHAIN_RPC: process.env.VITE_GNOSISCHAIN_RPC,
